@@ -1,0 +1,20 @@
+baseURL = 'https://sunkz.top/'
+languageCode = 'en-us'
+title = 'Sunkz'
+theme = 'paper'
+
+[menu]
+  [[menu.main]]
+    identifier = "工具集"
+    name = "工具集"
+    url = "/工具集/"
+    weight = 10
+  [[menu.main]]
+      identifier = "关于我"
+      name = "关于我"
+      url = "/关于我/"
+      weight = 10
+
+[params]
+    color = 'light'
+    github = 'sunkz'
