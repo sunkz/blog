@@ -2,6 +2,7 @@ baseURL = 'https://sunkz.top/'
 languageCode = 'en-us'
 title = 'Sunkz'
 theme = 'paper'
+publishdir = 'docs'
 
 [menu]
   [[menu.main]]

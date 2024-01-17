@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Posts on Sunkz</title>
+    <link>https://sunkz.top/posts/</link>
+    <description>Recent content in Posts on Sunkz</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Mon, 21 Jan 2019 18:43:29 -0800</lastBuildDate>
+    <atom:link href="https://sunkz.top/posts/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>基于Github&#43;Docker的自动化部署</title>
+      <link>https://sunkz.top/posts/%E5%9F%BA%E4%BA%8Egithub&#43;docker%E7%9A%84%E8%87%AA%E5%8A%A8%E5%8C%96%E9%83%A8%E7%BD%B2/</link>
+      <pubDate>Mon, 21 Jan 2019 18:43:29 -0800</pubDate>
+      <guid>https://sunkz.top/posts/%E5%9F%BA%E4%BA%8Egithub&#43;docker%E7%9A%84%E8%87%AA%E5%8A%A8%E5%8C%96%E9%83%A8%E7%BD%B2/</guid>
+      <description>准备工作 Github Dockerhub Server (没有服务器的话,本机使用内网穿透也可以) 整体流程 具体步骤 code 创建springboot工程提供一个接口, 并编写 dockerfile&#xA;/** * hello 接口 */ @GetMapping(&amp;#34;/hello&amp;#34;) public String hello(){ return &amp;#34;hello&amp;#34;; } FROM openjdk:11 WORKDIR /workspace/app COPY mvnw . COPY .mvn .mvn COPY pom.xml . COPY src src RUN ./mvnw package -DskipTests ENTRYPOINT [&amp;#34;java&amp;#34;,&amp;#34;-jar&amp;#34;,&amp;#34;target/hello-0.0.1-SNAPSHOT.jar&amp;#34;] Github 创建hello repository&#xA;Dockerhub 创建hello repository并关联上Github的hello repository&#xA;hook 编写hook服务,当 dockerhub hello image 更新时,会触发该hook&#xA;/** * hook在server上运行,当Dockerhub中hello image有变动, * 将触发该接口,该接口将会执行auto_deploy脚本 */ @GetMapping(&amp;#34;/hook&amp;#34;) public void hook(){ Runtime.getRuntime().exec(&amp;#34;/root/code/auto_deploy.sh&amp;#34;); } #!</description>
+    </item>
+    <item>
+      <title>身份认证</title>
+      <link>https://sunkz.top/posts/%E8%BA%AB%E4%BB%BD%E8%AE%A4%E8%AF%81/</link>
+      <pubDate>Sun, 18 Nov 2018 15:11:00 -0800</pubDate>
+      <guid>https://sunkz.top/posts/%E8%BA%AB%E4%BB%BD%E8%AE%A4%E8%AF%81/</guid>
+      <description>Cookie - Standalone Cookie - Cluster Auth Server + Token Auth Server + Gateway + Token Auth Server + Gateway + JWT </description>
+    </item>
+    <item>
+      <title>基于Github搭建Maven私服</title>
+      <link>https://sunkz.top/posts/%E5%9F%BA%E4%BA%8Egithub%E6%90%AD%E5%BB%BAmaven%E7%A7%81%E6%9C%8D/</link>
+      <pubDate>Thu, 12 Jul 2018 12:28:29 -0800</pubDate>
+      <guid>https://sunkz.top/posts/%E5%9F%BA%E4%BA%8Egithub%E6%90%AD%E5%BB%BAmaven%E7%A7%81%E6%9C%8D/</guid>
+      <description>Github Package 私服 demo : http://github.com/sunkz/common&#xA;settings.xml 生效顺序 : .m2/settings.xml &amp;gt; $M2_HOME/conf/settings.xml&#xA;&amp;lt;?xml version=&amp;#34;1.0&amp;#34; encoding=&amp;#34;UTF-8&amp;#34;?&amp;gt; &amp;lt;settings xmlns=&amp;#34;http://maven.apache.org/SETTINGS/1.2.0&amp;#34; xmlns:xsi=&amp;#34;http://www.w3.org/2001/XMLSchema-instance&amp;#34; xsi:schemaLocation=&amp;#34;http://maven.apache.org/SETTINGS/1.2.0 https://maven.apache.org/xsd/settings-1.2.0.xsd&amp;#34;&amp;gt; &amp;lt;activeProfiles&amp;gt; &amp;lt;!-- profile active 之后才会生效 --&amp;gt; &amp;lt;activeProfile&amp;gt;nexus&amp;lt;/activeProfile&amp;gt; &amp;lt;/activeProfiles&amp;gt; &amp;lt;servers&amp;gt; &amp;lt;!-- 私服秘钥 --&amp;gt; &amp;lt;server&amp;gt; &amp;lt;!-- 需要与 repository.id 一致 --&amp;gt; &amp;lt;id&amp;gt;github&amp;lt;/id&amp;gt; &amp;lt;username&amp;gt;sunkz&amp;lt;/username&amp;gt; &amp;lt;password&amp;gt;xxxx&amp;lt;/password&amp;gt; &amp;lt;/server&amp;gt; &amp;lt;/servers&amp;gt; &amp;lt;mirrors&amp;gt; &amp;lt;!-- 远程仓库镜像, 拦截指定 repository --&amp;gt; &amp;lt;mirror&amp;gt; &amp;lt;id&amp;gt;aliyun&amp;lt;/id&amp;gt; &amp;lt;!-- 拦截指定 repository.id, 此处为拦截 maven 中央仓库 --&amp;gt; &amp;lt;mirrorOf&amp;gt;central&amp;lt;/mirrorOf&amp;gt; &amp;lt;url&amp;gt;http://maven.aliyun.com/nexus/content/repositories/central/&amp;lt;/url&amp;gt; &amp;lt;/mirror&amp;gt; &amp;lt;/mirrors&amp;gt; &amp;lt;profiles&amp;gt; &amp;lt;profile&amp;gt; &amp;lt;id&amp;gt;nexus&amp;lt;/id&amp;gt; &amp;lt;!-- 拉包顺序: &amp;#39;本地 .m2/repository&amp;#39; -&amp;gt; &amp;#39;远程 repositories&amp;#39; --&amp;gt; &amp;lt;!</description>
+    </item>
+  </channel>
+</rss>

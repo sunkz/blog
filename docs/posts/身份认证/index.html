@@ -1,0 +1,340 @@
+<!doctype html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<html
+  class="not-ready lg:text-base"
+  style="--bg: #fff"
+  lang="en-us"
+>
+  <head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1, shrink-to-fit=no"
+  />
+
+  
+  <title>身份认证 - Sunkz</title>
+
+  
+  <meta name="theme-color" />
+
+  
+  
+  
+  
+  <meta name="description" content="Cookie - Standalone Cookie - Cluster Auth Server &#43; Token Auth Server &#43; Gateway &#43; Token Auth Server &#43; Gateway &#43; JWT " />
+  <meta name="author" content="Sunkz" />
+  
+
+  
+  
+  
+  
+  
+  
+  <link rel="preload stylesheet" as="style" href="https://sunkz.top/main.min.css" />
+
+  
+  
+  
+  
+  
+  <link rel="preload" as="image" href="https://sunkz.top/theme.png" />
+
+  
+  
+  
+  
+  
+
+  
+  
+  <link rel="preload" as="image" href="https://sunkz.top/github.svg" />
+  
+  
+
+  
+  
+  <script
+    defer
+    src="https://sunkz.top/highlight.min.js"
+    onload="hljs.initHighlightingOnLoad();"
+  ></script>
+  
+
+  
+  
+  
+
+  
+  <link rel="icon" href="https://sunkz.top/favicon.ico" />
+  <link rel="apple-touch-icon" href="https://sunkz.top/apple-touch-icon.png" />
+
+  
+  <meta name="generator" content="Hugo 0.121.1">
+
+  
+  
+  
+  
+  
+  <meta itemprop="name" content="身份认证">
+<meta itemprop="description" content="Cookie - Standalone Cookie - Cluster Auth Server &#43; Token Auth Server &#43; Gateway &#43; Token Auth Server &#43; Gateway &#43; JWT "><meta itemprop="datePublished" content="2018-11-18T15:11:00-08:00" />
+<meta itemprop="dateModified" content="2018-11-18T15:11:00-08:00" />
+<meta itemprop="wordCount" content="22">
+<meta itemprop="keywords" content="" />
+  
+  <meta property="og:title" content="身份认证" />
+<meta property="og:description" content="Cookie - Standalone Cookie - Cluster Auth Server &#43; Token Auth Server &#43; Gateway &#43; Token Auth Server &#43; Gateway &#43; JWT " />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://sunkz.top/posts/%E8%BA%AB%E4%BB%BD%E8%AE%A4%E8%AF%81/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2018-11-18T15:11:00-08:00" />
+<meta property="article:modified_time" content="2018-11-18T15:11:00-08:00" />
+
+
+  
+  <meta name="twitter:card" content="summary"/><meta name="twitter:title" content="身份认证"/>
+<meta name="twitter:description" content="Cookie - Standalone Cookie - Cluster Auth Server &#43; Token Auth Server &#43; Gateway &#43; Token Auth Server &#43; Gateway &#43; JWT "/>
+
+  
+  
+  
+  <link rel="canonical" href="https://sunkz.top/posts/%E8%BA%AB%E4%BB%BD%E8%AE%A4%E8%AF%81/" />
+  
+  
+</head>
+
+  <body class="text-black duration-200 ease-out dark:text-white">
+    <header class="mx-auto flex h-[4.5rem] max-w-3xl px-8 lg:justify-center">
+  <div class="relative z-50 mr-auto flex items-center">
+    <a
+      class="-translate-x-[1px] -translate-y-[1px] text-2xl font-semibold"
+      href="https://sunkz.top/"
+      >Sunkz</a
+    >
+    <div
+      class="btn-dark text-[0] ml-4 h-6 w-6 shrink-0 cursor-pointer [background:url(./theme.png)_left_center/_auto_theme('spacing.6')_no-repeat] [transition:_background-position_0.4s_steps(5)] dark:[background-position:right]"
+      role="button"
+      aria-label="Dark"
+    ></div>
+  </div>
+
+  <div
+    class="btn-menu relative z-50 -mr-8 flex h-[4.5rem] w-[5rem] shrink-0 cursor-pointer flex-col items-center justify-center gap-2.5 lg:hidden"
+    role="button"
+    aria-label="Menu"
+  ></div>
+
+  
+
+  <script>
+    
+    const htmlClass = document.documentElement.classList;
+    setTimeout(() => {
+      htmlClass.remove('not-ready');
+    }, 10);
+
+    
+    const btnMenu = document.querySelector('.btn-menu');
+    btnMenu.addEventListener('click', () => {
+      htmlClass.toggle('open');
+    });
+
+    
+    const metaTheme = document.querySelector('meta[name="theme-color"]');
+    const lightBg = '#fff'.replace(/"/g, '');
+    const setDark = (isDark) => {
+      metaTheme.setAttribute('content', isDark ? '#000' : lightBg);
+      htmlClass[isDark ? 'add' : 'remove']('dark');
+      localStorage.setItem('dark', isDark);
+    };
+
+    
+    const darkScheme = window.matchMedia('(prefers-color-scheme: dark)');
+    if (htmlClass.contains('dark')) {
+      setDark(true);
+    } else {
+      const darkVal = localStorage.getItem('dark');
+      setDark(darkVal ? darkVal === 'true' : darkScheme.matches);
+    }
+
+    
+    darkScheme.addEventListener('change', (event) => {
+      setDark(event.matches);
+    });
+
+    
+    const btnDark = document.querySelector('.btn-dark');
+    btnDark.addEventListener('click', () => {
+      setDark(localStorage.getItem('dark') !== 'true');
+    });
+  </script>
+
+  <div
+    class="nav-wrapper fixed inset-x-0 top-full z-40 flex h-full select-none flex-col justify-center pb-16 duration-200 dark:bg-black lg:static lg:h-auto lg:flex-row lg:!bg-transparent lg:pb-0 lg:transition-none"
+  >
+    
+    
+    <nav class="lg:ml-12 lg:flex lg:flex-row lg:items-center lg:space-x-6">
+      
+      <a
+        class="block text-center text-2xl leading-[5rem] lg:text-base lg:font-normal"
+        href="/%E5%85%B3%E4%BA%8E%E6%88%91/"
+        >关于我</a
+      >
+      
+      <a
+        class="block text-center text-2xl leading-[5rem] lg:text-base lg:font-normal"
+        href="/%E5%B7%A5%E5%85%B7%E9%9B%86/"
+        >工具集</a
+      >
+      
+    </nav>
+    
+
+    
+    <nav
+      class="mt-12 flex justify-center space-x-10 dark:invert lg:ml-12 lg:mt-0 lg:items-center lg:space-x-6"
+    >
+      
+      <a
+        class="h-8 w-8 text-[0] [background:var(--url)_center_center/cover_no-repeat] lg:h-6 lg:w-6"
+        style="--url: url(./github.svg)"
+        href="https://github.com/sunkz"
+        target="_blank"
+        rel="me"
+      >
+        github
+      </a>
+      
+    </nav>
+    
+  </div>
+</header>
+
+
+    <main
+      class="prose prose-neutral relative mx-auto min-h-[calc(100%-9rem)] max-w-3xl px-8 pb-16 pt-12 dark:prose-invert"
+    >
+      
+
+<article>
+  <header class="mb-16">
+    <h1 class="!my-0 pb-2.5">身份认证</h1>
+
+    
+    <div class="text-sm antialiased opacity-60">
+      
+      <time>Nov 18, 2018</time>
+      
+      
+      
+      
+    </div>
+    
+  </header>
+
+  <section><h3 id="cookie---standalone">Cookie - Standalone</h3>
+<p><img src="https://image-pub.guazistatic.com/qnbdp168731298997cfacdf4e604201a4205c1c99143ffc1066.png" alt=""></p>
+<h3 id="cookie---cluster">Cookie - Cluster</h3>
+<p><img src="https://image-pub.guazistatic.com/qnbdp16873130130a1371bd2b8c40b094f88c81b2f033ca1066.png" alt=""></p>
+<h3 id="auth-server--token">Auth Server + Token</h3>
+<p><img src="https://image-pub.guazistatic.com/qnbdp16873130366508862d0de34dddb66ddc87b833a9d31066.png" alt=""></p>
+<h3 id="auth-server--gateway--token">Auth Server + Gateway + Token</h3>
+<p><img src="https://image-pub.guazistatic.com/qnbdp16873130881d50874725b540ad91d3b8aa36e8d7251066.png" alt=""></p>
+<h3 id="auth-server--gateway--jwt">Auth Server + Gateway + JWT</h3>
+<p><img src="https://image-pub.guazistatic.com/qnbdp16873131256972ed5294334c1188b8e41217d950c61066.png" alt=""></p>
+</section>
+
+  
+  
+
+  
+  
+  
+  
+  <nav class="mt-24 flex rounded-lg bg-black/[3%] text-lg dark:bg-white/[8%]">
+    
+    <a
+      class="flex w-1/2 items-center rounded-l-md p-6 pr-3 font-semibold no-underline hover:bg-black/[2%] dark:hover:bg-white/[3%]"
+      href="https://sunkz.top/posts/%E5%9F%BA%E4%BA%8Egithub&#43;docker%E7%9A%84%E8%87%AA%E5%8A%A8%E5%8C%96%E9%83%A8%E7%BD%B2/"
+      ><span class="mr-1.5">←</span><span>基于Github&#43;Docker的自动化部署</span></a
+    >
+    
+    
+    <a
+      class="ml-auto flex w-1/2 items-center justify-end rounded-r-md p-6 pl-3 font-semibold no-underline hover:bg-black/[2%] dark:hover:bg-white/[3%]"
+      href="https://sunkz.top/posts/%E5%9F%BA%E4%BA%8Egithub%E6%90%AD%E5%BB%BAmaven%E7%A7%81%E6%9C%8D/"
+      ><span>基于Github搭建Maven私服</span><span class="ml-1.5">→</span></a
+    >
+    
+  </nav>
+  
+  
+
+  
+  
+
+  
+  
+
+  
+
+  
+</article>
+
+
+    </main>
+
+    <footer
+  class="opaco mx-auto flex h-[4.5rem] max-w-3xl items-center px-8 text-[0.9em] opacity-60"
+>
+  <div class="mr-auto">
+    &copy; 2024
+    <a class="link" href="https://sunkz.top/">Sunkz</a>
+  </div>
+  <a class="link mx-6" href="https://gohugo.io/" rel="noopener" target="_blank"
+    >Powered by Hugo️️</a
+  >️
+  <a
+    class="link"
+    href="https://github.com/nanxiaobei/hugo-paper"
+    rel="noopener"
+    target="_blank"
+    >✎ Paper</a
+  >
+</footer>
+
+  </body>
+</html>

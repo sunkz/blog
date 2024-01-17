@@ -1,0 +1,402 @@
+<!doctype html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<html
+  class="not-ready lg:text-base"
+  style="--bg: #fff"
+  lang="en-us"
+>
+  <head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1, shrink-to-fit=no"
+  />
+
+  
+  <title>基于Github搭建Maven私服 - Sunkz</title>
+
+  
+  <meta name="theme-color" />
+
+  
+  
+  
+  
+  <meta name="description" content="Github Package 私服 demo : http://github.com/sunkz/common
+settings.xml 生效顺序 : .m2/settings.xml &gt; $M2_HOME/conf/settings.xml
+&lt;?xml version=&#34;1.0&#34; encoding=&#34;UTF-8&#34;?&gt; &lt;settings xmlns=&#34;http://maven.apache.org/SETTINGS/1.2.0&#34; xmlns:xsi=&#34;http://www.w3.org/2001/XMLSchema-instance&#34; xsi:schemaLocation=&#34;http://maven.apache.org/SETTINGS/1.2.0 https://maven.apache.org/xsd/settings-1.2.0.xsd&#34;&gt; &lt;activeProfiles&gt; &lt;!-- profile active 之后才会生效 --&gt; &lt;activeProfile&gt;nexus&lt;/activeProfile&gt; &lt;/activeProfiles&gt; &lt;servers&gt; &lt;!-- 私服秘钥 --&gt; &lt;server&gt; &lt;!-- 需要与 repository.id 一致 --&gt; &lt;id&gt;github&lt;/id&gt; &lt;username&gt;sunkz&lt;/username&gt; &lt;password&gt;xxxx&lt;/password&gt; &lt;/server&gt; &lt;/servers&gt; &lt;mirrors&gt; &lt;!-- 远程仓库镜像, 拦截指定 repository --&gt; &lt;mirror&gt; &lt;id&gt;aliyun&lt;/id&gt; &lt;!-- 拦截指定 repository.id, 此处为拦截 maven 中央仓库 --&gt; &lt;mirrorOf&gt;central&lt;/mirrorOf&gt; &lt;url&gt;http://maven.aliyun.com/nexus/content/repositories/central/&lt;/url&gt; &lt;/mirror&gt; &lt;/mirrors&gt; &lt;profiles&gt; &lt;profile&gt; &lt;id&gt;nexus&lt;/id&gt; &lt;!-- 拉包顺序: &#39;本地 .m2/repository&#39; -&gt; &#39;远程 repositories&#39; --&gt; &lt;!" />
+  <meta name="author" content="Sunkz" />
+  
+
+  
+  
+  
+  
+  
+  
+  <link rel="preload stylesheet" as="style" href="https://sunkz.top/main.min.css" />
+
+  
+  
+  
+  
+  
+  <link rel="preload" as="image" href="https://sunkz.top/theme.png" />
+
+  
+  
+  
+  
+  
+
+  
+  
+  <link rel="preload" as="image" href="https://sunkz.top/github.svg" />
+  
+  
+
+  
+  
+  <script
+    defer
+    src="https://sunkz.top/highlight.min.js"
+    onload="hljs.initHighlightingOnLoad();"
+  ></script>
+  
+
+  
+  
+  
+
+  
+  <link rel="icon" href="https://sunkz.top/favicon.ico" />
+  <link rel="apple-touch-icon" href="https://sunkz.top/apple-touch-icon.png" />
+
+  
+  <meta name="generator" content="Hugo 0.121.1">
+
+  
+  
+  
+  
+  
+  <meta itemprop="name" content="基于Github搭建Maven私服">
+<meta itemprop="description" content="Github Package 私服 demo : http://github.com/sunkz/common
+settings.xml 生效顺序 : .m2/settings.xml &gt; $M2_HOME/conf/settings.xml
+&lt;?xml version=&#34;1.0&#34; encoding=&#34;UTF-8&#34;?&gt; &lt;settings xmlns=&#34;http://maven.apache.org/SETTINGS/1.2.0&#34; xmlns:xsi=&#34;http://www.w3.org/2001/XMLSchema-instance&#34; xsi:schemaLocation=&#34;http://maven.apache.org/SETTINGS/1.2.0 https://maven.apache.org/xsd/settings-1.2.0.xsd&#34;&gt; &lt;activeProfiles&gt; &lt;!-- profile active 之后才会生效 --&gt; &lt;activeProfile&gt;nexus&lt;/activeProfile&gt; &lt;/activeProfiles&gt; &lt;servers&gt; &lt;!-- 私服秘钥 --&gt; &lt;server&gt; &lt;!-- 需要与 repository.id 一致 --&gt; &lt;id&gt;github&lt;/id&gt; &lt;username&gt;sunkz&lt;/username&gt; &lt;password&gt;xxxx&lt;/password&gt; &lt;/server&gt; &lt;/servers&gt; &lt;mirrors&gt; &lt;!-- 远程仓库镜像, 拦截指定 repository --&gt; &lt;mirror&gt; &lt;id&gt;aliyun&lt;/id&gt; &lt;!-- 拦截指定 repository.id, 此处为拦截 maven 中央仓库 --&gt; &lt;mirrorOf&gt;central&lt;/mirrorOf&gt; &lt;url&gt;http://maven.aliyun.com/nexus/content/repositories/central/&lt;/url&gt; &lt;/mirror&gt; &lt;/mirrors&gt; &lt;profiles&gt; &lt;profile&gt; &lt;id&gt;nexus&lt;/id&gt; &lt;!-- 拉包顺序: &#39;本地 .m2/repository&#39; -&gt; &#39;远程 repositories&#39; --&gt; &lt;!"><meta itemprop="datePublished" content="2018-07-12T12:28:29-08:00" />
+<meta itemprop="dateModified" content="2018-07-12T12:28:29-08:00" />
+<meta itemprop="wordCount" content="127">
+<meta itemprop="keywords" content="" />
+  
+  <meta property="og:title" content="基于Github搭建Maven私服" />
+<meta property="og:description" content="Github Package 私服 demo : http://github.com/sunkz/common
+settings.xml 生效顺序 : .m2/settings.xml &gt; $M2_HOME/conf/settings.xml
+&lt;?xml version=&#34;1.0&#34; encoding=&#34;UTF-8&#34;?&gt; &lt;settings xmlns=&#34;http://maven.apache.org/SETTINGS/1.2.0&#34; xmlns:xsi=&#34;http://www.w3.org/2001/XMLSchema-instance&#34; xsi:schemaLocation=&#34;http://maven.apache.org/SETTINGS/1.2.0 https://maven.apache.org/xsd/settings-1.2.0.xsd&#34;&gt; &lt;activeProfiles&gt; &lt;!-- profile active 之后才会生效 --&gt; &lt;activeProfile&gt;nexus&lt;/activeProfile&gt; &lt;/activeProfiles&gt; &lt;servers&gt; &lt;!-- 私服秘钥 --&gt; &lt;server&gt; &lt;!-- 需要与 repository.id 一致 --&gt; &lt;id&gt;github&lt;/id&gt; &lt;username&gt;sunkz&lt;/username&gt; &lt;password&gt;xxxx&lt;/password&gt; &lt;/server&gt; &lt;/servers&gt; &lt;mirrors&gt; &lt;!-- 远程仓库镜像, 拦截指定 repository --&gt; &lt;mirror&gt; &lt;id&gt;aliyun&lt;/id&gt; &lt;!-- 拦截指定 repository.id, 此处为拦截 maven 中央仓库 --&gt; &lt;mirrorOf&gt;central&lt;/mirrorOf&gt; &lt;url&gt;http://maven.aliyun.com/nexus/content/repositories/central/&lt;/url&gt; &lt;/mirror&gt; &lt;/mirrors&gt; &lt;profiles&gt; &lt;profile&gt; &lt;id&gt;nexus&lt;/id&gt; &lt;!-- 拉包顺序: &#39;本地 .m2/repository&#39; -&gt; &#39;远程 repositories&#39; --&gt; &lt;!" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://sunkz.top/posts/%E5%9F%BA%E4%BA%8Egithub%E6%90%AD%E5%BB%BAmaven%E7%A7%81%E6%9C%8D/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2018-07-12T12:28:29-08:00" />
+<meta property="article:modified_time" content="2018-07-12T12:28:29-08:00" />
+
+
+  
+  <meta name="twitter:card" content="summary"/><meta name="twitter:title" content="基于Github搭建Maven私服"/>
+<meta name="twitter:description" content="Github Package 私服 demo : http://github.com/sunkz/common
+settings.xml 生效顺序 : .m2/settings.xml &gt; $M2_HOME/conf/settings.xml
+&lt;?xml version=&#34;1.0&#34; encoding=&#34;UTF-8&#34;?&gt; &lt;settings xmlns=&#34;http://maven.apache.org/SETTINGS/1.2.0&#34; xmlns:xsi=&#34;http://www.w3.org/2001/XMLSchema-instance&#34; xsi:schemaLocation=&#34;http://maven.apache.org/SETTINGS/1.2.0 https://maven.apache.org/xsd/settings-1.2.0.xsd&#34;&gt; &lt;activeProfiles&gt; &lt;!-- profile active 之后才会生效 --&gt; &lt;activeProfile&gt;nexus&lt;/activeProfile&gt; &lt;/activeProfiles&gt; &lt;servers&gt; &lt;!-- 私服秘钥 --&gt; &lt;server&gt; &lt;!-- 需要与 repository.id 一致 --&gt; &lt;id&gt;github&lt;/id&gt; &lt;username&gt;sunkz&lt;/username&gt; &lt;password&gt;xxxx&lt;/password&gt; &lt;/server&gt; &lt;/servers&gt; &lt;mirrors&gt; &lt;!-- 远程仓库镜像, 拦截指定 repository --&gt; &lt;mirror&gt; &lt;id&gt;aliyun&lt;/id&gt; &lt;!-- 拦截指定 repository.id, 此处为拦截 maven 中央仓库 --&gt; &lt;mirrorOf&gt;central&lt;/mirrorOf&gt; &lt;url&gt;http://maven.aliyun.com/nexus/content/repositories/central/&lt;/url&gt; &lt;/mirror&gt; &lt;/mirrors&gt; &lt;profiles&gt; &lt;profile&gt; &lt;id&gt;nexus&lt;/id&gt; &lt;!-- 拉包顺序: &#39;本地 .m2/repository&#39; -&gt; &#39;远程 repositories&#39; --&gt; &lt;!"/>
+
+  
+  
+  
+  <link rel="canonical" href="https://sunkz.top/posts/%E5%9F%BA%E4%BA%8Egithub%E6%90%AD%E5%BB%BAmaven%E7%A7%81%E6%9C%8D/" />
+  
+  
+</head>
+
+  <body class="text-black duration-200 ease-out dark:text-white">
+    <header class="mx-auto flex h-[4.5rem] max-w-3xl px-8 lg:justify-center">
+  <div class="relative z-50 mr-auto flex items-center">
+    <a
+      class="-translate-x-[1px] -translate-y-[1px] text-2xl font-semibold"
+      href="https://sunkz.top/"
+      >Sunkz</a
+    >
+    <div
+      class="btn-dark text-[0] ml-4 h-6 w-6 shrink-0 cursor-pointer [background:url(./theme.png)_left_center/_auto_theme('spacing.6')_no-repeat] [transition:_background-position_0.4s_steps(5)] dark:[background-position:right]"
+      role="button"
+      aria-label="Dark"
+    ></div>
+  </div>
+
+  <div
+    class="btn-menu relative z-50 -mr-8 flex h-[4.5rem] w-[5rem] shrink-0 cursor-pointer flex-col items-center justify-center gap-2.5 lg:hidden"
+    role="button"
+    aria-label="Menu"
+  ></div>
+
+  
+
+  <script>
+    
+    const htmlClass = document.documentElement.classList;
+    setTimeout(() => {
+      htmlClass.remove('not-ready');
+    }, 10);
+
+    
+    const btnMenu = document.querySelector('.btn-menu');
+    btnMenu.addEventListener('click', () => {
+      htmlClass.toggle('open');
+    });
+
+    
+    const metaTheme = document.querySelector('meta[name="theme-color"]');
+    const lightBg = '#fff'.replace(/"/g, '');
+    const setDark = (isDark) => {
+      metaTheme.setAttribute('content', isDark ? '#000' : lightBg);
+      htmlClass[isDark ? 'add' : 'remove']('dark');
+      localStorage.setItem('dark', isDark);
+    };
+
+    
+    const darkScheme = window.matchMedia('(prefers-color-scheme: dark)');
+    if (htmlClass.contains('dark')) {
+      setDark(true);
+    } else {
+      const darkVal = localStorage.getItem('dark');
+      setDark(darkVal ? darkVal === 'true' : darkScheme.matches);
+    }
+
+    
+    darkScheme.addEventListener('change', (event) => {
+      setDark(event.matches);
+    });
+
+    
+    const btnDark = document.querySelector('.btn-dark');
+    btnDark.addEventListener('click', () => {
+      setDark(localStorage.getItem('dark') !== 'true');
+    });
+  </script>
+
+  <div
+    class="nav-wrapper fixed inset-x-0 top-full z-40 flex h-full select-none flex-col justify-center pb-16 duration-200 dark:bg-black lg:static lg:h-auto lg:flex-row lg:!bg-transparent lg:pb-0 lg:transition-none"
+  >
+    
+    
+    <nav class="lg:ml-12 lg:flex lg:flex-row lg:items-center lg:space-x-6">
+      
+      <a
+        class="block text-center text-2xl leading-[5rem] lg:text-base lg:font-normal"
+        href="/%E5%85%B3%E4%BA%8E%E6%88%91/"
+        >关于我</a
+      >
+      
+      <a
+        class="block text-center text-2xl leading-[5rem] lg:text-base lg:font-normal"
+        href="/%E5%B7%A5%E5%85%B7%E9%9B%86/"
+        >工具集</a
+      >
+      
+    </nav>
+    
+
+    
+    <nav
+      class="mt-12 flex justify-center space-x-10 dark:invert lg:ml-12 lg:mt-0 lg:items-center lg:space-x-6"
+    >
+      
+      <a
+        class="h-8 w-8 text-[0] [background:var(--url)_center_center/cover_no-repeat] lg:h-6 lg:w-6"
+        style="--url: url(./github.svg)"
+        href="https://github.com/sunkz"
+        target="_blank"
+        rel="me"
+      >
+        github
+      </a>
+      
+    </nav>
+    
+  </div>
+</header>
+
+
+    <main
+      class="prose prose-neutral relative mx-auto min-h-[calc(100%-9rem)] max-w-3xl px-8 pb-16 pt-12 dark:prose-invert"
+    >
+      
+
+<article>
+  <header class="mb-16">
+    <h1 class="!my-0 pb-2.5">基于Github搭建Maven私服</h1>
+
+    
+    <div class="text-sm antialiased opacity-60">
+      
+      <time>Jul 12, 2018</time>
+      
+      
+      
+      
+    </div>
+    
+  </header>
+
+  <section><h3 id="github-package-私服">Github Package 私服</h3>
+<blockquote>
+<p>demo : <a href="http://github.com/sunkz/common">http://github.com/sunkz/common</a></p>
+</blockquote>
+<h4 id="settingsxml">settings.xml</h4>
+<blockquote>
+<p>生效顺序 : .m2/settings.xml &gt; $M2_HOME/conf/settings.xml</p>
+</blockquote>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-xml" data-lang="xml"><span style="display:flex;"><span><span style="color:#75715e">&lt;?xml version=&#34;1.0&#34; encoding=&#34;UTF-8&#34;?&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&lt;settings</span> <span style="color:#a6e22e">xmlns=</span><span style="color:#e6db74">&#34;http://maven.apache.org/SETTINGS/1.2.0&#34;</span> <span style="color:#a6e22e">xmlns:xsi=</span><span style="color:#e6db74">&#34;http://www.w3.org/2001/XMLSchema-instance&#34;</span>
+</span></span><span style="display:flex;"><span>          <span style="color:#a6e22e">xsi:schemaLocation=</span><span style="color:#e6db74">&#34;http://maven.apache.org/SETTINGS/1.2.0 https://maven.apache.org/xsd/settings-1.2.0.xsd&#34;</span><span style="color:#f92672">&gt;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&lt;activeProfiles&gt;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">&lt;!-- profile active 之后才会生效 --&gt;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">&lt;activeProfile&gt;</span>nexus<span style="color:#f92672">&lt;/activeProfile&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&lt;/activeProfiles&gt;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&lt;servers&gt;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">&lt;!-- 私服秘钥 --&gt;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">&lt;server&gt;</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#75715e">&lt;!-- 需要与 repository.id 一致 --&gt;</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#f92672">&lt;id&gt;</span>github<span style="color:#f92672">&lt;/id&gt;</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#f92672">&lt;username&gt;</span>sunkz<span style="color:#f92672">&lt;/username&gt;</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#f92672">&lt;password&gt;</span>xxxx<span style="color:#f92672">&lt;/password&gt;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">&lt;/server&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&lt;/servers&gt;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&lt;mirrors&gt;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">&lt;!-- 远程仓库镜像, 拦截指定 repository --&gt;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">&lt;mirror&gt;</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#f92672">&lt;id&gt;</span>aliyun<span style="color:#f92672">&lt;/id&gt;</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#75715e">&lt;!-- 拦截指定 repository.id, 此处为拦截 maven 中央仓库 --&gt;</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#f92672">&lt;mirrorOf&gt;</span>central<span style="color:#f92672">&lt;/mirrorOf&gt;</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#f92672">&lt;url&gt;</span>http://maven.aliyun.com/nexus/content/repositories/central/<span style="color:#f92672">&lt;/url&gt;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">&lt;/mirror&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&lt;/mirrors&gt;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&lt;profiles&gt;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">&lt;profile&gt;</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#f92672">&lt;id&gt;</span>nexus<span style="color:#f92672">&lt;/id&gt;</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#75715e">&lt;!-- 拉包顺序: &#39;本地 .m2/repository&#39; -&gt; &#39;远程 repositories&#39; --&gt;</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#75715e">&lt;!-- 多个 repositories 默认从上到下依次尝试拉取, 若不配置 repositories 默认拉 maven 中央仓库 --&gt;</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#f92672">&lt;repositories&gt;</span>
+</span></span><span style="display:flex;"><span>                <span style="color:#75715e">&lt;!-- maven 中央仓库 --&gt;</span>
+</span></span><span style="display:flex;"><span>                <span style="color:#f92672">&lt;repository&gt;</span>
+</span></span><span style="display:flex;"><span>                    <span style="color:#f92672">&lt;id&gt;</span>central<span style="color:#f92672">&lt;/id&gt;</span>
+</span></span><span style="display:flex;"><span>                    <span style="color:#f92672">&lt;url&gt;</span>https://repo1.maven.org/maven2<span style="color:#f92672">&lt;/url&gt;</span>
+</span></span><span style="display:flex;"><span>                <span style="color:#f92672">&lt;/repository&gt;</span>
+</span></span><span style="display:flex;"><span>                <span style="color:#75715e">&lt;!-- github 私服地址 --&gt;</span>
+</span></span><span style="display:flex;"><span>                <span style="color:#f92672">&lt;repository&gt;</span>
+</span></span><span style="display:flex;"><span>                    <span style="color:#f92672">&lt;id&gt;</span>github<span style="color:#f92672">&lt;/id&gt;</span>
+</span></span><span style="display:flex;"><span>                    <span style="color:#f92672">&lt;url&gt;</span>https://maven.pkg.github.com/sunkz/common<span style="color:#f92672">&lt;/url&gt;</span>
+</span></span><span style="display:flex;"><span>                    <span style="color:#f92672">&lt;snapshots&gt;</span>
+</span></span><span style="display:flex;"><span>                        <span style="color:#f92672">&lt;enabled&gt;</span>true<span style="color:#f92672">&lt;/enabled&gt;</span>
+</span></span><span style="display:flex;"><span>                    <span style="color:#f92672">&lt;/snapshots&gt;</span>
+</span></span><span style="display:flex;"><span>                <span style="color:#f92672">&lt;/repository&gt;</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#f92672">&lt;/repositories&gt;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">&lt;/profile&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&lt;/profiles&gt;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&lt;/settings&gt;</span>
+</span></span></code></pre></div><h4 id="pomxml">pom.xml</h4>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-xml" data-lang="xml"><span style="display:flex;"><span><span style="color:#75715e">&lt;!-- mvn deploy 远程私服地址 --&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&lt;distributionManagement&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&lt;repository&gt;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">&lt;!-- id 需要与 settings.xml server 中的 一致 --&gt;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">&lt;id&gt;</span>github<span style="color:#f92672">&lt;/id&gt;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">&lt;url&gt;</span>https://maven.pkg.github.com/sunkz/common<span style="color:#f92672">&lt;/url&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&lt;/repository&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&lt;/distributionManagement&gt;</span>
+</span></span></code></pre></div></section>
+
+  
+  
+
+  
+  
+  
+  
+  <nav class="mt-24 flex rounded-lg bg-black/[3%] text-lg dark:bg-white/[8%]">
+    
+    <a
+      class="flex w-1/2 items-center rounded-l-md p-6 pr-3 font-semibold no-underline hover:bg-black/[2%] dark:hover:bg-white/[3%]"
+      href="https://sunkz.top/posts/%E8%BA%AB%E4%BB%BD%E8%AE%A4%E8%AF%81/"
+      ><span class="mr-1.5">←</span><span>身份认证</span></a
+    >
+    
+    
+  </nav>
+  
+  
+
+  
+  
+
+  
+  
+
+  
+
+  
+</article>
+
+
+    </main>
+
+    <footer
+  class="opaco mx-auto flex h-[4.5rem] max-w-3xl items-center px-8 text-[0.9em] opacity-60"
+>
+  <div class="mr-auto">
+    &copy; 2024
+    <a class="link" href="https://sunkz.top/">Sunkz</a>
+  </div>
+  <a class="link mx-6" href="https://gohugo.io/" rel="noopener" target="_blank"
+    >Powered by Hugo️️</a
+  >️
+  <a
+    class="link"
+    href="https://github.com/nanxiaobei/hugo-paper"
+    rel="noopener"
+    target="_blank"
+    >✎ Paper</a
+  >
+</footer>
+
+  </body>
+</html>

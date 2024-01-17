@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+    <title>ExcelToJson</title>
+</head>
+<body>
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.6/dist/clipboard.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.5/xlsx.full.min.js"></script>
+<div class="container-fluid col-xl-6 mt-4">
+    <div class="custom-file">
+        <input type="file" class="custom-file-input" id="file" name="file" aria-describedby="upload">
+        <label class="custom-file-label" for="file">选择文件</label>
+    </div>
+    <pre class="border-top mt-3" id="result">
+    </pre>
+</div>
+<script type="application/javascript">
+    const result = document.getElementById("result");
+
+    const clipboardObj = navigator.clipboard;
+    if (clipboardObj) {
+        console.log("clipboardObj");
+        result.addEventListener("click", async function () {
+            await navigator.clipboard.writeText(result.innerHTML)
+            alert("复制成功")
+        });
+    } else {
+        console.log("execCommand");
+        result.addEventListener("click", function () {
+            const range = document.createRange();
+            range.selectNode(result);
+            window.getSelection().addRange(range);
+            document.execCommand("copy");
+            alert("复制成功")
+            window.getSelection().removeAllRanges();
+        });
+    }
+
+    $('input[type="file"]').change(async function (event) {
+        $('.custom-file-label').html(event.target.files[0].name);
+        const file = event.target.files[0];
+        const reader = new FileReader();
+        reader.onload = function (e) {
+            const data = e.target.result;
+            const workbook = XLSX.read(data, {type: 'binary'});
+            const sheetName = workbook.SheetNames[0];
+            const sheet = workbook.Sheets[sheetName];
+            const json = XLSX.utils.sheet_to_json(sheet);
+            result.innerHTML = JSON.stringify(json, null, 4);
+        };
+        reader.readAsBinaryString(file);
+    });
+</script>
+</body>
+</html>
