@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>JsonToExcel</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/xlsx/dist/xlsx.full.min.js"></script>
+</head>
+<body>
+<div class="container-fluid col-xl-12">
+    <div class="row">
+        <div class="col-xl-6 mt-4">
+            <textarea id="jsonSource" rows="25" class="form-control"></textarea>
+        </div>
+        <div class="col-xl-6 mt-4">
+            <textarea id="jsonTarget" rows="25" class="form-control"></textarea>
+        </div>
+    </div>
+    <div class="input-group mt-4">
+        <textarea id="fields" rows="1" class="form-control"></textarea>
+        <div class="input-group-append">
+            <button class="btn btn-outline-secondary" type="button" onclick="jsonExtract()">提取</button>
+        </div>
+    </div>
+</div>
+<script>
+    function jsonExtract() {
+        var jsonStr = $("#jsonSource").val();
+        var fieldsStr = $("#fields").val();
+
+        var jsonData = JSON.parse(jsonStr);
+        var fields = fieldsStr.split(",");
+        var resultArr = [];
+        for (var i = 0; i < jsonData.length; i++) {
+            var item = jsonData[i];
+            var newJson = {};
+            for (var j = 0; j < fields.length; j++) {
+                var field = fields[j];
+                newJson[field] = item[field];
+            }
+            resultArr.push(newJson);
+        }
+        var resultStr = JSON.stringify(resultArr, null, 2);
+        $("#jsonTarget").val(resultStr);
+    }
+</script>
+</body>
+</html>
