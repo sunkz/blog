@@ -29,11 +29,8 @@
 </div>
 <script>
     function jsonExtract() {
-        var jsonStr = $("#jsonSource").val();
-        var fieldsStr = $("#fields").val().replace(/, /g, ",");
-
-        var jsonData = JSON.parse(jsonStr);
-        var fields = fieldsStr.split(",");
+        var jsonData = JSON.parse($("#jsonSource").val());
+        var fields = $("#fields").val().replace(/, /g, ",").split(",");
         var resultArr = [];
         for (var i = 0; i < jsonData.length; i++) {
             var item = jsonData[i];
