@@ -30,7 +30,7 @@
 <script>
     function jsonExtract() {
         var jsonStr = $("#jsonSource").val();
-        var fieldsStr = $("#fields").val();
+        var fieldsStr = $("#fields").val().replace(/, /g, ",");
 
         var jsonData = JSON.parse(jsonStr);
         var fields = fieldsStr.split(",");
