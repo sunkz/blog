@@ -11,14 +11,14 @@ publishdir = 'docs'
     url = "/"
     weight = 10
   [[menu.main]]
-    identifier = "关于我"
-    name = "关于我"
-    url = "/about/"
-    weight = 10
-  [[menu.main]]
     identifier = "工具集"
     name = "工具集"
     url = "/tools/"
+    weight = 10
+  [[menu.main]]
+    identifier = "关于我"
+    name = "关于我"
+    url = "/about/"
     weight = 10
 
 [params]
