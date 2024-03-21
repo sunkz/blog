@@ -6,6 +6,11 @@ publishdir = 'docs'
 
 [menu]
   [[menu.main]]
+    identifier = "主页"
+    name = "主页"
+    url = "/"
+    weight = 10
+  [[menu.main]]
     identifier = "工具集"
     name = "工具集"
     url = "/tools/"
