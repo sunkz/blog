@@ -1,5 +1,9 @@
 #! /bin/bash
 
+cd docs
+rm -rf *
+cd ..
+
 hugo
 
 git add .
