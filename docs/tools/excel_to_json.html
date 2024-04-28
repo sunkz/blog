@@ -52,6 +52,11 @@
             const sheetName = workbook.SheetNames[0];
             const sheet = workbook.Sheets[sheetName];
             const json = XLSX.utils.sheet_to_json(sheet);
+            if (json.length > 0 && Object.keys(json[0]).length === 1) {
+                json.forEach(function (item, index) {
+                    json[index] = item[Object.keys(item)[0]];
+                });
+            }
             result.innerHTML = JSON.stringify(json, null, 4);
         };
         reader.readAsBinaryString(file);
