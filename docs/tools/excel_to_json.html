@@ -51,11 +51,13 @@
             const workbook = XLSX.read(data, {type: 'binary'});
             const sheetName = workbook.SheetNames[0];
             const sheet = workbook.Sheets[sheetName];
-            const json = XLSX.utils.sheet_to_json(sheet);
-            if (json.length > 0 && Object.keys(json[0]).length === 1) {
+            let json = XLSX.utils.sheet_to_json(sheet);
+            if (json.length > 0 && Object.keys(json[0]).length === 1 && !isNaN(Object.keys(json[0])[0])) {
+                const colKey = Object.keys(json[0])[0];
                 json.forEach(function (item, index) {
                     json[index] = item[Object.keys(item)[0]];
                 });
+                json.unshift(parseInt(colKey));
             }
             result.innerHTML = JSON.stringify(json, null, 4);
         };
