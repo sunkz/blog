@@ -20,18 +20,19 @@
 
         function exportExcel() {
             const json = document.getElementById("json").value;
+            if (!json.startsWith("[")) {
+                alert("不是 JSON 数组");
+                return;
+            }
             let data = JSON.parse(json);
             let isEleArray = false;
-            if (json.startsWith("[")) {
-                let jsonArray = JSON.parse(json);
-                if (jsonArray.length > 0 && typeof jsonArray[0] !== "object") {
-                    let newJsonArray = [];
-                    for (let i = 0; i < jsonArray.length; i++) {
-                        newJsonArray.push({"key": jsonArray[i]});
-                    }
-                    data = newJsonArray;
-                    isEleArray = true;
+            if (data.length > 0 && typeof data[0] !== "object") {
+                let newJsonArray = [];
+                for (let i = 0; i < data.length; i++) {
+                    newJsonArray.push({"key": data[i]});
                 }
+                data = newJsonArray;
+                isEleArray = true;
             }
             const ws = isEleArray ? XLSX.utils.json_to_sheet(data, {skipHeader: true}) : XLSX.utils.json_to_sheet(data);
             const wb = XLSX.utils.book_new();
@@ -43,7 +44,7 @@
 </head>
 <body>
 <div class="container-fluid col-xl-6 mt-4">
-    <textarea id="json" rows="20" class="form-control" placeholder="请输入Json对象数组"></textarea>
+    <textarea id="json" rows="25" class="form-control" placeholder="请输入 JSON 对象数组"></textarea>
     <button type="button" class="btn btn-outline-dark btn-block mt-4" onclick="exportExcel()">JsonToExcel</button>
 </div>
 </body>
