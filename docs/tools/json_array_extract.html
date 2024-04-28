@@ -29,19 +29,19 @@
 </div>
 <script>
     function jsonExtract() {
-        var jsonData = JSON.parse($("#jsonSource").val());
-        var fields = $("#fields").val().replace(/, /g, ",").split(",");
-        var resultArr = [];
-        for (var i = 0; i < jsonData.length; i++) {
-            var item = jsonData[i];
-            var newJson = {};
-            for (var j = 0; j < fields.length; j++) {
-                var field = fields[j];
+        const jsonData = JSON.parse($("#jsonSource").val());
+        const fields = $("#fields").val().replace(/, /g, ",").split(",");
+        const resultArr = [];
+        for (let i = 0; i < jsonData.length; i++) {
+            const item = jsonData[i];
+            const newJson = {};
+            for (let j = 0; j < fields.length; j++) {
+                const field = fields[j];
                 newJson[field] = item[field];
             }
             resultArr.push(newJson);
         }
-        var resultStr = JSON.stringify(resultArr, null, 2);
+        const resultStr = JSON.stringify(resultArr, null, 2);
         $("#jsonTarget").val(resultStr);
     }
 </script>

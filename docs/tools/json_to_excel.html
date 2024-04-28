@@ -12,19 +12,30 @@
     <script src="https://cdn.jsdelivr.net/npm/file-saver@2.0.5/dist/FileSaver.min.js"></script>
     <script>
         function s2ab(s) {
-            var buf = new ArrayBuffer(s.length);
-            var view = new Uint8Array(buf);
-            for (var i=0; i<s.length; i++) view[i] = s.charCodeAt(i) & 0xFF;
+            const buf = new ArrayBuffer(s.length);
+            const view = new Uint8Array(buf);
+            for (let i = 0; i < s.length; i++) view[i] = s.charCodeAt(i) & 0xFF;
             return buf;
         }
 
         function exportExcel() {
-            var data = JSON.parse(document.getElementById("json").value);
-            var ws = XLSX.utils.json_to_sheet(data);
-            var wb = XLSX.utils.book_new();
+            const json = document.getElementById("json").value;
+            let data = JSON.parse(json);
+            if (json.startsWith("[")) {
+                let jsonArray = JSON.parse(json);
+                if (jsonArray.length > 0 && typeof jsonArray[0] !== "object") {
+                    let newJsonArray = [];
+                    for (let i = 0; i < jsonArray.length; i++) {
+                        newJsonArray.push({"key": jsonArray[i]});
+                    }
+                    data = newJsonArray;
+                }
+            }
+            const ws = XLSX.utils.json_to_sheet(data);
+            const wb = XLSX.utils.book_new();
             XLSX.utils.book_append_sheet(wb, ws, "Sheet1");
-            var wbout = XLSX.write(wb, {bookType:'xlsx', type:'binary'});
-            saveAs(new Blob([s2ab(wbout)],{type:"application/octet-stream"}), 'output.xlsx');
+            const wbout = XLSX.write(wb, {bookType: 'xlsx', type: 'binary'});
+            saveAs(new Blob([s2ab(wbout)], {type: "application/octet-stream"}), 'output.xlsx');
         }
     </script>
 </head>
