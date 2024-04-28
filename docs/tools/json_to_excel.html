@@ -21,6 +21,7 @@
         function exportExcel() {
             const json = document.getElementById("json").value;
             let data = JSON.parse(json);
+            let isEleArray = false;
             if (json.startsWith("[")) {
                 let jsonArray = JSON.parse(json);
                 if (jsonArray.length > 0 && typeof jsonArray[0] !== "object") {
@@ -29,9 +30,10 @@
                         newJsonArray.push({"key": jsonArray[i]});
                     }
                     data = newJsonArray;
+                    isEleArray = true;
                 }
             }
-            const ws = XLSX.utils.json_to_sheet(data);
+            const ws = isEleArray ? XLSX.utils.json_to_sheet(data, {skipHeader: true}) : XLSX.utils.json_to_sheet(data);
             const wb = XLSX.utils.book_new();
             XLSX.utils.book_append_sheet(wb, ws, "Sheet1");
             const wbout = XLSX.write(wb, {bookType: 'xlsx', type: 'binary'});
