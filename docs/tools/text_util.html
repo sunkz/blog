@@ -11,7 +11,7 @@
     <script src="https://cdn.jsdelivr.net/npm/xlsx/dist/xlsx.full.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/file-saver@2.0.5/dist/FileSaver.min.js"></script>
     <script>
-        document.getElementById('text').addEventListener('lengthCount', convertData);
+        document.getElementById('lengthCount').addEventListener('input', convertData);
 
         function toUpperCase() {
             document.getElementById("text").value = document.getElementById("text").value.toUpperCase();
