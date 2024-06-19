@@ -14,37 +14,65 @@
         document.getElementById('lengthCount').addEventListener('input', convertData);
 
         function toUpperCase() {
-            document.getElementById("text").value = document.getElementById("text").value.toUpperCase();
+            document.getElementById("target").value = document.getElementById("source").value.toUpperCase();
             convertData();
         }
+
         function toLowerCase() {
-            document.getElementById("text").value = document.getElementById("text").value.toLowerCase();
+            document.getElementById("target").value = document.getElementById("source").value.toLowerCase();
             convertData();
         }
+
         function toCamelCase() {
-            document.getElementById("text").value = document.getElementById("text").value.replace(/(_\w)/g, function (m) {
+            document.getElementById("target").value = document.getElementById("source").value.replace(/(_\w)/g, function (m) {
                 return m[1].toUpperCase();
             });
             convertData();
         }
+
         function toSnakeCase() {
-            document.getElementById("text").value = document.getElementById("text").value.replace(/[A-Z]/g, (match) => `_${match.toLowerCase()}`);
+            document.getElementById("target").value = document.getElementById("source").value.replace(/[A-Z]/g, (match) => `_${match.toLowerCase()}`);
+            convertData();
+        }
+
+        function base64Encode() {
+            document.getElementById("target").value = btoa(document.getElementById("source").value);
+            convertData();
+        }
+
+        function base64Decode() {
+            document.getElementById("target").value = atob(document.getElementById("source").value);
+            convertData();
+        }
+
+        function urlEncode() {
+            document.getElementById("target").value = encodeURIComponent(document.getElementById("source").value);
+            convertData();
+        }
+
+        function urlDecode() {
+            document.getElementById("target").value = decodeURIComponent(document.getElementById("source").value);
             convertData();
         }
 
         function convertData() {
-            document.getElementById('lengthCount').innerHTML = 'length:' + document.getElementById("text").value.length;
+            document.getElementById('lengthCount').innerHTML = 'length:' + document.getElementById("source").value.length;
         }
     </script>
 </head>
 <body>
 <div class="container-fluid col-xl-6 mt-4">
-    <textarea id="text" rows="20" class="form-control" placeholder="请输入文本"></textarea>
+    <textarea id="source" rows="10" class="form-control" placeholder="请输入文本"></textarea>
+    <textarea id="target" rows="20" class="form-control" placeholder="请输入文本"></textarea>
     <div class="btn-group mt-2" role="group" aria-label="Basic example">
         <button type="button" class="btn btn-outline-dark" onclick="toUpperCase()">转大写</button>
         <button type="button" class="btn btn-outline-dark" onclick="toLowerCase()">转小写</button>
         <button type="button" class="btn btn-outline-dark" onclick="toCamelCase()">转驼峰</button>
         <button type="button" class="btn btn-outline-dark" onclick="toSnakeCase()">转下划线</button>
+        <button type="button" class="btn btn-outline-dark" onclick="base64Encode()">Base64编码</button>
+        <button type="button" class="btn btn-outline-dark" onclick="base64Decode()">Base64解码</button>
+        <button type="button" class="btn btn-outline-dark" onclick="urlEncode()">url编码</button>
+        <button type="button" class="btn btn-outline-dark" onclick="urlDecode()">url解码</button>
         <button type="button" class="btn btn-outline-secondary disabled" id="lengthCount">length:0</button>
     </div>
 </div>
