@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>JsonToExcel</title>
+    <title>JsonFoldUnFold</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"></script>
@@ -11,20 +11,22 @@
     <script src="https://cdn.jsdelivr.net/npm/xlsx/dist/xlsx.full.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/file-saver@2.0.5/dist/FileSaver.min.js"></script>
     <script>
-        function toUpperCase() {
-            document.getElementById("text").value = document.getElementById("text").value.toUpperCase();
+        function jsonUnfold() {
+            let data = JSON.parse(document.getElementById("json").value);
+            document.getElementById("json").value = JSON.stringify(data, null, 4);
         }
-        function toLowerCase() {
-            document.getElementById("text").value = document.getElementById("text").value.toLowerCase();
+        function jsonFold() {
+            let data = JSON.parse(document.getElementById("json").value);
+            document.getElementById("json").value = JSON.stringify(data, null, 0);
         }
     </script>
 </head>
 <body>
 <div class="container-fluid col-xl-6 mt-4">
-    <textarea id="text" rows="10" class="form-control" placeholder="请输入文本"></textarea>
+    <textarea id="json" rows="25" class="form-control" placeholder="请输入 JSON"></textarea>
     <div class="btn-group mt-2" role="group" aria-label="Basic example">
-        <button type="button" class="btn btn-outline-dark" onclick="toUpperCase()">转大写</button>
-        <button type="button" class="btn btn-outline-dark" onclick="toLowerCase()">转小写</button>
+        <button type="button" class="btn btn-outline-dark" onclick="jsonUnfold()">展开</button>
+        <button type="button" class="btn btn-outline-dark" onclick="jsonFold()">压缩</button>
     </div>
 </div>
 </body>
