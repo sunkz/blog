@@ -17,6 +17,14 @@
         function toLowerCase() {
             document.getElementById("text").value = document.getElementById("text").value.toLowerCase();
         }
+        function toCamelCase() {
+            document.getElementById("text").value = document.getElementById("text").value.replace(/(_\w)/g, function (m) {
+                return m[1].toUpperCase();
+            });
+        }
+        function toSnakeCase() {
+            document.getElementById("text").value = document.getElementById("text").value.replace(/[A-Z]/g, (match) => `_${match.toLowerCase()}`);
+        }
     </script>
 </head>
 <body>
@@ -25,6 +33,8 @@
     <div class="btn-group mt-2" role="group" aria-label="Basic example">
         <button type="button" class="btn btn-outline-dark" onclick="toUpperCase()">转大写</button>
         <button type="button" class="btn btn-outline-dark" onclick="toLowerCase()">转小写</button>
+        <button type="button" class="btn btn-outline-dark" onclick="toCamelCase()">转驼峰</button>
+        <button type="button" class="btn btn-outline-dark" onclick="toSnakeCase()">转驼峰</button>
     </div>
 </div>
 </body>
