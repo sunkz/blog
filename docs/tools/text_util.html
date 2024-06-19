@@ -8,99 +8,8 @@
     <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
-    <script>
-
-        function length() {
-            document.getElementById("target").value = document.getElementById("source").value.length;
-        }
-
-        function reverse() {
-            document.getElementById("target").value = document.getElementById("source").value.split('').reverse().join('');
-        }
-
-        function toUpperCase() {
-            document.getElementById("target").value = document.getElementById("source").value.toUpperCase();
-        }
-
-        function toLowerCase() {
-            document.getElementById("target").value = document.getElementById("source").value.toLowerCase();
-        }
-
-        function toCamelCase() {
-            document.getElementById("target").value = document.getElementById("source").value.replace(/(_\w)/g, function (m) {
-                return m[1].toUpperCase();
-            });
-        }
-
-        function toSnakeCase() {
-            document.getElementById("target").value = document.getElementById("source").value.replace(/[A-Z]/g, (match) => `_${match.toLowerCase()}`);
-        }
-
-        function base64Encode() {
-            document.getElementById("target").value = btoa(document.getElementById("source").value);
-        }
-
-        function base64Decode() {
-            document.getElementById("target").value = atob(document.getElementById("source").value);
-        }
-
-        function urlEncode() {
-            document.getElementById("target").value = encodeURIComponent(document.getElementById("source").value);
-        }
-
-        function urlDecode() {
-            document.getElementById("target").value = decodeURIComponent(document.getElementById("source").value);
-        }
-
-        function toTimestamp() {
-            let dateString = document.getElementById("source").value;
-            dateString = dateString.replace(/[\u4e00-\u9fa5]/g, '-');
-            dateString = dateString.replace(/\//g, '-');
-            dateString = dateString.trim().replace(/\s+/g, ' ');
-
-            const formats = [
-                /^\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}$/, // 2024-06-19 19:02:51
-                /^\d{4}-\d{2}-\d{2}$/, // 2024-06-19
-                /^\d{4}\/\d{2}\/\d{2}$/, // 2024/06/19
-                /^\d{4}年\d{2}月\d{2}日$/, // 2024年06月19日
-                /^\d{8}$/ // 20240619
-            ];
-
-            let parsedDate;
-
-            for (const format of formats) {
-                if (format.test(dateString)) {
-                    parsedDate = new Date(dateString);
-                    break;
-                }
-            }
-
-            if (!parsedDate || isNaN(parsedDate.getTime())) {
-                throw new Error('Invalid date format');
-            }
-
-            document.getElementById("target").value = Math.floor(parsedDate.getTime() / 1000);
-        }
-
-        function toDate() {
-            let timestamp = document.getElementById("source").value;
-            const timestampInMilliseconds = timestamp < 10000000000 ? timestamp * 1000 : timestamp;
-            alert(timestampInMilliseconds)
-            const date = new Date(timestampInMilliseconds);
-            const year = date.getFullYear();
-            const month = String(date.getMonth() + 1).padStart(2, '0');
-            const day = String(date.getDate()).padStart(2, '0');
-            const hours = String(date.getHours()).padStart(2, '0');
-            const minutes = String(date.getMinutes()).padStart(2, '0');
-            const seconds = String(date.getSeconds()).padStart(2, '0');
-
-            document.getElementById("target").value = `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
-        }
-
-        function calculator() {
-            document.getElementById("target").value = eval(document.getElementById("source").value);
-        }
-    </script>
+    <script src="https://cdn.jsdelivr.net/npm/xlsx/dist/xlsx.full.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/file-saver@2.0.5/dist/FileSaver.min.js"></script>
 </head>
 <body>
 <div class="container-fluid col-xl-6 mt-4">
@@ -135,6 +44,178 @@
         <button type="button" class="btn btn-outline-dark" onclick="toTimestamp()">转时间戳</button>
         <button type="button" class="btn btn-outline-dark" onclick="toDate()">转日期</button>
     </div>
+    <div class="input-group mt-2">
+        <div class="input-group-append">
+            <button type="button" class="btn btn-outline-dark" onclick="jsonFold()">Json压缩</button>
+            <button type="button" class="btn btn-outline-dark" onclick="jsonUnfold()">Json展开</button>
+        </div>
+        <div class="input-group-append">
+            <button type="button" class="btn btn-outline-dark" onclick="jsonToExcel()">Json转Excel</button>
+        </div>
+        <div class="custom-file">
+            <input type="file" class="custom-file-input" id="file" name="file" aria-describedby="upload">
+            <label class="custom-file-label" for="file" data-browse="Excel转Json" id="fileLabel">选择Excel文件</label>
+        </div>
+    </div>
 </div>
+<script>
+    function length() {
+        document.getElementById("target").value = document.getElementById("source").value.length;
+    }
+
+    function reverse() {
+        document.getElementById("target").value = document.getElementById("source").value.split('').reverse().join('');
+    }
+
+    function toUpperCase() {
+        document.getElementById("target").value = document.getElementById("source").value.toUpperCase();
+    }
+
+    function toLowerCase() {
+        document.getElementById("target").value = document.getElementById("source").value.toLowerCase();
+    }
+
+    function toCamelCase() {
+        document.getElementById("target").value = document.getElementById("source").value.replace(/(_\w)/g, function (m) {
+            return m[1].toUpperCase();
+        });
+    }
+
+    function toSnakeCase() {
+        document.getElementById("target").value = document.getElementById("source").value.replace(/[A-Z]/g, (match) => `_${match.toLowerCase()}`);
+    }
+
+    function base64Encode() {
+        document.getElementById("target").value = btoa(document.getElementById("source").value);
+    }
+
+    function base64Decode() {
+        document.getElementById("target").value = atob(document.getElementById("source").value);
+    }
+
+    function urlEncode() {
+        document.getElementById("target").value = encodeURIComponent(document.getElementById("source").value);
+    }
+
+    function urlDecode() {
+        document.getElementById("target").value = decodeURIComponent(document.getElementById("source").value);
+    }
+
+    function toTimestamp() {
+        let dateString = document.getElementById("source").value;
+        dateString = dateString.replace(/[\u4e00-\u9fa5]/g, '-');
+        dateString = dateString.replace(/\//g, '-');
+        dateString = dateString.trim().replace(/\s+/g, ' ');
+
+        const formats = [
+            /^\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}$/, // 2024-06-19 19:02:51
+            /^\d{4}-\d{2}-\d{2}$/, // 2024-06-19
+            /^\d{4}\/\d{2}\/\d{2}$/, // 2024/06/19
+            /^\d{4}年\d{2}月\d{2}日$/, // 2024年06月19日
+            /^\d{8}$/ // 20240619
+        ];
+
+        let parsedDate;
+
+        for (const format of formats) {
+            if (format.test(dateString)) {
+                parsedDate = new Date(dateString);
+                break;
+            }
+        }
+
+        if (!parsedDate || isNaN(parsedDate.getTime())) {
+            throw new Error('Invalid date format');
+        }
+
+        document.getElementById("target").value = Math.floor(parsedDate.getTime() / 1000);
+    }
+
+    function toDate() {
+        let timestamp = document.getElementById("source").value;
+        const timestampInMilliseconds = timestamp < 10000000000 ? timestamp * 1000 : timestamp;
+        alert(timestampInMilliseconds)
+        const date = new Date(timestampInMilliseconds);
+        const year = date.getFullYear();
+        const month = String(date.getMonth() + 1).padStart(2, '0');
+        const day = String(date.getDate()).padStart(2, '0');
+        const hours = String(date.getHours()).padStart(2, '0');
+        const minutes = String(date.getMinutes()).padStart(2, '0');
+        const seconds = String(date.getSeconds()).padStart(2, '0');
+
+        document.getElementById("target").value = `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
+    }
+
+    function calculator() {
+        document.getElementById("target").value = eval(document.getElementById("source").value);
+    }
+
+    function jsonUnfold() {
+        let data = JSON.parse(document.getElementById("source").value);
+        document.getElementById("target").value = JSON.stringify(data, null, 4);
+    }
+
+    function jsonFold() {
+        let data = JSON.parse(document.getElementById("source").value);
+        document.getElementById("target").value = JSON.stringify(data, null, 0);
+    }
+
+    function s2ab(s) {
+        const buf = new ArrayBuffer(s.length);
+        const view = new Uint8Array(buf);
+        for (let i = 0; i < s.length; i++) view[i] = s.charCodeAt(i) & 0xFF;
+        return buf;
+    }
+
+    function jsonToExcel() {
+        const json = document.getElementById("source").value;
+        if (!json.startsWith("[")) {
+            alert("不是 JSON 数组");
+            return;
+        }
+        let data = JSON.parse(json);
+        let isEleArray = false;
+        if (data.length > 0 && typeof data[0] !== "object") {
+            let newJsonArray = [];
+            for (let i = 0; i < data.length; i++) {
+                newJsonArray.push({"key": data[i]});
+            }
+            data = newJsonArray;
+            isEleArray = true;
+        }
+        const ws = isEleArray ? XLSX.utils.json_to_sheet(data, {skipHeader: true}) : XLSX.utils.json_to_sheet(data);
+        const wb = XLSX.utils.book_new();
+        XLSX.utils.book_append_sheet(wb, ws, "Sheet1");
+        const wbout = XLSX.write(wb, {bookType: 'xlsx', type: 'binary'});
+        saveAs(new Blob([s2ab(wbout)], {type: "application/octet-stream"}), 'output.xlsx');
+    }
+
+    document.getElementById("file").addEventListener("change", handleFileChange);
+    function handleFileChange(event) {
+        document.getElementById("fileLabel").innerHTML = event.target.files[0].name;
+        const file = event.target.files[0];
+        const reader = new FileReader();
+        reader.onload = function (e) {
+            const data = e.target.result;
+            const workbook = XLSX.read(data, {type: 'binary'});
+            const sheetName = workbook.SheetNames[0];
+            const sheet = workbook.Sheets[sheetName];
+            let json = XLSX.utils.sheet_to_json(sheet);
+            if (json.length > 0 && Object.keys(json[0]).length === 1) {
+                const colKey = Object.keys(json[0])[0];
+                json.forEach(function (item, index) {
+                    json[index] = item[Object.keys(item)[0]];
+                });
+                if (!isNaN(colKey)) {
+                    json.unshift(parseInt(colKey));
+                } else {
+                    json.unshift(colKey);
+                }
+            }
+            document.getElementById("source").innerHTML = JSON.stringify(json, null, 4);
+        };
+        reader.readAsArrayBuffer(file);
+    }
+</script>
 </body>
 </html>
