@@ -63,17 +63,19 @@
 <body>
 <div class="container-fluid col-xl-6 mt-4">
     <textarea id="source" rows="10" class="form-control" placeholder="请输入文本"></textarea>
-    <textarea id="target" rows="20" class="form-control" placeholder="请输入文本"></textarea>
+    <textarea id="target" rows="10" class="form-control" placeholder="请输入文本"></textarea>
     <div class="btn-group mt-2" role="group" aria-label="Basic example">
         <button type="button" class="btn btn-outline-dark" onclick="toUpperCase()">转大写</button>
         <button type="button" class="btn btn-outline-dark" onclick="toLowerCase()">转小写</button>
         <button type="button" class="btn btn-outline-dark" onclick="toCamelCase()">转驼峰</button>
         <button type="button" class="btn btn-outline-dark" onclick="toSnakeCase()">转下划线</button>
+        <button type="button" class="btn btn-outline-secondary disabled" id="lengthCount">length:0</button>
+    </div>
+    <div class="btn-group mt-2" role="group" aria-label="Basic example">
         <button type="button" class="btn btn-outline-dark" onclick="base64Encode()">Base64编码</button>
         <button type="button" class="btn btn-outline-dark" onclick="base64Decode()">Base64解码</button>
         <button type="button" class="btn btn-outline-dark" onclick="urlEncode()">url编码</button>
         <button type="button" class="btn btn-outline-dark" onclick="urlDecode()">url解码</button>
-        <button type="button" class="btn btn-outline-secondary disabled" id="lengthCount">length:0</button>
     </div>
 </div>
 </body>
