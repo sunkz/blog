@@ -11,6 +11,8 @@
     <script src="https://cdn.jsdelivr.net/npm/xlsx/dist/xlsx.full.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/file-saver@2.0.5/dist/FileSaver.min.js"></script>
     <script>
+        document.getElementById('text').addEventListener('lengthCount', convertData);
+
         function toUpperCase() {
             document.getElementById("text").value = document.getElementById("text").value.toUpperCase();
         }
@@ -25,6 +27,10 @@
         function toSnakeCase() {
             document.getElementById("text").value = document.getElementById("text").value.replace(/[A-Z]/g, (match) => `_${match.toLowerCase()}`);
         }
+
+        function convertData() {
+            document.getElementById('lengthCount').innerHTML = 'length:' + lines.length;
+        }
     </script>
 </head>
 <body>
@@ -35,6 +41,7 @@
         <button type="button" class="btn btn-outline-dark" onclick="toLowerCase()">转小写</button>
         <button type="button" class="btn btn-outline-dark" onclick="toCamelCase()">转驼峰</button>
         <button type="button" class="btn btn-outline-dark" onclick="toSnakeCase()">转下划线</button>
+        <button type="button" class="btn btn-outline-secondary disabled" id="lengthCount">length:0</button>
     </div>
 </div>
 </body>
