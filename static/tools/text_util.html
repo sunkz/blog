@@ -15,21 +15,25 @@
 
         function toUpperCase() {
             document.getElementById("text").value = document.getElementById("text").value.toUpperCase();
+            convertData();
         }
         function toLowerCase() {
             document.getElementById("text").value = document.getElementById("text").value.toLowerCase();
+            convertData();
         }
         function toCamelCase() {
             document.getElementById("text").value = document.getElementById("text").value.replace(/(_\w)/g, function (m) {
                 return m[1].toUpperCase();
             });
+            convertData();
         }
         function toSnakeCase() {
             document.getElementById("text").value = document.getElementById("text").value.replace(/[A-Z]/g, (match) => `_${match.toLowerCase()}`);
+            convertData();
         }
 
         function convertData() {
-            document.getElementById('lengthCount').innerHTML = 'length:' + lines.length;
+            document.getElementById('lengthCount').innerHTML = 'length:' + document.getElementById("text").value.length;
         }
     </script>
 </head>
