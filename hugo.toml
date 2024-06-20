@@ -6,7 +6,7 @@ publishdir = 'docs'
 
 [services]
   [services.googleAnalytics]
-    ID = 'G-Y5BQC1B009'
+    ID = 'G-4GYBL72NP'
 
 [menu]
   [[menu.main]]
