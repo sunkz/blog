@@ -4,6 +4,10 @@ title = 'Sunkz'
 theme = 'paper'
 publishdir = 'docs'
 
+[services]
+  [services.googleAnalytics]
+    ID = 'G-Y5BQC1B009'
+
 [menu]
   [[menu.main]]
     identifier = "主页"
