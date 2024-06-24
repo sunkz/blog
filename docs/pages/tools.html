@@ -229,7 +229,6 @@
     function toDate() {
         let timestamp = document.getElementById("source").value;
         const timestampInMilliseconds = timestamp < 10000000000 ? timestamp * 1000 : timestamp;
-        alert(timestampInMilliseconds)
         const date = new Date(timestampInMilliseconds);
         const year = date.getFullYear();
         const month = String(date.getMonth() + 1).padStart(2, '0');
