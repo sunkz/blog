@@ -258,14 +258,21 @@
         const jsonData = JSON.parse(document.getElementById("source").value);
         const fields = document.getElementById("fields").value.replace(/, /g, ",").split(",");
         const resultArr = [];
-        for (let i = 0; i < jsonData.length; i++) {
-            const item = jsonData[i];
-            const newJson = {};
-            for (let j = 0; j < fields.length; j++) {
-                const field = fields[j];
-                newJson[field] = item[field];
+        if (fields.length === 1) {
+            for (let i = 0; i < jsonData.length; i++) {
+                const item = jsonData[i];
+                resultArr.push(item[fields[0]]);
             }
-            resultArr.push(newJson);
+        } else {
+            for (let i = 0; i < jsonData.length; i++) {
+                const item = jsonData[i];
+                const newJson = {};
+                for (let j = 0; j < fields.length; j++) {
+                    const field = fields[j];
+                    newJson[field] = item[field];
+                }
+                resultArr.push(newJson);
+            }
         }
         document.getElementById("target").value = JSON.stringify(resultArr, null, 4);
     }
