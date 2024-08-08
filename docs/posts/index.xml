@@ -16,13 +16,6 @@
       <description>准备工作 Github Dockerhub Server (没有服务器的话,本机使用内网穿透也可以) 整体流程 具体步骤 code 创建springboot工程提供一个接口, 并编写 dockerfile&#xA;/** * hello 接口 */ @GetMapping(&amp;#34;/hello&amp;#34;) public String hello(){ return &amp;#34;hello&amp;#34;; } FROM openjdk:11 WORKDIR /workspace/app COPY mvnw . COPY .mvn .mvn COPY pom.xml . COPY src src RUN ./mvnw package -DskipTests ENTRYPOINT [&amp;#34;java&amp;#34;,&amp;#34;-jar&amp;#34;,&amp;#34;target/hello-0.0.1-SNAPSHOT.jar&amp;#34;] Github 创建hello repository&#xA;Dockerhub 创建hello repository并关联上Github的hello repository&#xA;hook 编写hook服务,当 dockerhub hello image 更新时,会触发该hook&#xA;/** * hook在server上运行,当Dockerhub中hello image有变动, * 将触发该接口,该接口将会执行auto_deploy脚本 */ @GetMapping(&amp;#34;/hook&amp;#34;) public void hook(){ Runtime.getRuntime().exec(&amp;#34;/root/code/auto_deploy.sh&amp;#34;); } #!</description>
     </item>
     <item>
-      <title>身份认证</title>
-      <link>https://sunkz.top/posts/%E8%BA%AB%E4%BB%BD%E8%AE%A4%E8%AF%81/</link>
-      <pubDate>Sun, 18 Nov 2018 15:11:00 -0800</pubDate>
-      <guid>https://sunkz.top/posts/%E8%BA%AB%E4%BB%BD%E8%AE%A4%E8%AF%81/</guid>
-      <description>Cookie - Standalone Cookie - Cluster Auth Server + Token Auth Server + Gateway + Token Auth Server + Gateway + JWT </description>
-    </item>
-    <item>
       <title>基于Github搭建Maven私服</title>
       <link>https://sunkz.top/posts/%E5%9F%BA%E4%BA%8Egithub%E6%90%AD%E5%BB%BAmaven%E7%A7%81%E6%9C%8D/</link>
       <pubDate>Thu, 12 Jul 2018 12:28:29 -0800</pubDate>
