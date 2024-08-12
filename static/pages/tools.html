@@ -73,24 +73,18 @@
     </div>
     <div class="input-group mt-2">
         <div class="btn-group">
-            <button type="button" class="btn btn-outline-dark" onclick="jsonFold()">Json压缩</button>
-            <button type="button" class="btn btn-outline-dark" onclick="jsonUnfold()">Json展开</button>
+            <button type="button" class="btn btn-secondary disabled">JSON</button>
+            <button type="button" class="btn btn-outline-dark" onclick="jsonFold()">压缩</button>
+            <button type="button" class="btn btn-outline-dark" onclick="jsonUnfold()">展开</button>
+            <button type="button" class="btn btn-outline-dark" onclick="jsonToExcel()">转EXCEL</button>
         </div>
-        <textarea id="fields" rows="1" class="form-control"
-                  placeholder="请输入要提取的字段名  多个字段名,隔开"></textarea>
-        <div class="input-group-append">
-            <button class="btn btn-outline-dark" type="button" onclick="jsonExtract()">Json数组字段提取</button>
-        </div>
-    </div>
-    <div class="input-group mt-2">
-        <div class="btn-group">
-            <button type="button" class="btn btn-outline-dark" onclick="jsonToExcel()">Json数组转Excel</button>
-        </div>
+
         <div class="custom-file">
             <input type="file" class="custom-file-input" id="file" name="file" aria-describedby="upload">
-            <label class="custom-file-label" for="file" data-browse="Excel转Json" id="fileLabel">请选择Excel文件</label>
+            <label class="custom-file-label" for="file" data-browse="EXCEL转JSON" id="fileLabel">请选择EXCEL文件</label>
         </div>
     </div>
+
 </div>
 <script>
     function overwrite() {
@@ -252,29 +246,6 @@
     function jsonFold() {
         let data = JSON.parse(document.getElementById("source").value);
         document.getElementById("target").value = JSON.stringify(data, null, 0);
-    }
-
-    function jsonExtract() {
-        const jsonData = JSON.parse(document.getElementById("source").value);
-        const fields = document.getElementById("fields").value.replace(/, /g, ",").split(",");
-        const resultArr = [];
-        if (fields.length === 1) {
-            for (let i = 0; i < jsonData.length; i++) {
-                const item = jsonData[i];
-                resultArr.push(item[fields[0]]);
-            }
-        } else {
-            for (let i = 0; i < jsonData.length; i++) {
-                const item = jsonData[i];
-                const newJson = {};
-                for (let j = 0; j < fields.length; j++) {
-                    const field = fields[j];
-                    newJson[field] = item[field];
-                }
-                resultArr.push(newJson);
-            }
-        }
-        document.getElementById("target").value = JSON.stringify(resultArr, null, 4);
     }
 
     function s2ab(s) {
