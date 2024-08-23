@@ -307,7 +307,7 @@
                     json.unshift(colKey);
                 }
             }
-            document.getElementById("source").innerHTML = JSON.stringify(json, null, 4);
+            document.getElementById("source").value = JSON.stringify(json, null, 4);
         };
         reader.readAsArrayBuffer(file);
     }
