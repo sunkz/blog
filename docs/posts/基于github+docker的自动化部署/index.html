@@ -114,15 +114,20 @@ hook 编写hook服务,当 dockerhub hello image 更新时,会触发该hook
   
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-4GYBL72NPJ"></script>
 <script>
-var doNotTrack = false;
-if (!doNotTrack) {
-	window.dataLayer = window.dataLayer || [];
-	function gtag(){dataLayer.push(arguments);}
-	gtag('js', new Date());
-	gtag('config', 'G-4GYBL72NPJ', { 'anonymize_ip': false });
-}
-</script>
+    var _hmt = _hmt || [];
+    (function() {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?f26145ce1f38dde09427d3600b57a66d";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+    })();
 
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-4GYBL72NPJ');
+</script>
   
   <meta itemprop="name" content="基于Github&#43;Docker的自动化部署">
 <meta itemprop="description" content="准备工作 Github Dockerhub Server (没有服务器的话,本机使用内网穿透也可以) 整体流程 具体步骤 code 创建springboot工程提供一个接口, 并编写 dockerfile
