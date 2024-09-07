@@ -53,11 +53,13 @@
   
   
   
-  <meta name="description" content="准备工作 Github Dockerhub Server (没有服务器的话,本机使用内网穿透也可以) 整体流程 具体步骤 code 创建springboot工程提供一个接口, 并编写 dockerfile
-/** * hello 接口 */ @GetMapping(&#34;/hello&#34;) public String hello(){ return &#34;hello&#34;; } FROM openjdk:11 WORKDIR /workspace/app COPY mvnw . COPY .mvn .mvn COPY pom.xml . COPY src src RUN ./mvnw package -DskipTests ENTRYPOINT [&#34;java&#34;,&#34;-jar&#34;,&#34;target/hello-0.0.1-SNAPSHOT.jar&#34;] Github 创建hello repository
-Dockerhub 创建hello repository并关联上Github的hello repository
-hook 编写hook服务,当 dockerhub hello image 更新时,会触发该hook
-/** * hook在server上运行,当Dockerhub中hello image有变动, * 将触发该接口,该接口将会执行auto_deploy脚本 */ @GetMapping(&#34;/hook&#34;) public void hook(){ Runtime.getRuntime().exec(&#34;/root/code/auto_deploy.sh&#34;); } #!" />
+  <meta name="description" content="准备工作 Github Dockerhub Server (没有服务器的话,本机使用内网穿透也可以) 整体流程 具体步骤 1. code /hello 代码
+创建 springboot 工程提供一个接口, 并编写 dockerfile
+/** * hello 接口 */ @GetMapping(&#34;/hello&#34;) public String hello(){ return &#34;hello&#34;; } FROM openjdk:11 WORKDIR /workspace/app COPY mvnw . COPY .mvn .mvn COPY pom.xml . COPY src src RUN ./mvnw package -DskipTests ENTRYPOINT [&#34;java&#34;,&#34;-jar&#34;,&#34;target/hello-0.0.1-SNAPSHOT.jar&#34;] 2. 在 Github 创建仓库
+创建hello repository
+3.1 在 Dockerhub 创建 image 并绑定 Github 仓库
+创建hello repository并关联上Github的hello repository
+3.2 在 Dockerhub 为 image 创建 webhook" />
   <meta name="author" content="Sunkz" />
   
 
@@ -117,21 +119,25 @@ hook 编写hook服务,当 dockerhub hello image 更新时,会触发该hook
 </script>
   
   <meta itemprop="name" content="基于Github&#43;Docker的自动化部署">
-<meta itemprop="description" content="准备工作 Github Dockerhub Server (没有服务器的话,本机使用内网穿透也可以) 整体流程 具体步骤 code 创建springboot工程提供一个接口, 并编写 dockerfile
-/** * hello 接口 */ @GetMapping(&#34;/hello&#34;) public String hello(){ return &#34;hello&#34;; } FROM openjdk:11 WORKDIR /workspace/app COPY mvnw . COPY .mvn .mvn COPY pom.xml . COPY src src RUN ./mvnw package -DskipTests ENTRYPOINT [&#34;java&#34;,&#34;-jar&#34;,&#34;target/hello-0.0.1-SNAPSHOT.jar&#34;] Github 创建hello repository
-Dockerhub 创建hello repository并关联上Github的hello repository
-hook 编写hook服务,当 dockerhub hello image 更新时,会触发该hook
-/** * hook在server上运行,当Dockerhub中hello image有变动, * 将触发该接口,该接口将会执行auto_deploy脚本 */ @GetMapping(&#34;/hook&#34;) public void hook(){ Runtime.getRuntime().exec(&#34;/root/code/auto_deploy.sh&#34;); } #!"><meta itemprop="datePublished" content="2019-01-21T18:43:29-08:00" />
+<meta itemprop="description" content="准备工作 Github Dockerhub Server (没有服务器的话,本机使用内网穿透也可以) 整体流程 具体步骤 1. code /hello 代码
+创建 springboot 工程提供一个接口, 并编写 dockerfile
+/** * hello 接口 */ @GetMapping(&#34;/hello&#34;) public String hello(){ return &#34;hello&#34;; } FROM openjdk:11 WORKDIR /workspace/app COPY mvnw . COPY .mvn .mvn COPY pom.xml . COPY src src RUN ./mvnw package -DskipTests ENTRYPOINT [&#34;java&#34;,&#34;-jar&#34;,&#34;target/hello-0.0.1-SNAPSHOT.jar&#34;] 2. 在 Github 创建仓库
+创建hello repository
+3.1 在 Dockerhub 创建 image 并绑定 Github 仓库
+创建hello repository并关联上Github的hello repository
+3.2 在 Dockerhub 为 image 创建 webhook"><meta itemprop="datePublished" content="2019-01-21T18:43:29-08:00" />
 <meta itemprop="dateModified" content="2019-01-21T18:43:29-08:00" />
-<meta itemprop="wordCount" content="147">
+<meta itemprop="wordCount" content="196">
 <meta itemprop="keywords" content="" />
   
   <meta property="og:title" content="基于Github&#43;Docker的自动化部署" />
-<meta property="og:description" content="准备工作 Github Dockerhub Server (没有服务器的话,本机使用内网穿透也可以) 整体流程 具体步骤 code 创建springboot工程提供一个接口, 并编写 dockerfile
-/** * hello 接口 */ @GetMapping(&#34;/hello&#34;) public String hello(){ return &#34;hello&#34;; } FROM openjdk:11 WORKDIR /workspace/app COPY mvnw . COPY .mvn .mvn COPY pom.xml . COPY src src RUN ./mvnw package -DskipTests ENTRYPOINT [&#34;java&#34;,&#34;-jar&#34;,&#34;target/hello-0.0.1-SNAPSHOT.jar&#34;] Github 创建hello repository
-Dockerhub 创建hello repository并关联上Github的hello repository
-hook 编写hook服务,当 dockerhub hello image 更新时,会触发该hook
-/** * hook在server上运行,当Dockerhub中hello image有变动, * 将触发该接口,该接口将会执行auto_deploy脚本 */ @GetMapping(&#34;/hook&#34;) public void hook(){ Runtime.getRuntime().exec(&#34;/root/code/auto_deploy.sh&#34;); } #!" />
+<meta property="og:description" content="准备工作 Github Dockerhub Server (没有服务器的话,本机使用内网穿透也可以) 整体流程 具体步骤 1. code /hello 代码
+创建 springboot 工程提供一个接口, 并编写 dockerfile
+/** * hello 接口 */ @GetMapping(&#34;/hello&#34;) public String hello(){ return &#34;hello&#34;; } FROM openjdk:11 WORKDIR /workspace/app COPY mvnw . COPY .mvn .mvn COPY pom.xml . COPY src src RUN ./mvnw package -DskipTests ENTRYPOINT [&#34;java&#34;,&#34;-jar&#34;,&#34;target/hello-0.0.1-SNAPSHOT.jar&#34;] 2. 在 Github 创建仓库
+创建hello repository
+3.1 在 Dockerhub 创建 image 并绑定 Github 仓库
+创建hello repository并关联上Github的hello repository
+3.2 在 Dockerhub 为 image 创建 webhook" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://sunkz.top/posts/%E5%9F%BA%E4%BA%8Egithub&#43;docker%E7%9A%84%E8%87%AA%E5%8A%A8%E5%8C%96%E9%83%A8%E7%BD%B2/" /><meta property="article:section" content="posts" />
 <meta property="article:published_time" content="2019-01-21T18:43:29-08:00" />
@@ -140,11 +146,13 @@ hook 编写hook服务,当 dockerhub hello image 更新时,会触发该hook
 
   
   <meta name="twitter:card" content="summary"/><meta name="twitter:title" content="基于Github&#43;Docker的自动化部署"/>
-<meta name="twitter:description" content="准备工作 Github Dockerhub Server (没有服务器的话,本机使用内网穿透也可以) 整体流程 具体步骤 code 创建springboot工程提供一个接口, 并编写 dockerfile
-/** * hello 接口 */ @GetMapping(&#34;/hello&#34;) public String hello(){ return &#34;hello&#34;; } FROM openjdk:11 WORKDIR /workspace/app COPY mvnw . COPY .mvn .mvn COPY pom.xml . COPY src src RUN ./mvnw package -DskipTests ENTRYPOINT [&#34;java&#34;,&#34;-jar&#34;,&#34;target/hello-0.0.1-SNAPSHOT.jar&#34;] Github 创建hello repository
-Dockerhub 创建hello repository并关联上Github的hello repository
-hook 编写hook服务,当 dockerhub hello image 更新时,会触发该hook
-/** * hook在server上运行,当Dockerhub中hello image有变动, * 将触发该接口,该接口将会执行auto_deploy脚本 */ @GetMapping(&#34;/hook&#34;) public void hook(){ Runtime.getRuntime().exec(&#34;/root/code/auto_deploy.sh&#34;); } #!"/>
+<meta name="twitter:description" content="准备工作 Github Dockerhub Server (没有服务器的话,本机使用内网穿透也可以) 整体流程 具体步骤 1. code /hello 代码
+创建 springboot 工程提供一个接口, 并编写 dockerfile
+/** * hello 接口 */ @GetMapping(&#34;/hello&#34;) public String hello(){ return &#34;hello&#34;; } FROM openjdk:11 WORKDIR /workspace/app COPY mvnw . COPY .mvn .mvn COPY pom.xml . COPY src src RUN ./mvnw package -DskipTests ENTRYPOINT [&#34;java&#34;,&#34;-jar&#34;,&#34;target/hello-0.0.1-SNAPSHOT.jar&#34;] 2. 在 Github 创建仓库
+创建hello repository
+3.1 在 Dockerhub 创建 image 并绑定 Github 仓库
+创建hello repository并关联上Github的hello repository
+3.2 在 Dockerhub 为 image 创建 webhook"/>
 
   
   
@@ -299,8 +307,10 @@ hook 编写hook服务,当 dockerhub hello image 更新时,会触发该hook
 <h2 id="整体流程">整体流程</h2>
 <p><img src="https://image-pub.guazistatic.com/qnbdp1687261666519eb77b74c447a0836c018cf26c61be1066.jpeg" alt=""></p>
 <h2 id="具体步骤">具体步骤</h2>
-<h3 id="code">code</h3>
-<p>创建springboot工程提供一个接口, 并编写 dockerfile</p>
+<blockquote>
+<p><!-- raw HTML omitted -->1. code /hello 代码<!-- raw HTML omitted --></p>
+</blockquote>
+<p>创建 springboot 工程提供一个接口, 并编写 dockerfile</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#75715e">/**
 </span></span></span><span style="display:flex;"><span><span style="color:#75715e"> * hello 接口
 </span></span></span><span style="display:flex;"><span><span style="color:#75715e"> */</span>
@@ -320,14 +330,25 @@ hook 编写hook服务,当 dockerhub hello image 更新时,会触发该hook
 </span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#66d9ef">RUN</span> ./mvnw package -DskipTests<span style="color:#960050;background-color:#1e0010">
 </span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">
 </span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#66d9ef">ENTRYPOINT</span> [<span style="color:#e6db74">&#34;java&#34;</span>,<span style="color:#e6db74">&#34;-jar&#34;</span>,<span style="color:#e6db74">&#34;target/hello-0.0.1-SNAPSHOT.jar&#34;</span>]<span style="color:#960050;background-color:#1e0010">
-</span></span></span></code></pre></div><h3 id="github">Github</h3>
+</span></span></span></code></pre></div><blockquote>
+<p><!-- raw HTML omitted -->2. 在 Github 创建仓库<!-- raw HTML omitted --></p>
+</blockquote>
 <p>创建hello repository</p>
 <p><img src="https://image-pub.guazistatic.com/qnbdp16872617386e0861eaba004d73a34dcbfc302d51281066.jpeg" alt=""></p>
-<h3 id="dockerhub">Dockerhub</h3>
+<blockquote>
+<p><!-- raw HTML omitted -->3.1 在 Dockerhub 创建 image 并绑定 Github 仓库<!-- raw HTML omitted --></p>
+</blockquote>
 <p>创建hello repository并关联上Github的hello repository</p>
-<!-- raw HTML omitted -->
-<h3 id="hook">hook</h3>
-<p>编写hook服务,当 dockerhub hello image 更新时,会触发该hook</p>
+<p><img src="https://image-pub.guazistatic.com/qnbdp1687312654cb1a06a6825940d5b8879914cee452f81066.jpeg" alt=""></p>
+<blockquote>
+<p><!-- raw HTML omitted --> 3.2 在 Dockerhub 为 image 创建 webhook</p>
+</blockquote>
+<p>dockerhub hello repository添加 webhook (指向 server中的 hook 钩子)</p>
+<p><img src="https://image-pub.guazistatic.com/qnbdp16872619515ddc2bf483e64eaab0aca9a8008650ca1066.jpeg" alt=""></p>
+<blockquote>
+<p><!-- raw HTML omitted -->4.1 在 server 编写 hook 钩子<!-- raw HTML omitted --></p>
+</blockquote>
+<p>编写 hook 服务,当 dockerhub hello image 更新时,会触发该hook</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#75715e">/**
 </span></span></span><span style="display:flex;"><span><span style="color:#75715e"> * hook在server上运行,当Dockerhub中hello image有变动,
 </span></span></span><span style="display:flex;"><span><span style="color:#75715e"> * 将触发该接口,该接口将会执行auto_deploy脚本
@@ -338,30 +359,30 @@ hook 编写hook服务,当 dockerhub hello image 更新时,会触发该hook
 </span></span><span style="display:flex;"><span>}
 </span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span><span style="color:#75715e">#! /bin/bash
 </span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e"># 销毁旧的容器,从dockerhub拉取最新hello images并启动</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 销毁旧的容器,从 dockerhub 拉取最新 hello image 并启动</span>
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>docker stop hello
 </span></span><span style="display:flex;"><span>docker rm hello
 </span></span><span style="display:flex;"><span>docker pull sunkezheng/hello
 </span></span><span style="display:flex;"><span>docker run --name hello -p8080:8080 -d sunkezheng/hello
-</span></span></code></pre></div><p>在server上启动该hook服务</p>
+</span></span></code></pre></div><blockquote>
+<p><!-- raw HTML omitted -->4.2 在 server 上启动该 hook 服务<!-- raw HTML omitted --></p>
+</blockquote>
 <p><img src="https://image-pub.guazistatic.com/qnbdp16872617581339524958b54597ad2485e2b8368fb01066.jpeg" alt=""></p>
-<h3 id="webhook">webhook</h3>
-<p>dockerhub hello repository添加webhook指向 server中的hook服务</p>
-<!-- raw HTML omitted -->
-<h2 id="触发流水线">触发流水线</h2>
-<p>至此整条流水线已经建立</p>
+<blockquote>
+<p><!-- raw HTML omitted -->5. 触发流水线<!-- raw HTML omitted --></p>
+</blockquote>
 <p><img src="https://image-pub.guazistatic.com/qnbdp1687261666519eb77b74c447a0836c018cf26c61be1066.jpeg" alt=""></p>
-<p>将hello springboot工程提交到Github hello repository, 触发整条流水线.</p>
+<p>将 hello springboot 工程提交到 Github , 触发整条流水线 :</p>
 <p><img src="https://image-pub.guazistatic.com/qnbdp1687261879ca80a39a1c34400c98305aebb08216e21066.jpeg" alt=""></p>
 <p>curl 请求测试</p>
-<!-- raw HTML omitted -->
+<p><img src="https://image-pub.guazistatic.com/qnbdp1687261913454650b157fb47e89ff11b877dd312af1066.jpeg" alt=""></p>
 <h2 id="扩展">扩展</h2>
 <ul>
 <li>Github Actions将支持CI/CD到自定的Server</li>
-<li>使用Jenkins可以简化Hook部分</li>
 <li>配合Nginx使用可实现 &lsquo;零停机&rsquo; 更新</li>
 <li>第三方云厂商提供了大量模板式Serverless的DevOps解决方案</li>
+<li>省略 dockerhub 直接基于 springboot jar包 ⬇️</li>
 </ul>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span><span style="color:#75715e">#! /bin/bash
 </span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
