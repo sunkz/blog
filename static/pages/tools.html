@@ -28,10 +28,10 @@
     </div>
     <div class="row mt-1">
         <div class="col-md-6">
-            <textarea id="source" rows="20" class="form-control" placeholder="请输入文本"></textarea>
+            <textarea id="source" rows="18" class="form-control" placeholder="请输入文本"></textarea>
         </div>
         <div class="col-md-6">
-            <textarea id="target" rows="20" class="form-control"></textarea>
+            <textarea id="target" rows="18" class="form-control"></textarea>
         </div>
     </div>
     <div class="btn-group mt-2" role="group" aria-label="Basic example">
@@ -72,25 +72,35 @@
         <button type="button" class="btn btn-outline-dark" onclick="distinct()">去重</button>
         <button type="button" class="btn btn-outline-dark" onclick="ascending()">升序</button>
         <button type="button" class="btn btn-outline-dark" onclick="descending()">降序</button>
-        <button type="button" class="btn btn-outline-dark" onclick="mergeDouhao()">合并x,</button>
-        <button type="button" class="btn btn-outline-dark" onclick="mergeDanyinhao()">合并'x',</button>
-        <button type="button" class="btn btn-outline-dark" onclick="mergeShuangyinhao()">合并"x",</button>
         <button type="button" class="btn btn-outline-dark" onclick="linesCount()">行数</button>
+        <button type="button" class="btn btn-outline-dark" onclick="wordFrequency()">词频</button>
+        <button type="button" id="merge-btn" class="btn btn btn-outline-dark" onclick="mergeSymbol('')">合并x,</button>
+        <button type="button" class="btn btn btn-outline-dark dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-expanded="false">
+            <span class="sr-only">合并item</span>
+        </button>
+        <div class="dropdown-menu">
+            <a class="dropdown-item" href="#" onclick="mergeSymbol('')">合并x,</a>
+            <a class="dropdown-item" href="#" onclick="mergeSymbol('\'')">合并'x',</a>
+            <a class="dropdown-item" href="#" onclick="mergeSymbol('&quot;')">合并"x",</a>
+        </div>
     </div>
     <div class="input-group mt-2">
-        <div class="btn-group">
+        <div class="input-group-prepend mr-1">
             <button type="button" class="btn btn-secondary disabled">JSON</button>
             <button type="button" class="btn btn-outline-dark" onclick="jsonFold()">压缩</button>
             <button type="button" class="btn btn-outline-dark" onclick="jsonUnfold()">展开</button>
             <button type="button" class="btn btn-outline-dark" onclick="jsonToExcel()">转EXCEL</button>
         </div>
-
-        <div class="custom-file">
-            <input type="file" class="custom-file-input" id="file" name="file" accept=".xlsx, .xls" aria-describedby="upload">
-            <label class="custom-file-label" for="file" data-browse="EXCEL转JSON" id="fileLabel">请选择EXCEL文件</label>
+        <div class="input-group-prepend">
+            <span class="input-group-text" data-toggle="tooltip" title="使用JS语法操作JSON">this</span>
         </div>
+        <input type="text" id="jsOpt" class="form-control" placeholder="Json过滤示例 .key.subKey、[0][1]、.map(x=>x.val)、.filer(x=>x.val>20) ">
     </div>
     <div class="input-group mt-2">
+        <div class="custom-file mr-2">
+            <input type="file" class="custom-file-input" id="file" name="file" aria-describedby="upload" accept=".xlsx, .xls">
+            <label class="custom-file-label" for="file" data-browse="EXCEL转JSON" id="fileLabel">请选择EXCEL文件</label>
+        </div>
         <div class="custom-file">
             <input type="file" class="custom-file-input" id="mfile" name="mfile" aria-describedby="upload" accept=".xlsx, .xls" multiple>
             <label class="custom-file-label" for="mfile" data-browse="EXCEL合并" id="mfileLabel">请选择EXCEL文件, 表头需要相同</label>
@@ -99,6 +109,18 @@
 
 </div>
 <script>
+
+    document.getElementById('jsOpt').addEventListener('input', function() {
+        try {
+            const jsCode = 'this' + document.getElementById('jsOpt').value;
+            const jsonData = JSON.parse(document.getElementById('source').value);
+            const result = new Function('return ' + jsCode.replace(/^this/, 'arguments[0]'))(jsonData);
+            document.getElementById('target').value = JSON.stringify(result, null, 2);
+        } catch (error) {
+            document.getElementById('target').value = '错误: ' + error.message;
+        }
+    })
+
     function doClear() {
         document.getElementById('source').value = '';
         document.getElementById('target').value = '';
@@ -108,19 +130,11 @@
         document.getElementById('source').value = document.getElementById('target').value;
     }
 
-    function mergeDouhao() {
-        const lines = document.getElementById('source').value.trim().replace(/,/g, '\n').split('\n').map(item => item.trim()).filter(item => item !== '');
-        document.getElementById('target').value = lines.join(',');
-    }
-
-    function mergeDanyinhao() {
-        const lines = document.getElementById('source').value.trim().replace(/,/g, '\n').split('\n').map(item => item.trim()).filter(item => item !== '');
-        document.getElementById('target').value = lines.map(item => `'${item}'`).join(',');
-    }
-
-    function mergeShuangyinhao() {
-        const lines = document.getElementById('source').value.trim().replace(/,/g, '\n').split('\n').map(item => item.trim()).filter(item => item !== '');
-        document.getElementById('target').value = lines.map(item => `"${item}"`).join(',');
+    function mergeSymbol(symbol) {
+        document.getElementById('merge-btn').innerText = `合并${symbol}x${symbol},`;
+        document.getElementById('merge-btn').setAttribute('onclick', `mergeSymbol('${symbol}')`);
+        const lines = document.getElementById('source').value.trim().split('\n').map(item => item.trim()).filter(item => item !== '');
+        document.getElementById('target').value = lines.map(item => `${symbol}${item}${symbol}`).join(',');
     }
 
     function linesCount() {
@@ -128,13 +142,29 @@
         document.getElementById('target').value = lines.length;
     }
 
+    function wordFrequency() {
+        const lines = document.getElementById('source').value.trim().split('\n').map(item => item.trim()).filter(item => item !== '');
+        const freqMap = {};
+        lines.forEach(line => {
+            freqMap[line] = (freqMap[line] || 0) + 1;
+        });
+        const sortedEntries = Object.entries(freqMap).sort((a, b) => {
+            if (b[1] !== a[1]) {
+                return b[1] - a[1];
+            } else {
+                return a[0].localeCompare(b[0]);
+            }
+        });
+        document.getElementById('target').value = sortedEntries.map(entry => `${entry[0]} : ${entry[1]}`).join('\n');
+    }
+
     function distinct() {
-        const lines = document.getElementById('source').value.trim().replace(/,/g, '\n').split('\n').map(item => item.trim()).filter(item => item !== '');
+        const lines = document.getElementById('source').value.trim().split('\n').map(item => item.trim()).filter(item => item !== '');
         document.getElementById('target').value = [...new Set(lines)].join('\n');
     }
 
     function ascending() {
-        const lines = document.getElementById('source').value.trim().replace(/,/g, '\n').split('\n').map(item => item.trim()).filter(item => item !== '');
+        const lines = document.getElementById('source').value.trim().split('\n').map(item => item.trim()).filter(item => item !== '');
 
         const sortedElements = lines.sort((a, b) => {
             const isNumericA = !isNaN(parseFloat(a)) && isFinite(parseFloat(a));
@@ -150,7 +180,7 @@
     }
 
     function descending() {
-        const lines = document.getElementById('source').value.trim().replace(/,/g, '\n').split('\n').map(item => item.trim()).filter(item => item !== '');
+        const lines = document.getElementById('source').value.trim().split('\n').map(item => item.trim()).filter(item => item !== '');
 
         const sortedElements = lines.sort((a, b) => {
             const isNumericA = !isNaN(parseFloat(a)) && isFinite(parseFloat(a));
