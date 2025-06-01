@@ -132,7 +132,7 @@
 
     function mergeSymbol(symbol) {
         document.getElementById('merge-btn').innerText = `合并${symbol}x${symbol},`;
-        document.getElementById('merge-btn').setAttribute('onclick', `mergeSymbol('${symbol}')`);
+        document.getElementById('merge-btn').setAttribute('onclick', `mergeSymbol(${JSON.stringify(symbol)})`);
         const lines = document.getElementById('source').value.trim().split('\n').map(item => item.trim()).filter(item => item !== '');
         document.getElementById('target').value = lines.map(item => `${symbol}${item}${symbol}`).join(',');
     }
