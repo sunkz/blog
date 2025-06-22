@@ -7,17 +7,21 @@ date: 2024-08-25T23:28:29-08:00
 
 > utools 插件中心 搜索 : 文本工具箱
 
-![](https://image-pub.guazistatic.com/qnbdp1066x2948e8846c7944ceb01fe17b321ea93f1725728109.png)
+![](https://img.picui.cn/free/2025/06/23/68582db259e21.png)
 
 ### 各种功能等你体验
 
 > 时间戳日期互转
 
-![](https://image-pub.guazistatic.com/qnbdp1066xb2764ac12dd4467f972f0388202560d01725728255.png)
+![](https://img.picui.cn/free/2025/06/23/68582e12630d6.png)
 
 > 文本去重升序降序合并
 
-![](https://image-pub.guazistatic.com/qnbdp1066x0b2f8f788101474bb86ebed01ff7e3211725728323.png)
+![](https://img.picui.cn/free/2025/06/23/68582e62ee817.png)
+
+> Json 操作
+
+![](https://img.picui.cn/free/2025/06/23/68582edd20272.png)
 
 > Json 压缩展开 / Json Excel 互转
 
@@ -28,10 +32,3 @@ date: 2024-08-25T23:28:29-08:00
 
 ![](https://image-pub.guazistatic.com/qnbdp1066x1b7063ef771e47f580c7330c2092ed3f1725728438.png)
 
-> URL 编解码
-
-![](https://image-pub.guazistatic.com/qnbdp1066xf81527cef0bb408ca75f0151259221681725728483.png)
-
-> 计算器
-
-![](https://image-pub.guazistatic.com/qnbdp1066x862997c39bfe459aa3165ccac031eb7f1725728528.png)
