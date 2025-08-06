@@ -68,7 +68,7 @@
         <button type="button" class="btn btn-outline-dark" data-toggle="tooltip" title="为空时默认当前时间戳" onclick="toDate()">转日期</button>
     </div>
     <div class="btn-group mt-2" role="group" aria-label="Basic example">
-        <button type="button" class="btn btn-secondary disabled">多行</button>
+        <span class="input-group-text" data-toggle="tooltip" title="将会移除每行首尾空格以及空白行">多行</span>
         <button type="button" class="btn btn-outline-dark" onclick="distinct()">去重</button>
         <button type="button" class="btn btn-outline-dark" onclick="ascending()">升序</button>
         <button type="button" class="btn btn-outline-dark" onclick="descending()">降序</button>
@@ -104,7 +104,7 @@
     </div>
     <div class="input-group mt-2">
         <div class="input-group-prepend mr-1">
-            <button type="button" class="btn btn-secondary disabled">JSON</button>
+            <span class="input-group-text" data-toggle="tooltip">JSON</span>
             <button type="button" class="btn btn-outline-dark" onclick="jsonFold()">压缩</button>
             <button type="button" class="btn btn-outline-dark" onclick="jsonUnfold()">展开</button>
             <button type="button" class="btn btn-outline-dark" onclick="jsonToExcel()">转EXCEL</button>
