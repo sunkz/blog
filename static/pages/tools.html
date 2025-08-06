@@ -74,6 +74,19 @@
         <button type="button" class="btn btn-outline-dark" onclick="descending()">降序</button>
         <button type="button" class="btn btn-outline-dark" onclick="linesCount()">行数</button>
         <button type="button" class="btn btn-outline-dark" onclick="wordFrequency()">词频</button>
+        <button type="button" class="btn btn btn-outline-dark dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-expanded="false">
+            <span class="sr-only">分割item</span>
+        </button>
+        <div class="dropdown-menu">
+            <a class="dropdown-item" href="#" onclick="splitlines(',')">分割,</a>
+            <a class="dropdown-item" href="#" onclick="splitlines('，')">分割，</a>
+            <a class="dropdown-item" href="#" onclick="splitlines(' ')">分割空格</a>
+            <a class="dropdown-item" href="#" onclick="splitlines('\\t')">分割\t</a>
+            <a class="dropdown-item" href="#" onclick="splitlines(';')">分割;</a>
+            <a class="dropdown-item" href="#" onclick="splitlines(':')">分割:</a>
+            <a class="dropdown-item" href="#" onclick="splitlines('|')">分割|</a>
+            <a class="dropdown-item" href="#" onclick="splitlines('\\n')">分割\n</a>
+        </div>
         <button type="button" id="merge-btn" class="btn btn btn-outline-dark" onclick="mergeSymbol('')">合并x,</button>
         <button type="button" class="btn btn btn-outline-dark dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-expanded="false">
             <span class="sr-only">合并item</span>
@@ -156,6 +169,19 @@
             }
         });
         document.getElementById('target').value = sortedEntries.map(entry => `${entry[0]} : ${entry[1]}`).join('\n');
+    }
+
+    function splitlines(delimiter) {
+        // 更新按钮文本和事件参数
+        document.getElementById('split-btn').innerText = `分割${delimiter}`;
+        document.getElementById('split-btn').setAttribute('onclick', `splitlines('${delimiter}')`);
+
+        // 按指定分隔符分割文本
+        const source = document.getElementById('source').value.trim();
+        const lines = source.split(delimiter)
+            .map(item => item.trim())
+            .filter(item => item !== '');
+        document.getElementById('target').value = lines.join('\n');
     }
 
     function distinct() {
