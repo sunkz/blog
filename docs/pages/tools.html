@@ -74,11 +74,13 @@
         <button type="button" class="btn btn-outline-dark" onclick="descending()">降序</button>
         <button type="button" class="btn btn-outline-dark" onclick="linesCount()">行数</button>
         <button type="button" class="btn btn-outline-dark" onclick="wordFrequency()">词频</button>
-        <button type="button" id="split-btn" class="btn btn btn-outline-dark" onclick="splitlines(',')">分割,</button>
-        <button type="button" class="btn btn btn-outline-dark dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-expanded="false">
+    </div>
+    <div class="btn-group mt-2" role="group" aria-label="Basic example">
+        <button type="button" id="split-btn" class="btn btn-outline-dark" onclick="splitlines(',')">分割,</button>
+        <button type="button" class="btn btn-outline-dark dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-expanded="false">
             <span class="sr-only">分割item</span>
         </button>
-        <div class="dropdown-menu">
+        <div class="dropdown-menu" aria-labelledby="split-btn">
             <a class="dropdown-item" href="#" onclick="splitlines(',')">分割,</a>
             <a class="dropdown-item" href="#" onclick="splitlines('，')">分割，</a>
             <a class="dropdown-item" href="#" onclick="splitlines(' ')">分割空格</a>
@@ -88,8 +90,10 @@
             <a class="dropdown-item" href="#" onclick="splitlines('|')">分割|</a>
             <a class="dropdown-item" href="#" onclick="splitlines('\\n')">分割\n</a>
         </div>
-        <button type="button" id="merge-btn" class="btn btn btn-outline-dark" onclick="mergeSymbol('')">合并x,</button>
-        <button type="button" class="btn btn btn-outline-dark dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-expanded="false">
+    </div>
+    <div class="btn-group mt-2" role="group" aria-label="Basic example">
+        <button type="button" id="merge-btn" class="btn btn-outline-dark" onclick="mergeSymbol('')">合并x,</button>
+        <button type="button" class="btn btn-outline-dark dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-expanded="false">
             <span class="sr-only">合并item</span>
         </button>
         <div class="dropdown-menu">
