@@ -5,16 +5,32 @@
     <title>TextUtil</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
+    <script charset="UTF-8" id="LA_COLLECT" src="js/sdk.51.la_js-sdk-pro.min.js"></script>
     <!-- 51.la -->
     <script>
         !function(p){"use strict";!function(t){var s=window,e=document,i=p,c="".concat("https:"===e.location.protocol?"https://":"http://","sdk.51.la/js-sdk-pro.min.js"),n=e.createElement("script"),r=e.getElementsByTagName("script")[0];n.type="text/javascript",n.setAttribute("charset","UTF-8"),n.async=!0,n.src=c,n.id="LA_COLLECT",i.d=n;var o=function(){s.LA.ids.push(i)};s.LA?s.LA.ids&&o():(s.LA=p,s.LA.ids=[],o()),r.parentNode.insertBefore(n,r)}()}({id:"3JacvsQODVWrNK9p",ck:"3JacvsQODVWrNK9p",autoTrack:true,hashMode:true});
     </script>
 
-    <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"></script>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/xlsx/dist/xlsx.full.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/file-saver@2.0.5/dist/FileSaver.min.js"></script>
+    <script src="js/http_cdn.jsdelivr.net_npm_jquery@3.5.1_dist_jquery.slim.js"></script>
+    <link rel="stylesheet" href="css/http_cdn.jsdelivr.net_npm_bootstrap@4.6.2_dist_css_bootstrap.css">
+    <script src="js/http_cdn.jsdelivr.net_npm_bootstrap@4.6.2_dist_js_bootstrap.bundle.js"></script>
+    <script src="js/http_cdn.jsdelivr.net_npm_xlsx_dist_xlsx.full.min.js"></script>
+    <script src="js/http_cdn.jsdelivr.net_npm_file-saver@2.0.5_dist_FileSaver.js"></script>
+    <!-- CodeMirror 5 用于 JSON 高亮与自动缩进 -->
+    <link rel="stylesheet" href="js/codemirror/lib/codemirror.css">
+    <link rel="stylesheet" href="js/codemirror/theme/neo.css">
+    <script src="js/codemirror/lib/codemirror.js"></script>
+    <script src="js/codemirror/mode/javascript/javascript.js"></script>
+    <script src="js/codemirror/addon/edit/closebrackets.js"></script>
+    <script src="js/codemirror/addon/edit/matchbrackets.js"></script>
+    <script src="js/codemirror/addon/display/placeholder.js"></script>
+    <!-- CodeMirror 额外功能：当前行高亮与代码折叠（本地化） -->
+    <link rel="stylesheet" href="js/codemirror/addon/fold/foldgutter.css">
+    <script src="js/codemirror/addon/selection/active-line.js"></script>
+    <script src="js/codemirror/addon/fold/foldcode.js"></script>
+    <script src="js/codemirror/addon/fold/foldgutter.js"></script>
+    <script src="js/codemirror/addon/fold/brace-fold.js"></script>
+    <script src="js/codemirror/addon/fold/comment-fold.js"></script>
     <script>
         $(function () {
             $('[data-toggle="tooltip"]').tooltip();
@@ -22,142 +38,651 @@
     </script>
 </head>
 <body>
-<div class="container-fluid col-xl-8 mt-4">
+<style>
+    /* 主题变量 */
+    :root {
+        --bg: #ffffff;
+        --text: #212529;
+        --muted: #6c757d;
+        --card-bg: #ffffff;
+        --card-header-bg: #f8f9fa;
+        --border: #dee2e6;
+        --input-bg: #ffffff;
+        --input-text: #212529;
+        --dropdown-bg: #ffffff;
+        --btn-bg: transparent;
+        --btn-text: #343a40;
+        --btn-border: #343a40;
+        --toggle-bg: #F0F0F0;
+        --toggle-slider-bg: #ffffff;
+        --editor-bg: #ffffff;
+        --editor-gutter-bg: #f8f9fa;
+        --editor-cursor: #111111;
+        --toggle-active-text: #000000;
+        --toggle-inactive-text: #666666;
+    }
+
+    [data-theme="dark"] {
+        --bg: #121212;
+        --text: #e9ecef;
+        --muted: #adb5bd;
+        --card-bg: #1b1b1b;
+        --card-header-bg: #1f1f1f;
+        --border: #2b2b2b;
+        --input-bg: #202020;
+        --input-text: #e9ecef;
+        --dropdown-bg: #202020;
+        --btn-bg: transparent;
+        --btn-text: #e9ecef;
+        --btn-border: #495057;
+        --toggle-bg: #2a2a2a;
+        --toggle-slider-bg: #3b3b3b;
+        --editor-bg: #1e1e1e;
+        --editor-gutter-bg: #252525;
+        --editor-cursor: #e9ecef;
+        --toggle-active-text: #ffffff;
+        --toggle-inactive-text: #adb5bd;
+    }
+
+    /* 全局基色覆盖 */
+    html, body {
+        background-color: var(--bg);
+        color: var(--text);
+    }
+
+    .card { background-color: var(--card-bg); border-color: var(--border); }
+    .card-header { background-color: var(--card-header-bg); border-color: var(--border); color: var(--text); }
+    .form-control, textarea { background-color: var(--input-bg); color: var(--input-text); border-color: var(--border); }
+    /* 暗色下输入框聚焦不变白 */
+    [data-theme="dark"] .form-control:focus,
+    [data-theme="dark"] textarea:focus {
+        background-color: var(--input-bg);
+        color: var(--input-text);
+        border-color: var(--btn-border);
+        box-shadow: 0 0 0 0.2rem rgba(108,117,125,0.25);
+    }
+    .input-group-text { background-color: var(--card-header-bg); color: var(--text); border-color: var(--border); }
+    .dropdown-menu { background-color: var(--dropdown-bg); }
+    .dropdown-item { color: var(--text); }
+    .dropdown-item:hover { background-color: rgba(108,117,125,0.15); }
+    .stats-text { color: var(--muted); }
+
+    /* 文件选择框（Bootstrap custom-file）暗色兼容 */
+    .custom-file-label {
+        background-color: var(--input-bg);
+        color: var(--input-text);
+        border-color: var(--border);
+    }
+    .custom-file-input:focus ~ .custom-file-label,
+    .custom-file-input:hover ~ .custom-file-label {
+        color: var(--input-text);
+        background-color: var(--input-bg);
+        border-color: var(--btn-border);
+        box-shadow: 0 0 0 0.2rem rgba(108,117,125,0.25);
+    }
+    .custom-file-label::after {
+        background-color: var(--card-header-bg);
+        color: var(--text);
+        border-left: 1px solid var(--border);
+    }
+
+    /* 按钮覆盖（以 outline-dark 为主） */
+    .btn-outline-dark {
+        color: var(--btn-text);
+        border-color: var(--btn-border);
+        background-color: var(--btn-bg);
+    }
+    .btn-outline-dark:hover,
+    .btn-outline-dark:focus {
+        color: var(--text);
+        background-color: rgba(108,117,125,0.25);
+        border-color: var(--btn-border);
+    }
+
+    .no-padding {
+        padding-left: 0 !important;
+        padding-right: 0 !important;
+    }
+
+    /* 切换开关样式 */
+    .toggle-switch {
+        display: flex;
+        background-color: var(--toggle-bg);
+        border-radius: 0.25rem;
+        padding: 2px;
+        position: relative;
+        width: 100%;
+        max-width: 420px;
+        height: 28px;
+        margin: 0.25rem auto 0;
+        overflow: hidden;
+    }
+
+    /* 滑动背景 */
+    .toggle-slider {
+        position: absolute;
+        top: 2px;
+        left: 4px;
+        width: calc(33.333% - 8px);
+        height: 24px;
+        background-color: var(--toggle-slider-bg);
+        border-radius: 0.25rem;
+        box-shadow: 0 2px 12px rgba(0, 0, 0, 0.25);
+        transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        z-index: 0;
+    }
+
+    .toggle-slider.slide-right {
+        transform: translateX(100%);
+    }
+
+    .toggle-option {
+        flex: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 0.25rem;
+        cursor: pointer;
+        transition: color 0.3s ease;
+        font-size: 1.125rem;
+        font-weight: 500;
+        position: relative;
+        z-index: 1;
+        user-select: none;
+        white-space: nowrap;
+    }
+
+    .toggle-option.active { color: var(--toggle-active-text); }
+    .toggle-option.inactive { color: var(--toggle-inactive-text); }
+
+    .toggle-option:hover {
+        opacity: 0.8;
+    }
+
+    /* 区分大小写按钮激活状态样式 */
+    .btn-outline-secondary.active {
+        background-color: #28a745 !important;
+        border-color: #28a745 !important;
+        color: white !important;
+    }
+
+    /* 隐藏原有的Bootstrap标签样式 */
+    .nav-tabs {
+        display: none;
+    }
+
+    /* 集合运算页面样式优化 */
+    .card-header {
+        border-bottom: 1px solid var(--border);
+        border-radius: 0.25rem 0.25rem 0 0 !important;
+        padding: 0.5rem 0.75rem;
+        font-size: 1rem;
+        font-weight: 400;
+        text-align: center;
+    }
+
+    /* 文本统计样式 */
+    .stats-text {
+        font-size: 0.75rem; /* 小号字体 */
+    }
+
+    /* 去除文本处理页卡片底部边框线 */
+    #text .card {
+        border-bottom: 0 !important;
+        border-right: 0 !important;
+    }
+    #text .card:first-child {
+        border-left: 0 !important;
+    }
+
+    /* 去除 JSON处理 页卡片边框线（与文本处理一致） */
+    #json-operation .card {
+        border-bottom: 0 !important;
+        border-right: 0 !important;
+    }
+    #json-operation .card:first-child {
+        border-left: 0 !important;
+    }
+
+    /* CodeMirror 在 JSON处理 中的高度与边框（与 form-control 视觉接近） */
+    #json-operation .CodeMirror {
+        height: 370px;
+        border: 1px solid var(--border);
+        border-radius: 0.25rem;
+        background-color: var(--editor-bg);
+        color: var(--text);
+    }
+    /* CodeMirror 当前行高亮（仅 JSON处理 页） */
+    #json-operation .CodeMirror-activeline-background { 
+        background: rgba(108,117,125,0.15); 
+    }
+    #json-operation .CodeMirror-activeline-gutter { 
+        background: rgba(108,117,125,0.15); 
+    }
+    /* 正确为行号预留独立 gutter，避免与文本重叠 */
+    /* 让 CodeMirror 自行计算 gutter 宽度，避免与正文错位 */
+    /* 让 CodeMirror 自行设置 gutters 宽度，避免覆盖导致的遮挡 */
+    /* 移除强制 width，交由 JS 计算精确像素 */
+    #json-operation .CodeMirror-linenumbers {
+        width: auto;
+        text-align: right;
+        padding-right: 4px;
+    }
+    /* 恢复行内最小左内边距，避免初始光标贴到 gutter */
+    #json-operation .CodeMirror-lines pre {
+        padding-left: 0;
+    }
+    /* 占位符文本右移，避免与行号区域重叠 */
+    #json-operation .CodeMirror .CodeMirror-placeholder {
+        padding-left: 0;
+        color: var(--muted); /* 与占位提示风格一致 */
+    }
+    /* 隐藏所有 gutters（行号/折叠栏），并去除占位宽度 */
+    #json-operation .CodeMirror-gutters {
+        display: none !important;
+        width: 0 !important;
+    }
+
+    /* CodeMirror 常规覆盖（行内/游标） */
+    .CodeMirror-cursor { border-left: 1px solid var(--editor-cursor); }
+    .cm-s-neo.CodeMirror { background-color: var(--editor-bg); color: var(--text); }
+    .cm-s-neo .CodeMirror-gutters { background-color: var(--editor-gutter-bg); border-right: 1px solid var(--border); }
+
+    /* 集合运算输入卡片头部：左侧标题 + 右侧统计 */
+    #set-operation .card-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        text-align: left;
+    }
+
+</style>
+
+<div class="container-fluid">
+
     <div class="alert alert-danger mt-1" role="alert">
         <a href="https://sunkz.top/posts/文本工具箱上架utools啦/" class="alert-link">工具箱已经上架到 utools 了, 点击查看详情</a>
     </div>
-    <div class="row mt-1">
-        <div class="col-md-6">
-            <textarea id="source" rows="18" class="form-control" placeholder="请输入文本"></textarea>
-        </div>
-        <div class="col-md-6">
-            <textarea id="target" rows="18" class="form-control"></textarea>
-        </div>
-    </div>
-    <div class="btn-group mt-2" role="group" aria-label="Basic example">
-        <button type="button" class="btn btn-secondary" onclick="doClear()">清空</button>
-        <button type="button" class="btn btn-secondary" data-toggle="tooltip" title="复制结果到输入框" onclick="overwrite()">覆盖</button>
-    </div>
-    <div class="btn-group mt-2" role="group" aria-label="Basic example">
-        <button type="button" class="btn btn-outline-dark" onclick="length()">长度</button>
-    </div>
-    <div class="btn-group mt-2" role="group" aria-label="Basic example">
-        <button type="button" class="btn btn-outline-dark" onclick="reverse()">反转</button>
-    </div>
-    <div class="btn-group mt-2" role="group" aria-label="Basic example">
-        <button type="button" class="btn btn-outline-dark" onclick="calculator()">计算器</button>
-    </div>
-    <div class="btn-group mt-2" role="group" aria-label="Basic example">
-        <button type="button" class="btn btn-outline-dark" onclick="toUpperCase()">转大写</button>
-        <button type="button" class="btn btn-outline-dark" onclick="toLowerCase()">转小写</button>
-    </div>
-    <div class="btn-group mt-2" role="group" aria-label="Basic example">
-        <button type="button" class="btn btn-outline-dark" onclick="toCamelCase()">转驼峰</button>
-        <button type="button" class="btn btn-outline-dark" onclick="toSnakeCase()">转下划线</button>
-    </div>
-    <div class="btn-group mt-2" role="group" aria-label="Basic example">
-        <button type="button" class="btn btn-outline-dark" onclick="base64Encode()">Base64编码</button>
-        <button type="button" class="btn btn-outline-dark" onclick="base64Decode()">解码</button>
-    </div>
-    <div class="btn-group mt-2" role="group" aria-label="Basic example">
-        <button type="button" class="btn btn-outline-dark" onclick="urlEncode()">url编码</button>
-        <button type="button" class="btn btn-outline-dark" onclick="urlDecode()">解码</button>
-    </div>
-    <div class="btn-group mt-2" role="group" aria-label="Basic example">
-        <button type="button" class="btn btn-outline-dark" data-toggle="tooltip" title="各种常见时间格式,为空时默认当前时间" onclick="toTimestamp()">转时间戳</button>
-        <button type="button" class="btn btn-outline-dark" data-toggle="tooltip" title="为空时默认当前时间戳" onclick="toDate()">转日期</button>
-    </div>
-    <div class="btn-group mt-2" role="group" aria-label="Basic example">
-        <span class="input-group-text" data-toggle="tooltip" title="将会移除每行首尾空格以及空白行">多行</span>
-        <button type="button" class="btn btn-outline-dark" onclick="distinct()">去重</button>
-        <button type="button" class="btn btn-outline-dark" onclick="ascending()">升序</button>
-        <button type="button" class="btn btn-outline-dark" onclick="descending()">降序</button>
-        <button type="button" class="btn btn-outline-dark" onclick="linesCount()">行数</button>
-        <button type="button" class="btn btn-outline-dark" onclick="wordFrequency()">词频</button>
-    </div>
-    <div class="btn-group mt-2" role="group" aria-label="Basic example">
-        <button type="button" id="split-btn" class="btn btn-outline-dark" onclick="splitlines(',')">分割,</button>
-        <button type="button" class="btn btn-outline-dark dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-expanded="false">
-            <span class="sr-only">分割item</span>
-        </button>
-        <div class="dropdown-menu" aria-labelledby="split-btn">
-            <a class="dropdown-item" href="#" onclick="splitlines(',')">分割,</a>
-            <a class="dropdown-item" href="#" onclick="splitlines('，')">分割，</a>
-            <a class="dropdown-item" href="#" onclick="splitlines(' ')">分割空格</a>
-            <a class="dropdown-item" href="#" onclick="splitlines('\\t')">分割\t</a>
-            <a class="dropdown-item" href="#" onclick="splitlines(';')">分割;</a>
-            <a class="dropdown-item" href="#" onclick="splitlines(':')">分割:</a>
-            <a class="dropdown-item" href="#" onclick="splitlines('|')">分割|</a>
-            <a class="dropdown-item" href="#" onclick="splitlines('\\n')">分割\n</a>
-        </div>
-    </div>
-    <div class="btn-group mt-2" role="group" aria-label="Basic example">
-        <button type="button" id="merge-btn" class="btn btn-outline-dark" onclick="mergeSymbol('')">合并x,</button>
-        <button type="button" class="btn btn-outline-dark dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-expanded="false">
-            <span class="sr-only">合并item</span>
-        </button>
-        <div class="dropdown-menu">
-            <a class="dropdown-item" href="#" onclick="mergeSymbol('')">合并x,</a>
-            <a class="dropdown-item" href="#" onclick="mergeSymbol('\'')">合并'x',</a>
-            <a class="dropdown-item" href="#" onclick="mergeSymbol('&quot;')">合并"x",</a>
-        </div>
-    </div>
-    <div class="input-group mt-2">
-        <div class="input-group-prepend mr-1">
-            <span class="input-group-text" data-toggle="tooltip">JSON</span>
-            <button type="button" class="btn btn-outline-dark" onclick="jsonFold()">压缩</button>
-            <button type="button" class="btn btn-outline-dark" onclick="jsonUnfold()">展开</button>
-            <button type="button" class="btn btn-outline-dark" onclick="jsonToExcel()">转EXCEL</button>
-        </div>
-        <div class="input-group-prepend">
-            <span class="input-group-text" data-toggle="tooltip" title="使用JS语法操作JSON">this</span>
-        </div>
-        <input type="text" id="jsOpt" class="form-control" placeholder="Json操作示例 .key.subKey、[0][1]、.map(x=>x.val)、.filer(x=>x.val>20) ">
-    </div>
-    <div class="input-group mt-2">
-        <div class="custom-file mr-2">
-            <input type="file" class="custom-file-input" id="file" name="file" aria-describedby="upload" accept=".xlsx, .xls">
-            <label class="custom-file-label" for="file" data-browse="EXCEL转JSON" id="fileLabel">请选择EXCEL文件</label>
-        </div>
-        <div class="custom-file">
-            <input type="file" class="custom-file-input" id="mfile" name="mfile" aria-describedby="upload" accept=".xlsx, .xls" multiple>
-            <label class="custom-file-label" for="mfile" data-browse="EXCEL合并" id="mfileLabel">请选择EXCEL文件, 表头需要相同</label>
+
+    <!-- 标签与主题切换同排 -->
+    <div class="d-flex align-items-center mt-0">
+        <div class="toggle-switch" id="toggleSwitch">
+            <div class="toggle-slider" id="toggleSlider"></div>
+            <div class="toggle-option active" data-target="text" onclick="switchTab('text')">文本处理</div>
+            <div class="toggle-option inactive" data-target="json-operation" onclick="switchTab('json-operation')">JSON处理</div>
+            <div class="toggle-option inactive" data-target="set-operation" onclick="switchTab('set-operation')">集合运算</div>
         </div>
     </div>
 
+    <!-- 标签内容 -->
+    <div class="tab-content no-padding" id="textTabContent">
+        <!-- 第一个标签页内容 -->
+        <div class="tab-pane fade show active no-padding" id="text" role="tabpanel" aria-labelledby="text-tab">
+            <div class="card-group mt-1">
+                <div class="card mr-1">
+                    <textarea id="source" rows="17" class="form-control" placeholder="请输入文本"></textarea>
+                    <div class="d-flex justify-content-end px-2 py-1">
+                        <small id="source-stats" class="stats-text">0 行 · 0 字符</small>
+                    </div>
+                </div>
+                <div class="card">
+                    <textarea id="target" rows="17" class="form-control"></textarea>
+                    <div class="d-flex justify-content-end px-2 py-1">
+                        <small id="target-stats" class="stats-text">0 行 · 0 字符</small>
+                    </div>
+                </div>
+            </div>
+            <div class="btn-group" role="group" aria-label="Basic example">
+                <button type="button" class="btn btn-secondary" title="清空输入框/输出框" onclick="doClear()">清空</button>
+            </div>
+            <div class="btn-group" role="group" aria-label="Basic example">
+                <button type="button" class="btn btn-secondary" data-toggle="tooltip" title="复制结果到输入框" onclick="overwrite()">覆盖</button>
+            </div>
+            <div class="btn-group" role="group" aria-label="Basic example">
+                <button type="button" class="btn btn-outline-dark" onclick="reverse()">反转</button>
+            </div>
+            <div class="btn-group" role="group" aria-label="Basic example">
+                <button type="button" class="btn btn-outline-dark" onclick="calculator()">计算器</button>
+            </div>
+            <div class="btn-group" role="group" aria-label="Basic example">
+                <button type="button" class="btn btn-outline-dark" onclick="toUpperCase()">转大写</button>
+                <button type="button" class="btn btn-outline-dark" onclick="toLowerCase()">小写</button>
+            </div>
+            <div class="btn-group" role="group" aria-label="Basic example">
+                <button type="button" class="btn btn-outline-dark" onclick="toCamelCase()">转驼峰</button>
+                <button type="button" class="btn btn-outline-dark" onclick="toSnakeCase()">下划线</button>
+            </div>
+            <div class="btn-group" role="group" aria-label="Basic example">
+                <button type="button" class="btn btn-outline-dark" onclick="base64Encode()">Base64编码</button>
+                <button type="button" class="btn btn-outline-dark" onclick="base64Decode()">解码</button>
+            </div>
+            <div class="btn-group" role="group" aria-label="Basic example">
+                <button type="button" class="btn btn-outline-dark" onclick="urlEncode()">url编码</button>
+                <button type="button" class="btn btn-outline-dark" onclick="urlDecode()">解码</button>
+            </div>
+            <div class="btn-group mt-1" role="group" aria-label="Basic example">
+                <button type="button" class="btn btn-outline-dark" data-toggle="tooltip" title="各种常见时间格式,为空时默认当前时间" onclick="toTimestamp()">转时间戳</button>
+                <button type="button" class="btn btn-outline-dark" data-toggle="tooltip" title="为空时默认当前时间戳" onclick="toDate()">转日期</button>
+            </div>
+            <div class="btn-group mt-1" role="group" aria-label="Basic example">
+                <span class="input-group-text" data-toggle="tooltip" title="将会移除每行首尾空格以及空白行">多行</span>
+                <button type="button" class="btn btn-outline-dark" onclick="distinct()">去重</button>
+                <button type="button" class="btn btn-outline-dark" onclick="ascending()">升序</button>
+                <button type="button" class="btn btn-outline-dark" onclick="descending()">降序</button>
+                <button type="button" class="btn btn-outline-dark" onclick="wordFrequency()">词频</button>
+            </div>
+            <div class="btn-group mt-1" role="group" aria-label="Basic example">
+                <button type="button" id="merge-btn" class="btn btn-outline-dark" onclick="mergeSymbol('empty')">合并x,</button>
+                <button type="button" class="btn btn-outline-dark" onclick="mergeSymbol('single')">合并'x',</button>
+                <button type="button" class="btn btn-outline-dark" onclick="mergeSymbol('double')">合并"x",</button>
+            </div>
+            <div class="btn-group mt-1" role="group" aria-label="Basic example">
+                <button type="button" id="split-btn" class="btn btn-outline-dark" onclick="splitlines(',')">分割,</button>
+                <button type="button" class="btn btn-outline-dark dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-expanded="false">
+                    <span class="sr-only">分割item</span>
+                </button>
+                <div class="dropdown-menu" aria-labelledby="split-btn">
+                    <a class="dropdown-item" href="#" onclick="splitlines(',')">分割,</a>
+                    <a class="dropdown-item" href="#" onclick="splitlines('，')">分割，</a>
+                    <a class="dropdown-item" href="#" onclick="splitlines(' ')">分割空格</a>
+                    <a class="dropdown-item" href="#" onclick="splitlines('\\t')">分割\t</a>
+                    <a class="dropdown-item" href="#" onclick="splitlines(';')">分割;</a>
+                    <a class="dropdown-item" href="#" onclick="splitlines(':')">分割:</a>
+                    <a class="dropdown-item" href="#" onclick="splitlines('|')">分割|</a>
+                    <a class="dropdown-item" href="#" onclick="splitlines('\\n')">分割\n</a>
+                    <a class="dropdown-item" href="#" onclick="splitlines('、')">分割、</a>
+                    <a class="dropdown-item" href="#" onclick="splitlines('.')">分割.</a>
+                </div>
+            </div>
+            <!-- 文本过滤：模式切换 + 输入框 -->
+            <div class="input-group mt-1">
+                <div class="input-group-prepend">
+                    <span class="input-group-text" id="txtFilterBtn" data-toggle="tooltip">过滤(排除)</span>
+                    <button type="button" class="btn btn-outline-secondary dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-expanded="false">
+                        <span class="sr-only">textFilter</span>
+                    </button>
+                    <div class="dropdown-menu">
+                        <a class="dropdown-item" href="#" id="modeTextReplace">模式一 : 替换</a>
+                        <a class="dropdown-item" href="#" id="modeTextFilterExclude">模式二 : 过滤(排除)</a>
+                        <a class="dropdown-item" href="#" id="modeTextFilterInclude">模式三 : 过滤(保留)</a>
+                    </div>
+                </div>
+                <input type="text" id="textFilterInput" class="form-control" placeholder="过滤掉包含指定文本的行" aria-label="Text filter input">
+                <input type="text" id="textReplaceFrom" class="form-control d-none" placeholder="旧文本" aria-label="Replace from">
+                <input type="text" id="textReplaceTo" class="form-control d-none" placeholder="新文本" aria-label="Replace to">
+                <div class="input-group-append" id="replaceOptions">
+                    <button type="button" class="btn btn-outline-secondary" id="toggleNewlineBtn" title="将 \n 视为换行" data-toggle="tooltip">\n</button>
+                    <button type="button" class="btn btn-outline-secondary" id="toggleCaseBtn" title="区分大小写：开启=区分 关闭=不区分" data-toggle="tooltip">Aa</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- 第二个标签页内容 -->
+        <div class="tab-pane fade no-padding" id="json-operation" role="tabpanel" aria-labelledby="json-tab">
+            <div class="card-group mt-1">
+                <div class="card mr-1">
+                    <textarea id="json_source" rows="15" class="form-control" placeholder="[\"请输入JSON文本\"]"></textarea>
+                    <div class="d-flex justify-content-end px-2 py-1">
+                        <small id="json_source-stats" class="stats-text">0 行 · 0 字符</small>
+                    </div>
+                </div>
+                <div class="card">
+                    <textarea id="json_target" rows="15" class="form-control"></textarea>
+                    <div class="d-flex justify-content-end px-2 py-1">
+                        <small id="json_target-stats" class="stats-text">0 行 · 0 字符</small>
+                    </div>
+                </div>
+            </div>
+            <div class="btn-group" role="group" aria-label="Basic example">
+                <button type="button" class="btn btn-secondary" title="清空输入框/输出框" onclick="doJsonClear()">清空</button>
+            </div>
+            <div class="btn-group" role="group" aria-label="Basic example">
+                <button type="button" class="btn btn-secondary" data-toggle="tooltip" title="复制结果到输入框" onclick="overwriteJson()">覆盖</button>
+            </div>
+            <div class="btn-group" role="group" aria-label="Basic example">
+                <button type="button" class="btn btn-outline-dark" onclick="jsonFormat()">格式化</button>
+            </div>
+            <div class="btn-group" role="group" aria-label="Basic example">
+                <button type="button" class="btn btn-outline-dark" onclick="jsonFold()">压缩</button>
+                <button type="button" class="btn btn-outline-dark" onclick="jsonUnfold()">展开</button>
+            </div>
+            <div class="btn-group" role="group" aria-label="Basic example">
+                <button type="button" class="btn btn-outline-dark" data-toggle="tooltip" title="将带转义符的JSON字符串转为正常JSON" onclick="jsonUnescape()">toJson</button>
+                <button type="button" class="btn btn-outline-dark" data-toggle="tooltip" title="将JSON转成带转义符号的字符串" onclick="escapeJson()">toString</button>
+            </div>
+            <div class="btn-group" role="group" aria-label="Basic example">
+                <button type="button" class="btn btn-outline-dark" data-toggle="tooltip" title="JSON数组" onclick="jsonToExcel()">转excel</button>
+            </div>
+            <div class="input-group mt-1">
+                <div class="input-group-prepend">
+                    <span class="input-group-text" id="jsOptBtn" data-toggle="tooltip">JSONPath this</span>
+                    <button type="button" class="btn btn-outline-secondary dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-expanded="false">
+                        <span class="sr-only">jsonOpt</span>
+                    </button>
+                    <div class="dropdown-menu">
+                        <a class="dropdown-item" href="#" id="modeJsonPath">模式一 : JSONPath</a>
+                        <a class="dropdown-item" href="#" id="modeFieldExtract">模式二 : JSON数组字段提取</a>
+                    </div>
+                </div>
+                <input type="text" id="jsonModeInput" class="form-control"  placeholder=".key.subKey、[0][1]、.map(x=>x.val)、.filer(x=>x.val>20) " aria-label="Text input with segmented dropdown button">
+            </div>
+            <div class="input-group mt-1">
+                <div class="custom-file mr-2">
+                    <input type="file" class="custom-file-input" id="file" name="file" aria-describedby="upload" accept=".xlsx, .xls">
+                    <label class="custom-file-label" for="file" data-browse="EXCEL转JSON" id="fileLabel">请选择EXCEL文件</label>
+                </div>
+                <div class="custom-file">
+                    <input type="file" class="custom-file-input" id="mfile" name="mfile" aria-describedby="upload" accept=".xlsx, .xls" multiple>
+                    <label class="custom-file-label" for="mfile" data-browse="EXCEL合并" id="mfileLabel">请选择EXCEL文件, 表头需要相同</label>
+                </div>
+            </div>
+        </div>
+
+        <!-- 第三个标签页内容 -->
+        <div class="tab-pane fade no-padding" id="set-operation" role="tabpanel" aria-labelledby="set-tab">
+            <div class="card-group mt-1">
+                <div class="card mr-1">
+                    <div class="card-header">
+                        <span>文本A</span>
+                        <small id="set-tab-source-1-stats" class="stats-text">0 行 · 0 字符</small>
+                    </div>
+                    <textarea id="set-tab-source-1" rows="15" class="form-control" placeholder="请输入文本A"></textarea>
+                </div>
+                <div class="card">
+                    <div class="card-header">
+                        <span>文本B</span>
+                        <small id="set-tab-source-2-stats" class="stats-text">0 行 · 0 字符</small>
+                    </div>
+                    <textarea id="set-tab-source-2" rows="15" class="form-control" placeholder="请输入文本B"></textarea>
+                </div>
+            </div>
+
+            <div class="text-center mt-1">
+                <button type="button" class="btn btn-outline-dark" onclick="setOperation()" style="border-radius: 0.25rem; padding: 0.375rem 1.5rem;">运算</button>
+            </div>
+
+            <div class="card-group mt-1 mb-1">
+                <div class="card mr-1">
+                    <div class="card-header">
+                        <span>A∪B</span>
+                        <small id="set-tab-target-1-stats" class="stats-text">0 行 · 0 字符</small>
+                    </div>
+                    <textarea id="set-tab-target-1" rows="16" class="form-control"></textarea>
+                </div>
+                <div class="card mr-1">
+                    <div class="card-header">
+                        <span>A∩B</span>
+                        <small id="set-tab-target-2-stats" class="stats-text">0 行 · 0 字符</small>
+                    </div>
+                    <textarea id="set-tab-target-2" rows="16" class="form-control"></textarea>
+                </div>
+                <div class="card mr-1">
+                    <div class="card-header">
+                        <span>A-B</span>
+                        <small id="set-tab-target-3-stats" class="stats-text">0 行 · 0 字符</small>
+                    </div>
+                    <textarea id="set-tab-target-3" rows="16" class="form-control"></textarea>
+                </div>
+                <div class="card">
+                    <div class="card-header">
+                        <span>B-A</span>
+                        <small id="set-tab-target-4-stats" class="stats-text">0 行 · 0 字符</small>
+                    </div>
+                    <textarea id="set-tab-target-4" rows="16" class="form-control"></textarea>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 <script>
 
-    document.getElementById('jsOpt').addEventListener('input', function() {
-        try {
-            const jsCode = 'this' + document.getElementById('jsOpt').value;
-            const jsonData = JSON.parse(document.getElementById('source').value);
-            const result = new Function('return ' + jsCode.replace(/^this/, 'arguments[0]'))(jsonData);
-            document.getElementById('target').value = JSON.stringify(result, null, 2);
-        } catch (error) {
-            document.getElementById('target').value = '错误: ' + error.message;
+    // 初始化 CodeMirror 编辑器（JSON 高亮、自动缩进）
+    if (window.CodeMirror) {
+        window.jsonSourceEditor = CodeMirror.fromTextArea(document.getElementById('json_source'), {
+            mode: {name: 'javascript', json: true},
+            lineNumbers: false,
+            indentUnit: 2,
+            tabSize: 2,
+            smartIndent: true,
+            matchBrackets: true,
+            autoCloseBrackets: true,
+            lineWrapping: true,
+            theme: 'neo',
+            placeholder: '["请输入JSON文本"]',
+            styleActiveLine: true,
+            gutters: [],
+            foldGutter: false
+        });
+        window.jsonTargetEditor = CodeMirror.fromTextArea(document.getElementById('json_target'), {
+            mode: {name: 'javascript', json: true},
+            lineNumbers: false,
+            indentUnit: 2,
+            tabSize: 2,
+            smartIndent: true,
+            matchBrackets: true,
+            autoCloseBrackets: true,
+            lineWrapping: true,
+            theme: 'neo',
+            styleActiveLine: true,
+            gutters: [],
+            foldGutter: false
+        });
+
+        // 编辑时更新统计与联动
+        jsonSourceEditor.on('change', function () {
+            updateStats('json_source');
+            const jsonModeInput = document.getElementById('jsonModeInput');
+            if (jsonModeInput && jsonModeInput.value.trim() !== '') {
+                if (window.currentJsonMode === 'field') {
+                    updateJsonFieldExtractCombined();
+                } else if (window.currentJsonMode === 'jsonpath') {
+                    updateJsonPathEval();
+                }
+            }
+        });
+        jsonTargetEditor.on('change', function () { updateStats('json_target'); });
+    }
+
+    // 封装：获取/设置 JSON 源与目标（兼容 CodeMirror 与原 textarea）
+    function getJsonSource() {
+        return window.jsonSourceEditor ? window.jsonSourceEditor.getValue() : document.getElementById('json_source').value;
+    }
+    function setJsonSource(value) {
+        if (window.jsonSourceEditor) {
+            window.jsonSourceEditor.setValue(value || '');
+        } else {
+            document.getElementById('json_source').value = value || '';
         }
-    })
+        updateStats('json_source');
+    }
+    function getJsonTarget() {
+        return window.jsonTargetEditor ? window.jsonTargetEditor.getValue() : document.getElementById('json_target').value;
+    }
+    function setJsonTarget(value) {
+        if (window.jsonTargetEditor) {
+            window.jsonTargetEditor.setValue(value || '');
+        } else {
+            document.getElementById('json_target').value = value || '';
+        }
+        updateStats('json_target');
+    }
+
+    // 切换标签页函数
+    function switchTab(targetId) {
+        // 更新切换开关状态
+        const toggleOptions = document.querySelectorAll('.toggle-option');
+        const toggleSlider = document.getElementById('toggleSlider');
+        
+        toggleOptions.forEach(option => {
+            if (option.getAttribute('data-target') === targetId) {
+                option.classList.remove('inactive');
+                option.classList.add('active');
+            } else {
+                option.classList.remove('active');
+                option.classList.add('inactive');
+            }
+        });
+
+        // 控制滑动背景（支持多标签）
+        const optionArray = Array.from(toggleOptions);
+        const currentIndex = optionArray.findIndex(opt => opt.getAttribute('data-target') === targetId);
+        const sliderWidthPercent = 100 / optionArray.length;
+        const gapPx = 8; // 每段总间隙（左右各 4px）
+        toggleSlider.style.width = `calc(${sliderWidthPercent}% - ${gapPx}px)`;
+        toggleSlider.style.transform = `translateX(calc(${currentIndex * 100}% + ${currentIndex * gapPx}px))`;
+
+        // 隐藏所有标签页内容
+        const tabPanes = document.querySelectorAll('.tab-pane');
+        tabPanes.forEach(pane => {
+            pane.classList.remove('show', 'active');
+        });
+
+        // 显示目标标签页内容
+        const targetPane = document.getElementById(targetId);
+        if (targetPane) {
+            targetPane.classList.add('show', 'active');
+        }
+    }
 
     function doClear() {
         document.getElementById('source').value = '';
         document.getElementById('target').value = '';
+        updateStats('source');
+        updateStats('target');
+    }
+
+    function doJsonClear() {
+        setJsonSource('');
+        setJsonTarget('');
     }
 
     function overwrite() {
         document.getElementById('source').value = document.getElementById('target').value;
+        updateStats('source');
     }
 
-    function mergeSymbol(symbol) {
-        document.getElementById('merge-btn').innerText = `合并${symbol}x${symbol},`;
-        document.getElementById('merge-btn').setAttribute('onclick', `mergeSymbol(${JSON.stringify(symbol)})`);
+    function overwriteJson() {
+        setJsonSource(getJsonTarget());
+    }
+
+    function mergeSymbol(symbolToken) {
+        let symbol = '';
+        let label = '合并x,';
+        if (symbolToken === 'single') {
+            symbol = "'";
+            label = "合并'x',";
+        } else if (symbolToken === 'double') {
+            symbol = '"';
+            label = '合并"x",';
+        }
+        const mergeBtn = document.getElementById('merge-btn');
+        if (mergeBtn) {
+            mergeBtn.innerText = label;
+            mergeBtn.setAttribute('onclick', `mergeSymbol('${symbolToken}')`);
+        }
         const lines = document.getElementById('source').value.trim().split('\n').map(item => item.trim()).filter(item => item !== '');
         document.getElementById('target').value = lines.map(item => `${symbol}${item}${symbol}`).join(',');
-    }
-
-    function linesCount() {
-        const lines = document.getElementById('source').value.split('\n');
-        document.getElementById('target').value = lines.length;
+        updateStats('target');
     }
 
     function wordFrequency() {
@@ -174,25 +699,185 @@
             }
         });
         document.getElementById('target').value = sortedEntries.map(entry => `${entry[0]} : ${entry[1]}`).join('\n');
+        updateStats('target');
     }
 
+    // 修改 splitlines 函数定义以支持分隔符参数
     function splitlines(delimiter) {
         // 更新按钮文本和事件参数
         document.getElementById('split-btn').innerText = `分割${delimiter}`;
         document.getElementById('split-btn').setAttribute('onclick', `splitlines('${delimiter}')`);
-
+        
         // 按指定分隔符分割文本
         const source = document.getElementById('source').value.trim();
         const lines = source.split(delimiter)
             .map(item => item.trim())
             .filter(item => item !== '');
         document.getElementById('target').value = lines.join('\n');
+        updateStats('target');
     }
 
     function distinct() {
         const lines = document.getElementById('source').value.trim().split('\n').map(item => item.trim()).filter(item => item !== '');
         document.getElementById('target').value = [...new Set(lines)].join('\n');
+        updateStats('target');
     }
+
+    // 文本过滤模式切换 + 实时过滤
+    (function() {
+        const txtFilterBtn = document.getElementById('txtFilterBtn');
+        const modeExclude = document.getElementById('modeTextFilterExclude');
+        const modeInclude = document.getElementById('modeTextFilterInclude');
+        const modeReplace = document.getElementById('modeTextReplace');
+        const textFilterInput = document.getElementById('textFilterInput');
+        const textReplaceFrom = document.getElementById('textReplaceFrom');
+        const textReplaceTo = document.getElementById('textReplaceTo');
+        const replaceOptions = document.getElementById('replaceOptions');
+        const toggleNewlineBtn = document.getElementById('toggleNewlineBtn');
+        const toggleCaseBtn = document.getElementById('toggleCaseBtn');
+
+        if (!txtFilterBtn || !modeExclude || !modeInclude || !modeReplace || !textFilterInput || !textReplaceFrom || !textReplaceTo || !replaceOptions || !toggleNewlineBtn || !toggleCaseBtn) return;
+
+        window.currentTextFilterMode = 'exclude';
+        window.textReplaceTreatNewline = false;
+        window.textReplaceCaseSensitive = false; // Aa 关闭=不敏感，开启=敏感
+
+        // 初始：模式一默认隐藏 "\n" 按钮
+        toggleNewlineBtn.classList.add('d-none');
+
+        function applyOutput(lines) {
+            let outputText = Array.isArray(lines) ? lines.join('\n') : String(lines);
+            // 过滤/包含模式下：可选将输入的 "\\n" 视为换行来匹配
+            if (window.textReplaceTreatNewline && typeof lines !== 'string') {
+                const keyword = textFilterInput.value || '';
+                const normalizedKeyword = keyword.replace(/\\n/g, '\n');
+                if (keyword !== normalizedKeyword && keyword !== '') {
+                    const rawValue = document.getElementById('source').value;
+                    const rawLines = rawValue.split('\n');
+                    const handled = rawLines.map(item => item.trim()).filter(item => item !== '');
+                    let result;
+                    if (window.currentTextFilterMode === 'exclude') {
+                        result = handled.filter(line => !line.includes(normalizedKeyword));
+                    } else if (window.currentTextFilterMode === 'include') {
+                        result = handled.filter(line => line.includes(normalizedKeyword));
+                    }
+                    if (result) {
+                        outputText = result.join('\n');
+                    }
+                }
+            }
+            document.getElementById('target').value = outputText;
+            updateStats('target');
+        }
+
+        function runTextFilterOrReplace() {
+            const rawValue = document.getElementById('source').value;
+
+            // 替换模式：对完整文本进行替换，支持跨行
+            if (window.currentTextFilterMode === 'replace') {
+                let from = textReplaceFrom.value || '';
+                let to = textReplaceTo.value || '';
+                if (window.textReplaceTreatNewline) {
+                    from = from.replace(/\\n/g, '\n');
+                    to = to.replace(/\\n/g, '\n');
+                }
+                if (from === '') {
+                    document.getElementById('target').value = rawValue;
+                    updateStats('target');
+                    return;
+                }
+                const escaped = from.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+                const flags = window.textReplaceCaseSensitive ? 'g' : 'gi';
+                const regex = new RegExp(escaped, flags);
+                const replacedText = rawValue.replace(regex, to);
+                document.getElementById('target').value = replacedText;
+                updateStats('target');
+                return;
+            }
+
+            // 过滤模式：逐行处理（去首尾空白，忽略空行），支持大小写不敏感
+            const rawLines = rawValue.split('\n');
+            const handled = rawLines.map(item => item.trim()).filter(item => item !== '');
+            const keywordInput = textFilterInput.value || '';
+            const normalizedKeyword = window.textReplaceTreatNewline ? keywordInput.replace(/\\n/g, '\n') : keywordInput;
+
+            let result;
+            if (!normalizedKeyword) {
+                result = handled;
+            } else {
+                const includesFn = (line) => {
+                    if (window.textReplaceCaseSensitive) {
+                        return line.includes(normalizedKeyword);
+                    }
+                    return line.toLowerCase().includes(normalizedKeyword.toLowerCase());
+                };
+                if (window.currentTextFilterMode === 'exclude') {
+                    result = handled.filter(line => !includesFn(line));
+                } else {
+                    result = handled.filter(line => includesFn(line));
+                }
+            }
+            applyOutput(result);
+        }
+
+        // 输入事件
+        textFilterInput.addEventListener('input', runTextFilterOrReplace);
+        textReplaceFrom.addEventListener('input', runTextFilterOrReplace);
+        textReplaceTo.addEventListener('input', runTextFilterOrReplace);
+        toggleNewlineBtn.addEventListener('click', function() {
+            window.textReplaceTreatNewline = !window.textReplaceTreatNewline;
+            toggleNewlineBtn.classList.toggle('active', window.textReplaceTreatNewline);
+            runTextFilterOrReplace();
+        });
+        toggleCaseBtn.addEventListener('click', function() {
+            window.textReplaceCaseSensitive = !window.textReplaceCaseSensitive;
+            // 按钮开启=敏感 -> active 表示敏感
+            toggleCaseBtn.classList.toggle('active', window.textReplaceCaseSensitive);
+            runTextFilterOrReplace();
+        });
+
+        // 模式切换
+        modeExclude.addEventListener('click', function(e) {
+            e.preventDefault();
+            window.currentTextFilterMode = 'exclude';
+            txtFilterBtn.textContent = '过滤(排除)';
+            textFilterInput.classList.remove('d-none');
+            textReplaceFrom.classList.add('d-none');
+            textReplaceTo.classList.add('d-none');
+            toggleNewlineBtn.classList.add('d-none');
+            textFilterInput.placeholder = '过滤掉包含指定文本的行';
+            runTextFilterOrReplace();
+        });
+        modeInclude.addEventListener('click', function(e) {
+            e.preventDefault();
+            window.currentTextFilterMode = 'include';
+            txtFilterBtn.textContent = '过滤(保留)';
+            textFilterInput.classList.remove('d-none');
+            textReplaceFrom.classList.add('d-none');
+            textReplaceTo.classList.add('d-none');
+            toggleNewlineBtn.classList.add('d-none');
+            textFilterInput.placeholder = '过滤出包含指定文本的行';
+            runTextFilterOrReplace();
+        });
+        modeReplace.addEventListener('click', function(e) {
+            e.preventDefault();
+            window.currentTextFilterMode = 'replace';
+            txtFilterBtn.textContent = '替换';
+            textFilterInput.classList.add('d-none');
+            textReplaceFrom.classList.remove('d-none');
+            textReplaceTo.classList.remove('d-none');
+            replaceOptions.classList.remove('d-none');
+            toggleNewlineBtn.classList.remove('d-none');
+            // 同步按钮状态：active 表示敏感
+            toggleCaseBtn.classList.toggle('active', window.textReplaceCaseSensitive);
+            textReplaceFrom.placeholder = '旧文本';
+            textReplaceTo.placeholder = '新文本';
+            runTextFilterOrReplace();
+        });
+
+        // 默认进入“模式三：替换”
+        modeReplace.click();
+    })();
 
     function ascending() {
         const lines = document.getElementById('source').value.trim().split('\n').map(item => item.trim()).filter(item => item !== '');
@@ -208,6 +893,7 @@
             }
         });
         document.getElementById('target').value = sortedElements.join('\n');
+        updateStats('target');
     }
 
     function descending() {
@@ -224,48 +910,54 @@
             }
         });
         document.getElementById('target').value = sortedElements.join('\n');
-    }
-
-    function length() {
-        document.getElementById("target").value = document.getElementById("source").value.length;
+        updateStats('target');
     }
 
     function reverse() {
         document.getElementById("target").value = document.getElementById("source").value.split('').reverse().join('');
+        updateStats('target');
     }
 
     function toUpperCase() {
         document.getElementById("target").value = document.getElementById("source").value.toUpperCase();
+        updateStats('target');
     }
 
     function toLowerCase() {
         document.getElementById("target").value = document.getElementById("source").value.toLowerCase();
+        updateStats('target');
     }
 
     function toCamelCase() {
         document.getElementById("target").value = document.getElementById("source").value.replace(/(_\w)/g, function (m) {
             return m[1].toUpperCase();
         });
+        updateStats('target');
     }
 
     function toSnakeCase() {
         document.getElementById("target").value = document.getElementById("source").value.replace(/[A-Z]/g, (match) => `_${match.toLowerCase()}`);
+        updateStats('target');
     }
 
     function base64Encode() {
         document.getElementById("target").value = btoa(document.getElementById("source").value);
+        updateStats('target');
     }
 
     function base64Decode() {
         document.getElementById("target").value = atob(document.getElementById("source").value);
+        updateStats('target');
     }
 
     function urlEncode() {
         document.getElementById("target").value = encodeURIComponent(document.getElementById("source").value);
+        updateStats('target');
     }
 
     function urlDecode() {
         document.getElementById("target").value = decodeURIComponent(document.getElementById("source").value);
+        updateStats('target');
     }
 
     function toTimestamp() {
@@ -280,7 +972,6 @@
             const seconds = String(now.getSeconds()).padStart(2, '0');
 
             dateString = `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
-
             document.getElementById("source").value = dateString;
         }
         // 使用正则表达式匹配不同的日期格式
@@ -292,6 +983,7 @@
 
             const date = new Date(`${year}-${month}-${day}`);
             document.getElementById("target").value = Math.floor(date.getTime() / 1000);
+            updateStats('target');
         } else {
             const regex = /(\d{4})[-/年](\d{1,2})[-/月](\d{1,2})(?:日)?(?:\s(\d{1,2}):(\d{1,2}):(\d{1,2}))?/;
             const match = dateString.match(regex);
@@ -308,6 +1000,7 @@
             }
 
             document.getElementById("target").value = Math.floor(date.getTime() / 1000);
+            updateStats('target');
         }
     }
 
@@ -319,28 +1012,60 @@
         }
         const timestampInMilliseconds = timestamp < 10000000000 ? timestamp * 1000 : timestamp;
         const date = new Date(timestampInMilliseconds);
+
+        // 输出多种常见日期格式
         const year = date.getFullYear();
         const month = String(date.getMonth() + 1).padStart(2, '0');
         const day = String(date.getDate()).padStart(2, '0');
         const hours = String(date.getHours()).padStart(2, '0');
         const minutes = String(date.getMinutes()).padStart(2, '0');
         const seconds = String(date.getSeconds()).padStart(2, '0');
+        const milliseconds = String(date.getMilliseconds()).padStart(3, '0');
 
-        document.getElementById("target").value = `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
+        const formattedDates = [
+            `${year}-${month}-${day}`, // 年-月-日
+            `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`, // 年-月-日 时:分:秒
+            `${year}-${month}-${day} ${hours}:${minutes}:${seconds}.${milliseconds}`, // 年-月-日 时:分:秒.毫秒
+            `${year}/${month}/${day}`, // 年/月/日
+            `${year}/${month}/${day} ${hours}:${minutes}:${seconds}`, // 年/月/日 时:分:秒
+            `${year}/${month}/${day} ${hours}:${minutes}:${seconds}.${milliseconds}`, // 年/月/日 时:分:秒.毫秒
+            `${year}年${month}月${day}日`, // 年月日
+            `${year}年${month}月${day}日 ${hours}时${minutes}分${seconds}秒`, // 年月日 时分秒
+            `${year}年${month}月${day}日 ${hours}时${minutes}分${seconds}秒${milliseconds}毫秒` // 年月日 时分秒毫秒
+        ];
+
+        document.getElementById("target").value = formattedDates.join('\n');
+        updateStats('target');
     }
 
     function calculator() {
         document.getElementById("target").value = eval(document.getElementById("source").value);
+        updateStats('target');
     }
 
     function jsonUnfold() {
-        let data = JSON.parse(document.getElementById("source").value);
-        document.getElementById("target").value = JSON.stringify(data, null, 4);
+        let data = JSON.parse(getJsonSource());
+        setJsonTarget(JSON.stringify(data, null, 4));
     }
 
     function jsonFold() {
-        let data = JSON.parse(document.getElementById("source").value);
-        document.getElementById("target").value = JSON.stringify(data, null, 0);
+        let data = JSON.parse(getJsonSource());
+        setJsonTarget(JSON.stringify(data, null, 0));
+    }
+
+    // JSON 格式化：读取左侧，格式化后覆盖写回左侧
+    function jsonFormat() {
+        try {
+            const input = getJsonSource();
+            if (!input || input.trim() === '') {
+                setJsonSource('');
+                return;
+            }
+            const data = JSON.parse(input);
+            setJsonSource(JSON.stringify(data, null, 2));
+        } catch (error) {
+            setJsonSource('错误: ' + error.message);
+        }
     }
 
     function s2ab(s) {
@@ -351,7 +1076,7 @@
     }
 
     function jsonToExcel() {
-        const json = document.getElementById("source").value;
+        const json = getJsonSource();
         if (!json.startsWith("[")) {
             alert("请输入 JSON 数组");
             return;
@@ -396,7 +1121,7 @@
                     json.unshift(colKey);
                 }
             }
-            document.getElementById("source").value = JSON.stringify(json, null, 4);
+            setJsonSource(JSON.stringify(json, null, 4));
         };
         reader.readAsArrayBuffer(file);
     }
@@ -432,7 +1157,7 @@
                             mergedData.unshift(colKey);
                         }
                     }
-                    document.getElementById("source").value = JSON.stringify(mergedData, null, 4);
+                    setJsonSource(JSON.stringify(mergedData, null, 4));
 
                     const ws = XLSX.utils.json_to_sheet(mergedData);
                     const wb = XLSX.utils.book_new();
@@ -443,6 +1168,247 @@
             };
             reader.readAsArrayBuffer(file);
         });
+    }
+
+    // 文本框统计：行数与字符数
+    function computeStats(text) {
+        if (text === '') return { lines: 0, chars: 0 };
+        const lines = text.split('\n').length;
+        const chars = text.length;
+        return { lines: lines, chars: chars };
+    }
+
+    function renderStats(idPrefix) {
+        const textarea = document.getElementById(idPrefix);
+        const statsEl = document.getElementById(idPrefix + '-stats');
+        if (!statsEl) return;
+        let text = '';
+        if (idPrefix === 'json_source' && window.jsonSourceEditor) {
+            text = window.jsonSourceEditor.getValue();
+        } else if (idPrefix === 'json_target' && window.jsonTargetEditor) {
+            text = window.jsonTargetEditor.getValue();
+        } else if (textarea) {
+            text = textarea.value;
+        }
+        const { lines, chars } = computeStats(text);
+        statsEl.textContent = `${lines} 行 · ${chars} 字符`;
+    }
+
+    function updateStats(idPrefix) {
+        renderStats(idPrefix);
+    }
+
+    // 绑定输入事件，实时更新
+    ['source', 'target', 'json_source', 'json_target', 'set-tab-source-1', 'set-tab-source-2', 'set-tab-target-1', 'set-tab-target-2', 'set-tab-target-3', 'set-tab-target-4'].forEach(function (id) {
+        const el = document.getElementById(id);
+        if (el) {
+            el.addEventListener('input', function () { updateStats(id); });
+        }
+    });
+
+    // 首次渲染
+    updateStats('source');
+    updateStats('target');
+    updateStats('json_source');
+    updateStats('json_target');
+    updateStats('set-tab-source-1');
+    updateStats('set-tab-source-2');
+    updateStats('set-tab-target-1');
+    updateStats('set-tab-target-2');
+    updateStats('set-tab-target-3');
+    updateStats('set-tab-target-4');
+
+    // 仅为业务按钮接入遥测（已移除主题按钮，无需排除）
+    document.querySelectorAll('button').forEach(function (button) {
+        button.addEventListener('click', handleClick);
+    });
+
+    async function handleClick(event) {
+    }
+
+    // 跟随系统主题：初始化并监听变化
+    (function() {
+        const mq = window.matchMedia ? window.matchMedia('(prefers-color-scheme: dark)') : null;
+        function apply(theme) { document.documentElement.setAttribute('data-theme', theme); }
+        const initial = mq && mq.matches ? 'dark' : 'light';
+        apply(initial);
+        if (mq && typeof mq.addEventListener === 'function') {
+            mq.addEventListener('change', function(e) { apply(e.matches ? 'dark' : 'light'); });
+        } else if (mq && typeof mq.addListener === 'function') { // 兼容旧浏览器
+            mq.addListener(function(e) { apply(e.matches ? 'dark' : 'light'); });
+        }
+    })();
+
+    // 新增JSON反向转义函数
+    function escapeJson() {
+        try {
+            const input = document.getElementById("source").value;
+            // 使用JSON.stringify实现转义，并去除外层引号
+            const escaped = JSON.stringify(input).slice(1, -1);
+            document.getElementById("target").value = escaped;
+            updateStats('target');
+        } catch (error) {
+            document.getElementById("target").value = `转义失败: ${error.message}`;
+            updateStats('target');
+            console.error('JSON反向转义错误:', error);
+        }
+    }
+
+    function setOperation() {
+        // 获取输入值并转换为数组
+        const aArray = document.getElementById('set-tab-source-1').value.trim().split('\n').map(item => item.trim()).filter(item => item !== '');
+        const bArray = document.getElementById('set-tab-source-2').value.trim().split('\n').map(item => item.trim()).filter(item => item !== '');
+        
+        // 创建Set对象
+        const aSet = new Set(aArray);
+        const bSet = new Set(bArray);
+        
+        // 计算并集
+        const union = [...new Set([...aArray, ...bArray])];
+        
+        // 计算交集
+        const intersection = aArray.filter(item => bSet.has(item));
+        
+        // 计算差集 A-B
+        const differenceAB = aArray.filter(item => !bSet.has(item));
+        
+        // 计算差集 B-A
+        const differenceBA = bArray.filter(item => !aSet.has(item));
+        
+        // 升序排序逻辑（复用ascending函数的排序规则）
+        const sortArray = (arr) => arr.sort((a, b) => {
+            const isNumericA = !isNaN(parseFloat(a)) && isFinite(parseFloat(a));
+            const isNumericB = !isNaN(parseFloat(b)) && isFinite(parseFloat(b));
+
+            if (isNumericA && isNumericB) {
+                return parseFloat(a) - parseFloat(b);
+            } else {
+                return a.localeCompare(b);
+            }
+        });
+        
+        // 更新结果文本框（排序前先去重）
+        document.getElementById('set-tab-target-1').value = sortArray([...new Set(union)]).join('\n');
+        document.getElementById('set-tab-target-2').value = sortArray([...new Set(intersection)]).join('\n');
+        document.getElementById('set-tab-target-3').value = sortArray([...new Set(differenceAB)]).join('\n');
+        document.getElementById('set-tab-target-4').value = sortArray([...new Set(differenceBA)]).join('\n');
+
+        ['set-tab-source-1','set-tab-source-2','set-tab-target-1','set-tab-target-2','set-tab-target-3','set-tab-target-4']
+            .forEach(updateStats);
+    }
+
+    // 清理旧的 fieldOpt 兼容逻辑，统一用 jsonModeInput + currentJsonMode
+    const jsonSourceInput = document.getElementById('json_source');
+    if (window.jsonSourceEditor) {
+        window.jsonSourceEditor.on('change', function () {
+            const jsonModeInput = document.getElementById('jsonModeInput');
+            if (jsonModeInput && jsonModeInput.value.trim() !== '') {
+                if (window.currentJsonMode === 'field') {
+                    updateJsonFieldExtractCombined();
+                } else if (window.currentJsonMode === 'jsonpath') {
+                    updateJsonPathEval();
+                }
+            }
+        });
+    } else if (jsonSourceInput) {
+        jsonSourceInput.addEventListener('input', function () {
+            const jsonModeInput = document.getElementById('jsonModeInput');
+            if (jsonModeInput && jsonModeInput.value.trim() !== '') {
+                if (window.currentJsonMode === 'field') {
+                    updateJsonFieldExtractCombined();
+                } else if (window.currentJsonMode === 'jsonpath') {
+                    updateJsonPathEval();
+                }
+            }
+        });
+    }
+
+    // JSON模式输入框占位符切换 + 功能联动
+    (function() {
+        const modeJsonPath = document.getElementById('modeJsonPath');
+        const modeFieldExtract = document.getElementById('modeFieldExtract');
+        const jsOptBtn = document.getElementById('jsOptBtn');
+        const jsonModeInput = document.getElementById('jsonModeInput');
+        // 默认模式
+        window.currentJsonMode = 'jsonpath';
+        if (jsonModeInput) {
+            jsonModeInput.addEventListener('input', function() {
+                if (window.currentJsonMode === 'jsonpath') {
+                    updateJsonPathEval();
+                } else if (window.currentJsonMode === 'field') {
+                    updateJsonFieldExtractCombined();
+                }
+            });
+        }
+        if (modeJsonPath && modeFieldExtract && jsOptBtn && jsonModeInput) {
+            modeJsonPath.addEventListener('click', function(e) {
+                e.preventDefault();
+                jsOptBtn.textContent = 'JSONPath this';
+                jsonModeInput.placeholder = '.key.subKey、[0][1]、.map(x=>x.val)、.filer(x=>x.val>20) ';
+                window.currentJsonMode = 'jsonpath';
+                if (jsonModeInput.value.trim() !== '') {
+                    updateJsonPathEval();
+                }
+            });
+            modeFieldExtract.addEventListener('click', function(e) {
+                e.preventDefault();
+                jsOptBtn.textContent = 'JSONArray extracts';
+                jsonModeInput.placeholder = 'key1,key2,key3... ';
+                window.currentJsonMode = 'field';
+                if (jsonModeInput.value.trim() !== '') {
+                    updateJsonFieldExtractCombined();
+                }
+            });
+        }
+    })();
+
+    // 模式一：在 json_source 上执行 JS 表达式（以 this 开头）并输出到 json_target
+    function updateJsonPathEval() {
+        try {
+            const exprInputEl = document.getElementById('jsonModeInput');
+            if (!exprInputEl) return;
+            const expr = exprInputEl.value.trim();
+            if (expr === '') return;
+            const jsCode = 'this' + expr;
+            const sourceText = getJsonSource();
+            const jsonData = JSON.parse(sourceText);
+            const result = new Function('return ' + jsCode.replace(/^this/, 'arguments[0]'))(jsonData);
+            setJsonTarget(JSON.stringify(result, null, 2));
+        } catch (error) {
+            setJsonTarget('错误: ' + error.message);
+        }
+    }
+
+    // 模式二：字段提取（从 json_source 的数组元素中提取指定字段）
+    function updateJsonFieldExtractCombined() {
+        const jsonModeInput = document.getElementById('jsonModeInput');
+        if (!jsonModeInput) return;
+        const fieldsInput = jsonModeInput.value.trim();
+        if (fieldsInput === '') {
+            return;
+        }
+        const fields = fieldsInput.split(',').map(key => key.trim()).filter(key => key.length > 0);
+        try {
+            const sourceText = getJsonSource();
+            const data = JSON.parse(sourceText);
+            if (!Array.isArray(data)) {
+                throw new Error('请输入 JSON 数组');
+            }
+            const result = data.map(item => {
+                const picked = {};
+                if (item && typeof item === 'object') {
+                    fields.forEach(key => {
+                        if (Object.prototype.hasOwnProperty.call(item, key)) {
+                            picked[key] = item[key];
+                        }
+                    });
+                }
+                return picked;
+            });
+            setJsonTarget(JSON.stringify(result, null, 2));
+        } catch (error) {
+            setJsonTarget('错误: ' + error.message);
+        }
     }
 </script>
 </body>
