@@ -6,10 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <script charset="UTF-8" id="LA_COLLECT" src="js/sdk.51.la_js-sdk-pro.min.js"></script>
-    <!-- 51.la -->
-    <script>
-        !function(p){"use strict";!function(t){var s=window,e=document,i=p,c="".concat("https:"===e.location.protocol?"https://":"http://","sdk.51.la/js-sdk-pro.min.js"),n=e.createElement("script"),r=e.getElementsByTagName("script")[0];n.type="text/javascript",n.setAttribute("charset","UTF-8"),n.async=!0,n.src=c,n.id="LA_COLLECT",i.d=n;var o=function(){s.LA.ids.push(i)};s.LA?s.LA.ids&&o():(s.LA=p,s.LA.ids=[],o()),r.parentNode.insertBefore(n,r)}()}({id:"3JacvsQODVWrNK9p",ck:"3JacvsQODVWrNK9p",autoTrack:true,hashMode:true});
-    </script>
+    <script>LA.init({id: "3JacKGWYXjpZRNIH", ck: "3JacKGWYXjpZRNIH", autoTrack: true, hashMode: true})</script>
 
     <script src="js/http_cdn.jsdelivr.net_npm_jquery@3.5.1_dist_jquery.slim.js"></script>
     <link rel="stylesheet" href="css/http_cdn.jsdelivr.net_npm_bootstrap@4.6.2_dist_css_bootstrap.css">
@@ -32,6 +29,9 @@
     <script src="js/codemirror/addon/fold/brace-fold.js"></script>
     <script src="js/codemirror/addon/fold/comment-fold.js"></script>
     <script>
+        // 全局变量
+        const APP_VERSION = '4.0.0';
+        
         $(function () {
             $('[data-toggle="tooltip"]').tooltip();
         });
@@ -152,7 +152,7 @@
         padding: 2px;
         position: relative;
         width: 100%;
-        max-width: 420px;
+        max-width: 560px;
         height: 28px;
         margin: 0.25rem auto 0;
         overflow: hidden;
@@ -163,7 +163,7 @@
         position: absolute;
         top: 2px;
         left: 4px;
-        width: calc(33.333% - 8px);
+        width: calc(25% - 8px);
         height: 24px;
         background-color: var(--toggle-slider-bg);
         border-radius: 0.25rem;
@@ -201,8 +201,8 @@
 
     /* 区分大小写按钮激活状态样式 */
     .btn-outline-secondary.active {
-        background-color: #28a745 !important;
-        border-color: #28a745 !important;
+        background-color: #495057 !important;
+        border-color: #495057 !important;
         color: white !important;
     }
 
@@ -241,6 +241,15 @@
         border-right: 0 !important;
     }
     #json-operation .card:first-child {
+        border-left: 0 !important;
+    }
+
+    /* 去除大爆炸页卡片边框线（与文本处理一致） */
+    #bigbang .card {
+        border-bottom: 0 !important;
+        border-right: 0 !important;
+    }
+    #bigbang .card:first-child {
         border-left: 0 !important;
     }
 
@@ -296,10 +305,90 @@
         text-align: left;
     }
 
+    /* 大爆炸样式 */
+    #bigbang .input-area {
+        margin-bottom: 0.5rem;
+    }
+    
+    /* 大爆炸输入框深黑色边框样式 */
+    #bigbangInput {
+        border: 2px solid #000000;
+        border-radius: 0.25rem;
+    }
+    
+    #bigbangInput:focus {
+        border-color: #000000;
+        box-shadow: 0 0 0 0.2rem rgba(0, 0, 0, 0.2);
+        outline: none;
+    }
+    
+    #bigbang .word-container {
+        border: 1px solid var(--border);
+        background-color: var(--input-bg);
+        min-height: 400px;
+        padding: 15px;
+        border-radius: 0.25rem;
+        overflow-y: auto;
+        max-height: 400px;
+    }
+    
+    #bigbang .word-tag {
+        display: inline-block;
+        background-color: transparent;
+        color: var(--text);
+        border: 1px solid var(--border);
+        padding: 6px 12px;
+        margin: 4px;
+        border-radius: 3px;
+        cursor: pointer;
+        user-select: none;
+        transition: all 0.2s;
+        font-size: 14px;
+    }
+    
+    #bigbang .word-tag:hover {
+        background-color: rgba(108, 117, 125, 0.1);
+        transform: translateY(-1px);
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+    
+    #bigbang .word-tag.selected {
+        background-color: #000000;
+        color: #ffffff;
+        border-color: #000000;
+    }
+    
+    #bigbang .result-area {
+        border: 1px solid var(--border);
+        background-color: var(--input-bg);
+        min-height: 400px;
+        padding: 0.375rem 0.75rem;
+        border-radius: 0.25rem;
+        color: var(--text);
+        white-space: pre-wrap;
+        word-wrap: break-word;
+        overflow-y: auto;
+        max-height: 400px;
+        font-family: inherit;
+        font-size: 1rem;
+        line-height: 1.5;
+    }
+
+    #target {
+        white-space: pre-wrap;
+        word-wrap: break-word;
+    }
+
+    #target .filter-highlight {
+        color: #dc3545;
+        background-color: rgba(220, 53, 69, 0.1);
+        padding: 0 2px;
+        border-radius: 2px;
+    }
+
 </style>
 
 <div class="container-fluid col-xl-8 mt-4">
-
     <div class="alert alert-danger mt-1" role="alert">
         <a href="https://sunkz.top/posts/文本工具箱上架utools啦/" class="alert-link">工具箱已经上架到 utools 了, 点击查看详情</a>
     </div>
@@ -311,6 +400,7 @@
             <div class="toggle-option active" data-target="text" onclick="switchTab('text')">文本处理</div>
             <div class="toggle-option inactive" data-target="json-operation" onclick="switchTab('json-operation')">JSON处理</div>
             <div class="toggle-option inactive" data-target="set-operation" onclick="switchTab('set-operation')">集合运算</div>
+            <div class="toggle-option inactive" data-target="bigbang" onclick="switchTab('bigbang')">大爆炸</div>
         </div>
     </div>
 
@@ -320,13 +410,13 @@
         <div class="tab-pane fade show active no-padding" id="text" role="tabpanel" aria-labelledby="text-tab">
             <div class="card-group mt-1">
                 <div class="card mr-1">
-                    <textarea id="source" rows="17" class="form-control" placeholder="请输入文本"></textarea>
+                    <textarea id="source" rows="15" class="form-control" placeholder="请输入文本"></textarea>
                     <div class="d-flex justify-content-end px-2 py-1">
                         <small id="source-stats" class="stats-text">0 行 · 0 字符</small>
                     </div>
                 </div>
                 <div class="card">
-                    <textarea id="target" rows="17" class="form-control"></textarea>
+                    <div id="target" contenteditable="true" class="form-control" style="min-height: 370px; overflow-y: auto;"></div>
                     <div class="d-flex justify-content-end px-2 py-1">
                         <small id="target-stats" class="stats-text">0 行 · 0 字符</small>
                     </div>
@@ -365,16 +455,18 @@
                 <button type="button" class="btn btn-outline-dark" data-toggle="tooltip" title="为空时默认当前时间戳" onclick="toDate()">转日期</button>
             </div>
             <div class="btn-group mt-1" role="group" aria-label="Basic example">
-                <span class="input-group-text" data-toggle="tooltip" title="将会移除每行首尾空格以及空白行">多行</span>
-                <button type="button" class="btn btn-outline-dark" onclick="distinct()">去重</button>
+                <span class="input-group-text" data-toggle="tooltip" title="多行文本处理">多行</span>
                 <button type="button" class="btn btn-outline-dark" onclick="ascending()">升序</button>
                 <button type="button" class="btn btn-outline-dark" onclick="descending()">降序</button>
+                <button type="button" class="btn btn-outline-dark" onclick="distinct()">去重</button>
                 <button type="button" class="btn btn-outline-dark" onclick="wordFrequency()">词频</button>
+                <button type="button" class="btn btn-outline-dark" onclick="sum()" data-toggle="tooltip" title="多行数字求和">求和</button>
+                <button type="button" class="btn btn-outline-dark" onclick="average()" data-toggle="tooltip" title="多行数字求平均">平均</button>
             </div>
             <div class="btn-group mt-1" role="group" aria-label="Basic example">
-                <button type="button" id="merge-btn" class="btn btn-outline-dark" onclick="mergeSymbol('empty')">合并x,</button>
-                <button type="button" class="btn btn-outline-dark" onclick="mergeSymbol('single')">合并'x',</button>
-                <button type="button" class="btn btn-outline-dark" onclick="mergeSymbol('double')">合并"x",</button>
+                <button type="button" id="merge-empty-btn" class="btn btn-outline-dark" onclick="mergeSymbol('empty')">合并x,</button>
+                <button type="button" id="merge-single-btn" class="btn btn-outline-dark" onclick="mergeSymbol('single')">'x',</button>
+                <button type="button" id="merge-double-btn" class="btn btn-outline-dark" onclick="mergeSymbol('double')">"x",</button>
             </div>
             <div class="btn-group mt-1" role="group" aria-label="Basic example">
                 <button type="button" id="split-btn" class="btn btn-outline-dark" onclick="splitlines(',')">分割,</button>
@@ -394,24 +486,54 @@
                     <a class="dropdown-item" href="#" onclick="splitlines('.')">分割.</a>
                 </div>
             </div>
-            <!-- 文本过滤：模式切换 + 输入框 -->
+            <!-- 过滤和提取列功能区域 -->
             <div class="input-group mt-1">
                 <div class="input-group-prepend">
-                    <span class="input-group-text" id="txtFilterBtn" data-toggle="tooltip">过滤(排除)</span>
-                    <button type="button" class="btn btn-outline-secondary dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-expanded="false">
-                        <span class="sr-only">textFilter</span>
-                    </button>
-                    <div class="dropdown-menu">
-                        <a class="dropdown-item" href="#" id="modeTextReplace">模式一 : 替换</a>
-                        <a class="dropdown-item" href="#" id="modeTextFilterExclude">模式二 : 过滤(排除)</a>
-                        <a class="dropdown-item" href="#" id="modeTextFilterInclude">模式三 : 过滤(保留)</a>
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-outline-dark" id="txtFilterBtn" data-toggle="tooltip" title="多行文本过滤 支持逻辑表达式: || 或, && 与, ! 非, () 分组">过滤</button>
+                        <button type="button" class="btn btn-outline-dark dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-expanded="false">
+                            <span class="sr-only">过滤item</span>
+                        </button>
+                        <div class="dropdown-menu" aria-labelledby="txtFilterBtn">
+                            <a class="dropdown-item" href="#" onclick="switchToFilterMode()">过滤</a>
+                            <a class="dropdown-item" href="#" onclick="switchToExtractMode()">提取</a>
+                            <a class="dropdown-item" href="#" onclick="switchToReplaceMode()">替换</a>
+                            <a class="dropdown-item" href="#" onclick="switchToJoinMode()">拼接</a>
+                        </div>
                     </div>
                 </div>
-                <input type="text" id="textFilterInput" class="form-control" placeholder="过滤掉包含指定文本的行" aria-label="Text filter input">
-                <input type="text" id="textReplaceFrom" class="form-control d-none" placeholder="旧文本" aria-label="Replace from">
-                <input type="text" id="textReplaceTo" class="form-control d-none" placeholder="新文本" aria-label="Replace to">
-                <div class="input-group-append" id="replaceOptions">
-                    <button type="button" class="btn btn-outline-secondary" id="toggleNewlineBtn" title="将 \n 视为换行" data-toggle="tooltip">\n</button>
+                
+                <!-- 过滤输入区域 -->
+                <div id="filterInputGroup" class="flex-grow-1">
+                    <input type="text" id="textFilterInput" class="form-control" placeholder="多行文本过滤 支持逻辑表达式: a || b, (a || b) && c, (a || b) && (c || !d)" aria-label="Text filter input">
+                </div>
+                
+                <!-- 提取列输入区域 -->
+                <div id="extractInputGroup" class="flex-grow-1" style="display: none;">
+                    <div class="input-group">
+                        <input type="text" id="extractDelimiter" class="form-control" style="width: 33.333%;" placeholder="请输入分割符" aria-label="Extract delimiter">
+                        <input type="text" id="extractColumns" class="form-control" style="width: 66.666%;" placeholder="请输入需要提取的列（多个列用逗号分隔，如：1,3,5）" aria-label="Extract columns">
+                    </div>
+                </div>
+                
+                <!-- 替换功能区域 -->
+                <div id="replaceInputGroup" class="flex-grow-1" style="display: none;">
+                    <div class="input-group">
+                        <input type="text" id="replaceFrom" class="form-control" style="width: 50%;" placeholder="请输入要替换的内容" aria-label="Replace from">
+                        <input type="text" id="replaceTo" class="form-control" style="width: 50%;" placeholder="请输入替换后的内容" aria-label="Replace to">
+                    </div>
+                </div>
+                
+                <!-- 拼接功能区域 -->
+                <div id="joinInputGroup" class="flex-grow-1" style="display: none;">
+                    <div class="input-group">
+                        <input type="text" id="joinPrefix" class="form-control" style="width: 25%;" placeholder="请输入前缀" aria-label="Join prefix">
+                        <input type="text" id="joinSuffix" class="form-control" style="width: 25%;" placeholder="请输入后缀" aria-label="Join suffix">
+                    </div>
+                </div>
+                
+                <!-- 右侧按钮组 -->
+                <div class="input-group-append">
                     <button type="button" class="btn btn-outline-secondary" id="toggleCaseBtn" title="区分大小写：开启=区分 关闭=不区分" data-toggle="tooltip">Aa</button>
                 </div>
             </div>
@@ -532,6 +654,36 @@
                 </div>
             </div>
         </div>
+        <!-- 第四个标签页内容 - 大爆炸 -->
+        <div class="tab-pane fade no-padding" id="bigbang" role="tabpanel" aria-labelledby="bigbang-tab">
+            <div class="card-group mt-1">
+                <div class="card mr-1">
+                    <div id="wordContainer" class="word-container"></div>
+                    <div class="d-flex justify-content-end px-2 py-1">
+                        <small id="bigbang-source-stats" class="stats-text">0 个元素</small>
+                    </div>
+                </div>
+                <div class="card">
+                    <div id="resultArea" class="result-area"></div>
+                    <div class="d-flex justify-content-end px-2 py-1">
+                        <small id="bigbang-target-stats" class="stats-text">0 行 · 0 字符</small>
+                    </div>
+                </div>
+            </div>
+            <div class="input-group mt-1">
+                <input type="text" id="bigbangInput" class="form-control" placeholder="请粘贴或输入文本..." aria-label="Bigbang input">
+            </div>
+            <div class="btn-group mt-1" role="group" aria-label="Split mode">
+                <span class="input-group-text">分割模式</span>
+                <button type="button" class="btn btn-outline-dark" id="splitByWord" onclick="bigbangSplitMode('word')">分词</button>
+                <button type="button" class="btn btn-outline-dark" id="splitByChar" onclick="bigbangSplitMode('char')">分字</button>
+            </div>
+            <div class="btn-group mt-1" role="group" aria-label="Actions">
+                <button type="button" class="btn btn-outline-dark" onclick="bigbangClearInput()">清空输入</button>
+                <button type="button" class="btn btn-outline-dark" onclick="bigbangClearSelection()">清空选择</button>
+                <button type="button" class="btn btn-outline-dark" onclick="bigbangCopyResult()">复制结果</button>
+            </div>
+        </div>
     </div>
 </div>
 <script>
@@ -644,11 +796,27 @@
         }
     }
 
+    function getTargetText() {
+        const target = document.getElementById('target');
+        return target.textContent || target.innerText || '';
+    }
+
+    function setTargetText(text) {
+        const target = document.getElementById('target');
+        target.textContent = text;
+        updateStats('target');
+    }
+
+    function setTargetHTML(html) {
+        const target = document.getElementById('target');
+        target.innerHTML = html;
+        updateStats('target');
+    }
+
     function doClear() {
         document.getElementById('source').value = '';
-        document.getElementById('target').value = '';
+        setTargetText('');
         updateStats('source');
-        updateStats('target');
     }
 
     function doJsonClear() {
@@ -657,7 +825,7 @@
     }
 
     function overwrite() {
-        document.getElementById('source').value = document.getElementById('target').value;
+        document.getElementById('source').value = getTargetText();
         updateStats('source');
     }
 
@@ -667,22 +835,13 @@
 
     function mergeSymbol(symbolToken) {
         let symbol = '';
-        let label = '合并x,';
         if (symbolToken === 'single') {
             symbol = "'";
-            label = "合并'x',";
         } else if (symbolToken === 'double') {
             symbol = '"';
-            label = '合并"x",';
-        }
-        const mergeBtn = document.getElementById('merge-btn');
-        if (mergeBtn) {
-            mergeBtn.innerText = label;
-            mergeBtn.setAttribute('onclick', `mergeSymbol('${symbolToken}')`);
         }
         const lines = document.getElementById('source').value.trim().split('\n').map(item => item.trim()).filter(item => item !== '');
-        document.getElementById('target').value = lines.map(item => `${symbol}${item}${symbol}`).join(',');
-        updateStats('target');
+        setTargetText(lines.map(item => `${symbol}${item}${symbol}`).join(','));
     }
 
     function wordFrequency() {
@@ -691,192 +850,277 @@
         lines.forEach(line => {
             freqMap[line] = (freqMap[line] || 0) + 1;
         });
-        const sortedEntries = Object.entries(freqMap).sort((a, b) => {
-            if (b[1] !== a[1]) {
-                return b[1] - a[1];
-            } else {
-                return a[0].localeCompare(b[0]);
-            }
-        });
-        document.getElementById('target').value = sortedEntries.map(entry => `${entry[0]} : ${entry[1]}`).join('\n');
-        updateStats('target');
+        // 按词频降序排序，词频相同时按词的字母顺序排序
+        const sortedFreqMap = {};
+        Object.entries(freqMap)
+            .sort((a, b) => {
+                if (b[1] !== a[1]) {
+                    return b[1] - a[1];
+                } else {
+                    return a[0].localeCompare(b[0]);
+                }
+            })
+            .forEach(([key, value]) => {
+                sortedFreqMap[key] = value;
+            });
+        // 以 JSON 格式展示结果，带缩进
+        setTargetText(JSON.stringify(sortedFreqMap, null, 4));
     }
 
     // 修改 splitlines 函数定义以支持分隔符参数
     function splitlines(delimiter) {
-        // 更新按钮文本和事件参数
-        document.getElementById('split-btn').innerText = `分割${delimiter}`;
-        document.getElementById('split-btn').setAttribute('onclick', `splitlines('${delimiter}')`);
-        
         // 按指定分隔符分割文本
         const source = document.getElementById('source').value.trim();
         const lines = source.split(delimiter)
             .map(item => item.trim())
             .filter(item => item !== '');
-        document.getElementById('target').value = lines.join('\n');
-        updateStats('target');
+        setTargetText(lines.join('\n'));
     }
 
     function distinct() {
         const lines = document.getElementById('source').value.trim().split('\n').map(item => item.trim()).filter(item => item !== '');
-        document.getElementById('target').value = [...new Set(lines)].join('\n');
-        updateStats('target');
+        setTargetText([...new Set(lines)].join('\n'));
     }
 
-    // 文本过滤模式切换 + 实时过滤
+    // 文本过滤：支持与或非逻辑表达式
     (function() {
         const txtFilterBtn = document.getElementById('txtFilterBtn');
-        const modeExclude = document.getElementById('modeTextFilterExclude');
-        const modeInclude = document.getElementById('modeTextFilterInclude');
-        const modeReplace = document.getElementById('modeTextReplace');
         const textFilterInput = document.getElementById('textFilterInput');
-        const textReplaceFrom = document.getElementById('textReplaceFrom');
-        const textReplaceTo = document.getElementById('textReplaceTo');
-        const replaceOptions = document.getElementById('replaceOptions');
-        const toggleNewlineBtn = document.getElementById('toggleNewlineBtn');
         const toggleCaseBtn = document.getElementById('toggleCaseBtn');
 
-        if (!txtFilterBtn || !modeExclude || !modeInclude || !modeReplace || !textFilterInput || !textReplaceFrom || !textReplaceTo || !replaceOptions || !toggleNewlineBtn || !toggleCaseBtn) return;
+        if (!txtFilterBtn || !textFilterInput || !toggleCaseBtn) return;
 
-        window.currentTextFilterMode = 'exclude';
-        window.textReplaceTreatNewline = false;
-        window.textReplaceCaseSensitive = false; // Aa 关闭=不敏感，开启=敏感
+        window.textFilterCaseSensitive = false;
 
-        // 初始：模式一默认隐藏 "\n" 按钮
-        toggleNewlineBtn.classList.add('d-none');
-
-        function applyOutput(lines) {
-            let outputText = Array.isArray(lines) ? lines.join('\n') : String(lines);
-            // 过滤/包含模式下：可选将输入的 "\\n" 视为换行来匹配
-            if (window.textReplaceTreatNewline && typeof lines !== 'string') {
-                const keyword = textFilterInput.value || '';
-                const normalizedKeyword = keyword.replace(/\\n/g, '\n');
-                if (keyword !== normalizedKeyword && keyword !== '') {
-                    const rawValue = document.getElementById('source').value;
-                    const rawLines = rawValue.split('\n');
-                    const handled = rawLines.map(item => item.trim()).filter(item => item !== '');
-                    let result;
-                    if (window.currentTextFilterMode === 'exclude') {
-                        result = handled.filter(line => !line.includes(normalizedKeyword));
-                    } else if (window.currentTextFilterMode === 'include') {
-                        result = handled.filter(line => line.includes(normalizedKeyword));
+        function parseLogicalExpression(expr) {
+            const tokens = [];
+            let i = 0;
+            
+            while (i < expr.length) {
+                const char = expr[i];
+                
+                if (/\s/.test(char)) {
+                    i++;
+                    continue;
+                }
+                
+                if (char === '(' || char === ')' || char === '!' || char === '&' || char === '|') {
+                    tokens.push(char);
+                    i++;
+                } else {
+                    let token = '';
+                    while (i < expr.length && !/[\s()&|!]/.test(expr[i])) {
+                        token += expr[i];
+                        i++;
                     }
-                    if (result) {
-                        outputText = result.join('\n');
+                    if (token) {
+                        tokens.push(token);
                     }
                 }
             }
-            document.getElementById('target').value = outputText;
-            updateStats('target');
+            
+            return tokens;
         }
 
-        function runTextFilterOrReplace() {
-            const rawValue = document.getElementById('source').value;
-
-            // 替换模式：对完整文本进行替换，支持跨行
-            if (window.currentTextFilterMode === 'replace') {
-                let from = textReplaceFrom.value || '';
-                let to = textReplaceTo.value || '';
-                if (window.textReplaceTreatNewline) {
-                    from = from.replace(/\\n/g, '\n');
-                    to = to.replace(/\\n/g, '\n');
-                }
-                if (from === '') {
-                    document.getElementById('target').value = rawValue;
-                    updateStats('target');
-                    return;
-                }
-                const escaped = from.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-                const flags = window.textReplaceCaseSensitive ? 'g' : 'gi';
-                const regex = new RegExp(escaped, flags);
-                const replacedText = rawValue.replace(regex, to);
-                document.getElementById('target').value = replacedText;
-                updateStats('target');
-                return;
+        function buildAST(tokens) {
+            let pos = 0;
+            
+            function parseExpression() {
+                return parseOr();
             }
+            
+            function parseOr() {
+                let left = parseAnd();
+                while (pos < tokens.length && tokens[pos] === '|') {
+                    pos++;
+                    if (pos < tokens.length && tokens[pos] === '|') {
+                        pos++;
+                    }
+                    // 检查是否有右侧操作数
+                    if (pos >= tokens.length) {
+                        // 如果没有右侧操作数，返回左侧操作数
+                        return left;
+                    }
+                    const right = parseAnd();
+                    left = { type: 'or', left, right };
+                }
+                return left;
+            }
+            
+            function parseAnd() {
+                let left = parseNot();
+                while (pos < tokens.length && tokens[pos] === '&') {
+                    pos++;
+                    if (pos < tokens.length && tokens[pos] === '&') {
+                        pos++;
+                    }
+                    // 检查是否有右侧操作数
+                    if (pos >= tokens.length) {
+                        // 如果没有右侧操作数，返回左侧操作数
+                        return left;
+                    }
+                    const right = parseNot();
+                    left = { type: 'and', left, right };
+                }
+                return left;
+            }
+            
+            function parseNot() {
+                if (pos < tokens.length && tokens[pos] === '!') {
+                    pos++;
+                    const operand = parsePrimary();
+                    return { type: 'not', operand };
+                }
+                return parsePrimary();
+            }
+            
+            function parsePrimary() {
+                if (pos < tokens.length && tokens[pos] === '(') {
+                    pos++;
+                    const expr = parseExpression();
+                    if (pos < tokens.length && tokens[pos] === ')') {
+                        pos++;
+                    }
+                    return expr;
+                }
+                if (pos < tokens.length) {
+                    const token = tokens[pos];
+                    pos++;
+                    return { type: 'literal', value: token };
+                }
+                return { type: 'literal', value: '' };
+            }
+            
+            return parseExpression();
+        }
 
-            // 过滤模式：逐行处理（去首尾空白，忽略空行），支持大小写不敏感
+        function evaluateAST(ast, line) {
+            if (!ast) return { matched: true, matchedTokens: [] };
+            
+            switch (ast.type) {
+                case 'or':
+                    const leftResult = evaluateAST(ast.left, line);
+                    const rightResult = evaluateAST(ast.right, line);
+                    if (leftResult.matched || rightResult.matched) {
+                        return { matched: true, matchedTokens: [...leftResult.matchedTokens, ...rightResult.matchedTokens] };
+                    }
+                    return { matched: false, matchedTokens: [] };
+                case 'and':
+                    const leftResultAnd = evaluateAST(ast.left, line);
+                    const rightResultAnd = evaluateAST(ast.right, line);
+                    if (leftResultAnd.matched && rightResultAnd.matched) {
+                        return { matched: true, matchedTokens: [...leftResultAnd.matchedTokens, ...rightResultAnd.matchedTokens] };
+                    }
+                    return { matched: false, matchedTokens: [] };
+                case 'not':
+                    const operandResult = evaluateAST(ast.operand, line);
+                    return { matched: !operandResult.matched, matchedTokens: [] };
+                case 'literal':
+                    if (window.textFilterCaseSensitive) {
+                        const matched = line.includes(ast.value);
+                        return { matched, matchedTokens: matched ? [ast.value] : [] };
+                    }
+                    const matched = line.toLowerCase().includes(ast.value.toLowerCase());
+                    return { matched, matchedTokens: matched ? [ast.value] : [] };
+                default:
+                    return { matched: true, matchedTokens: [] };
+            }
+        }
+
+        function runTextFilter() {
+            const rawValue = document.getElementById('source').value;
             const rawLines = rawValue.split('\n');
             const handled = rawLines.map(item => item.trim()).filter(item => item !== '');
-            const keywordInput = textFilterInput.value || '';
-            const normalizedKeyword = window.textReplaceTreatNewline ? keywordInput.replace(/\\n/g, '\n') : keywordInput;
+            const expression = textFilterInput.value || '';
 
             let result;
-            if (!normalizedKeyword) {
-                result = handled;
+            if (!expression.trim()) {
+                result = handled.map(line => ({ text: line, matched: false, matchedTokens: [] }));
             } else {
-                const includesFn = (line) => {
-                    if (window.textReplaceCaseSensitive) {
-                        return line.includes(normalizedKeyword);
+                try {
+                    const tokens = parseLogicalExpression(expression);
+                    // 检查是否存在不完整的表达式（例如 'apple ||' 或 '(apple || banana) && !'）
+                    if (tokens.length > 0) {
+                        // 检查是否有不完整的操作符在末尾
+                        if (tokens[tokens.length - 1] === '|' || tokens[tokens.length - 1] === '&') {
+                            // 如果最后一个token是操作符，则移除它
+                            tokens.pop();
+                        } else if (tokens[tokens.length - 1] === '!') {
+                            // 如果最后一个token是'!'，也需要移除它，因为它是一元操作符但没有操作数
+                            tokens.pop();
+                        }
                     }
-                    return line.toLowerCase().includes(normalizedKeyword.toLowerCase());
-                };
-                if (window.currentTextFilterMode === 'exclude') {
-                    result = handled.filter(line => !includesFn(line));
-                } else {
-                    result = handled.filter(line => includesFn(line));
+                    const ast = buildAST(tokens);
+                    result = handled.map(line => {
+                        const evalResult = evaluateAST(ast, line);
+                        return { text: line, matched: evalResult.matched, matchedTokens: evalResult.matchedTokens };
+                    }).filter(item => item.matched);
+                } catch (error) {
+                    result = handled.map(line => ({ text: line, matched: false, matchedTokens: [] }));
                 }
             }
-            applyOutput(result);
+            
+            const targetEl = document.getElementById('target');
+            const htmlContent = result.map(item => {
+                let text = item.text;
+                
+                // 转义HTML特殊字符（但保留已有的HTML标签）
+                const escapedText = text.replace(/&/g, '&amp;')
+                    .replace(/</g, '&lt;')
+                    .replace(/>/g, '&gt;');
+                
+                // 分割HTML标签和文本内容
+                const parts = [];
+                let lastIndex = 0;
+                const tagRegex = /&lt;[^&gt;]+&gt;/g;
+                let match;
+                
+                while ((match = tagRegex.exec(escapedText)) !== null) {
+                    if (match.index > lastIndex) {
+                        parts.push({ type: 'text', content: escapedText.substring(lastIndex, match.index) });
+                    }
+                    // 将转义的HTML标签还原
+                    const originalTag = match[0].replace(/&lt;/g, '<').replace(/&gt;/g, '>');
+                    parts.push({ type: 'tag', content: originalTag });
+                    lastIndex = match.index + match[0].length;
+                }
+                
+                if (lastIndex < escapedText.length) {
+                    parts.push({ type: 'text', content: escapedText.substring(lastIndex) });
+                }
+                
+                // 只在文本部分进行高亮
+                const highlightedParts = parts.map(part => {
+                    if (part.type === 'tag') {
+                        return part.content;
+                    } else {
+                        let highlightedText = part.content;
+                        item.matchedTokens.forEach(token => {
+                            if (window.textFilterCaseSensitive) {
+                                highlightedText = highlightedText.replace(new RegExp(`(${escapeRegExp(token)})`, 'g'), '<span class="filter-highlight">$1</span>');
+                            } else {
+                                highlightedText = highlightedText.replace(new RegExp(`(${escapeRegExp(token)})`, 'gi'), '<span class="filter-highlight">$1</span>');
+                            }
+                        });
+                        return highlightedText;
+                    }
+                });
+                
+                return highlightedParts.join('');
+            }).join('<br>');
+            setTargetHTML(htmlContent);
         }
 
-        // 输入事件
-        textFilterInput.addEventListener('input', runTextFilterOrReplace);
-        textReplaceFrom.addEventListener('input', runTextFilterOrReplace);
-        textReplaceTo.addEventListener('input', runTextFilterOrReplace);
-        toggleNewlineBtn.addEventListener('click', function() {
-            window.textReplaceTreatNewline = !window.textReplaceTreatNewline;
-            toggleNewlineBtn.classList.toggle('active', window.textReplaceTreatNewline);
-            runTextFilterOrReplace();
-        });
+        function escapeRegExp(string) {
+            return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+        }
+
+        textFilterInput.addEventListener('input', runTextFilter);
         toggleCaseBtn.addEventListener('click', function() {
-            window.textReplaceCaseSensitive = !window.textReplaceCaseSensitive;
-            // 按钮开启=敏感 -> active 表示敏感
-            toggleCaseBtn.classList.toggle('active', window.textReplaceCaseSensitive);
-            runTextFilterOrReplace();
+            window.textFilterCaseSensitive = !window.textFilterCaseSensitive;
+            toggleCaseBtn.classList.toggle('active', window.textFilterCaseSensitive);
+            runTextFilter();
         });
-
-        // 模式切换
-        modeExclude.addEventListener('click', function(e) {
-            e.preventDefault();
-            window.currentTextFilterMode = 'exclude';
-            txtFilterBtn.textContent = '过滤(排除)';
-            textFilterInput.classList.remove('d-none');
-            textReplaceFrom.classList.add('d-none');
-            textReplaceTo.classList.add('d-none');
-            toggleNewlineBtn.classList.add('d-none');
-            textFilterInput.placeholder = '过滤掉包含指定文本的行';
-            runTextFilterOrReplace();
-        });
-        modeInclude.addEventListener('click', function(e) {
-            e.preventDefault();
-            window.currentTextFilterMode = 'include';
-            txtFilterBtn.textContent = '过滤(保留)';
-            textFilterInput.classList.remove('d-none');
-            textReplaceFrom.classList.add('d-none');
-            textReplaceTo.classList.add('d-none');
-            toggleNewlineBtn.classList.add('d-none');
-            textFilterInput.placeholder = '过滤出包含指定文本的行';
-            runTextFilterOrReplace();
-        });
-        modeReplace.addEventListener('click', function(e) {
-            e.preventDefault();
-            window.currentTextFilterMode = 'replace';
-            txtFilterBtn.textContent = '替换';
-            textFilterInput.classList.add('d-none');
-            textReplaceFrom.classList.remove('d-none');
-            textReplaceTo.classList.remove('d-none');
-            replaceOptions.classList.remove('d-none');
-            toggleNewlineBtn.classList.remove('d-none');
-            // 同步按钮状态：active 表示敏感
-            toggleCaseBtn.classList.toggle('active', window.textReplaceCaseSensitive);
-            textReplaceFrom.placeholder = '旧文本';
-            textReplaceTo.placeholder = '新文本';
-            runTextFilterOrReplace();
-        });
-
-        // 默认进入“模式三：替换”
-        modeReplace.click();
     })();
 
     function ascending() {
@@ -892,8 +1136,7 @@
                 return a.localeCompare(b);
             }
         });
-        document.getElementById('target').value = sortedElements.join('\n');
-        updateStats('target');
+        setTargetText(sortedElements.join('\n'));
     }
 
     function descending() {
@@ -909,55 +1152,241 @@
                 return b.localeCompare(a);
             }
         });
-        document.getElementById('target').value = sortedElements.join('\n');
-        updateStats('target');
+        setTargetText(sortedElements.join('\n'));
+    }
+
+    function sum() {
+        const lines = document.getElementById('source').value.trim().split('\n').map(item => item.trim()).filter(item => item !== '');
+        const numbers = lines.map(item => parseFloat(item)).filter(item => !isNaN(item));
+        
+        if (numbers.length === 0) {
+            setTargetText('没有有效的数字');
+            return;
+        }
+        
+        const total = numbers.reduce((acc, num) => acc + num, 0);
+        
+        setTargetText(total.toString());
+    }
+
+    function average() {
+        const lines = document.getElementById('source').value.trim().split('\n').map(item => item.trim()).filter(item => item !== '');
+        const numbers = lines.map(item => parseFloat(item)).filter(item => !isNaN(item));
+        
+        if (numbers.length === 0) {
+            setTargetText('没有有效的数字');
+            return;
+        }
+        
+        const sum = numbers.reduce((acc, num) => acc + num, 0);
+        const avg = sum / numbers.length;
+        
+        setTargetText(avg.toString());
     }
 
     function reverse() {
-        document.getElementById("target").value = document.getElementById("source").value.split('').reverse().join('');
-        updateStats('target');
+        setTargetText(document.getElementById("source").value.split('').reverse().join(''));
     }
 
     function toUpperCase() {
-        document.getElementById("target").value = document.getElementById("source").value.toUpperCase();
-        updateStats('target');
+        setTargetText(document.getElementById("source").value.toUpperCase());
     }
 
     function toLowerCase() {
-        document.getElementById("target").value = document.getElementById("source").value.toLowerCase();
-        updateStats('target');
+        setTargetText(document.getElementById("source").value.toLowerCase());
     }
 
     function toCamelCase() {
-        document.getElementById("target").value = document.getElementById("source").value.replace(/(_\w)/g, function (m) {
+        setTargetText(document.getElementById("source").value.replace(/(_\w)/g, function (m) {
             return m[1].toUpperCase();
-        });
-        updateStats('target');
+        }));
     }
 
     function toSnakeCase() {
-        document.getElementById("target").value = document.getElementById("source").value.replace(/[A-Z]/g, (match) => `_${match.toLowerCase()}`);
-        updateStats('target');
+        setTargetText(document.getElementById("source").value.replace(/[A-Z]/g, (match) => `_${match.toLowerCase()}`));
     }
 
     function base64Encode() {
-        document.getElementById("target").value = btoa(document.getElementById("source").value);
-        updateStats('target');
+        setTargetText(btoa(document.getElementById("source").value));
     }
 
     function base64Decode() {
-        document.getElementById("target").value = atob(document.getElementById("source").value);
-        updateStats('target');
+        setTargetText(atob(document.getElementById("source").value));
     }
 
     function urlEncode() {
-        document.getElementById("target").value = encodeURIComponent(document.getElementById("source").value);
-        updateStats('target');
+        setTargetText(encodeURIComponent(document.getElementById("source").value));
     }
 
     function urlDecode() {
-        document.getElementById("target").value = decodeURIComponent(document.getElementById("source").value);
-        updateStats('target');
+        setTargetText(decodeURIComponent(document.getElementById("source").value));
+    }
+
+    async function switchToExtractMode() {
+        // 切换到提取列模式
+        document.getElementById('filterInputGroup').style.display = 'none';
+        document.getElementById('replaceInputGroup').style.display = 'none';
+        document.getElementById('joinInputGroup').style.display = 'none';
+        document.getElementById('extractInputGroup').style.display = 'flex';
+        document.getElementById('toggleCaseBtn').style.display = 'none';
+        document.getElementById('txtFilterBtn').textContent = '提取';
+        
+        // 更新tooltip提示信息
+        const btn = document.getElementById('txtFilterBtn');
+        btn.setAttribute('title', '提取指定列，支持自定义分割符和多列提取');
+        
+        // 重新初始化tooltip
+        $(btn).tooltip('dispose');
+        $(btn).tooltip();
+        
+        // 添加实时提取事件监听器
+        const delimiterInput = document.getElementById('extractDelimiter');
+        const columnsInput = document.getElementById('extractColumns');
+        
+        delimiterInput.addEventListener('input', doExtractColumns);
+        columnsInput.addEventListener('input', doExtractColumns);
+        
+        // 初始执行一次提取
+        doExtractColumns();
+    }
+    
+    async function switchToReplaceMode() {
+        // 切换到替换模式
+        document.getElementById('filterInputGroup').style.display = 'none';
+        document.getElementById('extractInputGroup').style.display = 'none';
+        document.getElementById('joinInputGroup').style.display = 'none';
+        document.getElementById('replaceInputGroup').style.display = 'flex';
+        document.getElementById('toggleCaseBtn').style.display = 'none';
+        document.getElementById('txtFilterBtn').textContent = '替换';
+        
+        // 更新tooltip提示信息
+        const btn = document.getElementById('txtFilterBtn');
+        btn.setAttribute('title', '替换文本内容');
+        
+        // 重新初始化tooltip
+        $(btn).tooltip('dispose');
+        $(btn).tooltip();
+        
+        // 添加实时替换事件监听器
+        const replaceFromInput = document.getElementById('replaceFrom');
+        const replaceToInput = document.getElementById('replaceTo');
+        
+        replaceFromInput.addEventListener('input', doReplace);
+        replaceToInput.addEventListener('input', doReplace);
+        
+        // 初始执行一次替换
+        doReplace();
+    }
+    
+    async function switchToJoinMode() {
+        // 切换到拼接模式
+        document.getElementById('filterInputGroup').style.display = 'none';
+        document.getElementById('extractInputGroup').style.display = 'none';
+        document.getElementById('replaceInputGroup').style.display = 'none';
+        document.getElementById('joinInputGroup').style.display = 'flex';
+        document.getElementById('toggleCaseBtn').style.display = 'none';
+        document.getElementById('txtFilterBtn').textContent = '拼接';
+        
+        // 更新tooltip提示信息
+        const btn = document.getElementById('txtFilterBtn');
+        btn.setAttribute('title', '拼接文本前缀和后缀');
+        
+        // 重新初始化tooltip
+        $(btn).tooltip('dispose');
+        $(btn).tooltip();
+        
+        // 添加实时拼接事件监听器
+        const joinPrefixInput = document.getElementById('joinPrefix');
+        const joinSuffixInput = document.getElementById('joinSuffix');
+        
+        joinPrefixInput.addEventListener('input', doJoin);
+        joinSuffixInput.addEventListener('input', doJoin);
+        
+        // 初始执行一次拼接
+        doJoin();
+    }
+    
+    async function switchToFilterMode() {
+        // 切换回过滤模式
+        document.getElementById('extractInputGroup').style.display = 'none';
+        document.getElementById('replaceInputGroup').style.display = 'none';
+        document.getElementById('joinInputGroup').style.display = 'none';
+        document.getElementById('filterInputGroup').style.display = 'flex';
+        document.getElementById('toggleCaseBtn').style.display = 'block';
+        document.getElementById('txtFilterBtn').textContent = '过滤';
+        
+        // 更新tooltip提示信息
+        const btn = document.getElementById('txtFilterBtn');
+        btn.setAttribute('title', '多行文本过滤 支持逻辑表达式: || 或, && 与, ! 非, () 分组');
+        
+        // 重新初始化tooltip
+        $(btn).tooltip('dispose');
+        $(btn).tooltip();
+    }
+    
+    function doExtractColumns() {
+        // 执行提取列操作
+        const delimiter = document.getElementById('extractDelimiter').value;
+        const columnsInput = document.getElementById('extractColumns').value;
+        
+        // 只有当用户输入了列号时，才检查是否有分隔符
+        if (columnsInput) {
+            if (!delimiter) {
+                return;
+            }
+            
+            // 解析列号
+            const columns = columnsInput.split(',').map(col => parseInt(col.trim()) - 1).filter(col => !isNaN(col) && col >= 0);
+            if (columns.length === 0) {
+                return;
+            }
+            
+            // 处理文本
+            const source = document.getElementById('source').value;
+            const lines = source.split('\n');
+            
+            const result = lines.map(line => {
+                const parts = line.split(delimiter);
+                return columns.map(col => parts[col] || '').join(delimiter);
+            }).filter(line => line.trim() !== '');
+            
+            setTargetText(result.join('\n'));
+        }
+    }
+    
+    function doReplace() {
+        // 执行替换操作
+        const replaceFrom = document.getElementById('replaceFrom').value;
+        const replaceTo = document.getElementById('replaceTo').value;
+        
+        // 只有当用户输入了要替换的内容时，才执行替换
+        if (replaceFrom) {
+            // 处理文本
+            const source = document.getElementById('source').value;
+            const result = source.replace(new RegExp(replaceFrom.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'g'), replaceTo);
+            
+            setTargetText(result);
+        } else {
+            // 如果没有输入要替换的内容，显示原始文本
+            const source = document.getElementById('source').value;
+            setTargetText(source);
+        }
+    }
+    
+    function doJoin() {
+        // 执行拼接操作
+        const prefix = document.getElementById('joinPrefix').value;
+        const suffix = document.getElementById('joinSuffix').value;
+        
+        // 处理文本
+        const source = document.getElementById('source').value;
+        const lines = source.split('\n');
+        
+        const result = lines.map(line => {
+            return prefix + line + suffix;
+        }).filter(line => line.trim() !== prefix + suffix);
+        
+        setTargetText(result.join('\n'));
     }
 
     function toTimestamp() {
@@ -982,8 +1411,7 @@
             const day = dateString.slice(6, 8);
 
             const date = new Date(`${year}-${month}-${day}`);
-            document.getElementById("target").value = Math.floor(date.getTime() / 1000);
-            updateStats('target');
+            setTargetText(Math.floor(date.getTime() / 1000));
         } else {
             const regex = /(\d{4})[-/年](\d{1,2})[-/月](\d{1,2})(?:日)?(?:\s(\d{1,2}):(\d{1,2}):(\d{1,2}))?/;
             const match = dateString.match(regex);
@@ -999,8 +1427,7 @@
                 throw new Error('Invalid date');
             }
 
-            document.getElementById("target").value = Math.floor(date.getTime() / 1000);
-            updateStats('target');
+            setTargetText(Math.floor(date.getTime() / 1000));
         }
     }
 
@@ -1013,7 +1440,6 @@
         const timestampInMilliseconds = timestamp < 10000000000 ? timestamp * 1000 : timestamp;
         const date = new Date(timestampInMilliseconds);
 
-        // 输出多种常见日期格式
         const year = date.getFullYear();
         const month = String(date.getMonth() + 1).padStart(2, '0');
         const day = String(date.getDate()).padStart(2, '0');
@@ -1023,24 +1449,22 @@
         const milliseconds = String(date.getMilliseconds()).padStart(3, '0');
 
         const formattedDates = [
-            `${year}-${month}-${day}`, // 年-月-日
-            `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`, // 年-月-日 时:分:秒
-            `${year}-${month}-${day} ${hours}:${minutes}:${seconds}.${milliseconds}`, // 年-月-日 时:分:秒.毫秒
-            `${year}/${month}/${day}`, // 年/月/日
-            `${year}/${month}/${day} ${hours}:${minutes}:${seconds}`, // 年/月/日 时:分:秒
-            `${year}/${month}/${day} ${hours}:${minutes}:${seconds}.${milliseconds}`, // 年/月/日 时:分:秒.毫秒
-            `${year}年${month}月${day}日`, // 年月日
-            `${year}年${month}月${day}日 ${hours}时${minutes}分${seconds}秒`, // 年月日 时分秒
-            `${year}年${month}月${day}日 ${hours}时${minutes}分${seconds}秒${milliseconds}毫秒` // 年月日 时分秒毫秒
+            `${year}-${month}-${day}`,
+            `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`,
+            `${year}-${month}-${day} ${hours}:${minutes}:${seconds}.${milliseconds}`,
+            `${year}/${month}/${day}`,
+            `${year}/${month}/${day} ${hours}:${minutes}:${seconds}`,
+            `${year}/${month}/${day} ${hours}:${minutes}:${seconds}.${milliseconds}`,
+            `${year}年${month}月${day}日`,
+            `${year}年${month}月${day}日 ${hours}时${minutes}分${seconds}秒`,
+            `${year}年${month}月${day}日 ${hours}时${minutes}分${seconds}秒${milliseconds}毫秒`
         ];
 
-        document.getElementById("target").value = formattedDates.join('\n');
-        updateStats('target');
+        setTargetText(formattedDates.join('\n'));
     }
 
     function calculator() {
-        document.getElementById("target").value = eval(document.getElementById("source").value);
-        updateStats('target');
+        setTargetText(eval(document.getElementById("source").value));
     }
 
     function jsonUnfold() {
@@ -1187,6 +1611,8 @@
             text = window.jsonSourceEditor.getValue();
         } else if (idPrefix === 'json_target' && window.jsonTargetEditor) {
             text = window.jsonTargetEditor.getValue();
+        } else if (idPrefix === 'target') {
+            text = textarea.textContent || textarea.innerText;
         } else if (textarea) {
             text = textarea.value;
         }
@@ -1223,9 +1649,6 @@
         button.addEventListener('click', handleClick);
     });
 
-    async function handleClick(event) {
-    }
-
     // 跟随系统主题：初始化并监听变化
     (function() {
         const mq = window.matchMedia ? window.matchMedia('(prefers-color-scheme: dark)') : null;
@@ -1239,17 +1662,35 @@
         }
     })();
 
+    // 新增jsonUnescape函数处理逻辑
+    function jsonUnescape() {
+        try {
+            const input = getJsonSource();
+            // 处理双重转义的JSON字符串
+            let result;
+            try {
+                // 先尝试直接解析
+                result = JSON.parse(input);
+            } catch (e) {
+                // 如果失败尝试二次解析（处理双重转义场景）
+                result = JSON.parse(JSON.parse(`"${input}"`));
+            }
+            setJsonTarget(JSON.stringify(result, null, 2));
+        } catch (error) {
+            // 符合错误处理规范 - 显示具体错误信息
+            setJsonTarget(`解析失败: ${error.message}`);
+            console.error('JSON转义错误:', error);
+        }
+    }
+
     // 新增JSON反向转义函数
     function escapeJson() {
         try {
             const input = document.getElementById("source").value;
-            // 使用JSON.stringify实现转义，并去除外层引号
             const escaped = JSON.stringify(input).slice(1, -1);
-            document.getElementById("target").value = escaped;
-            updateStats('target');
+            setTargetText(escaped);
         } catch (error) {
-            document.getElementById("target").value = `转义失败: ${error.message}`;
-            updateStats('target');
+            setTargetText(`转义失败: ${error.message}`);
             console.error('JSON反向转义错误:', error);
         }
     }
@@ -1407,8 +1848,291 @@
             });
             setJsonTarget(JSON.stringify(result, null, 2));
         } catch (error) {
-            setJsonTarget('error: ' + error.message);
+            setJsonTarget('错误: ' + error.message);
         }
+    }
+
+    // 大爆炸功能实现
+    let bigbangMode = 'word'; // 默认为分词模式
+    let selectedWords = [];
+
+    // 监听输入框变化自动处理
+    const bigbangInput = document.getElementById('bigbangInput');
+    if (bigbangInput) {
+        bigbangInput.addEventListener('input', function() {
+            const text = this.value;
+            if (text.trim()) {
+                // 默认激活分词模式
+                if (!document.getElementById('splitByWord').classList.contains('active') && 
+                    !document.getElementById('splitByChar').classList.contains('active')) {
+                    bigbangMode = 'word';
+                    document.getElementById('splitByWord').classList.add('active');
+                }
+                bigbangProcess(text);
+            } else {
+                document.getElementById('wordContainer').innerHTML = '';
+                selectedWords = [];
+                updateResult();
+                updateBigbangStats();
+            }
+        });
+    }
+
+    // 智能分割函数
+    function smartSplit(text) {
+        const tokens = [];
+        const specialChars = /[\s,;\.:\!\?\(\)\[\]\{\}<>'"/\\。？！，、；："\"'（）【】《》]/;
+        const urlRegex = /(https?:\/\/[^\s]+)/g;
+        
+        // 首先提取URL
+        const urls = text.match(urlRegex) || [];
+        let textWithoutUrls = text;
+        urls.forEach(function(url, index) {
+            textWithoutUrls = textWithoutUrls.replace(url, `__URL${index}__`);
+        });
+        
+        let currentToken = '';
+        for (let i = 0; i < textWithoutUrls.length; i++) {
+            const char = textWithoutUrls[i];
+            
+            if (specialChars.test(char)) {
+                if (currentToken) {
+                    tokens.push(currentToken);
+                    currentToken = '';
+                }
+                if (char.trim() !== '') {
+                    tokens.push(char);
+                }
+            } else {
+                currentToken += char;
+            }
+        }
+        if (currentToken) {
+            tokens.push(currentToken);
+        }
+        
+        // 还原URL
+        const finalTokens = [];
+        tokens.forEach(function(token) {
+            const urlMatch = token.match(/__URL(\d+)__/);
+            if (urlMatch) {
+                const urlIndex = parseInt(urlMatch[1]);
+                finalTokens.push(urls[urlIndex]);
+            } else {
+                finalTokens.push(token);
+            }
+        });
+        
+        return finalTokens;
+    }
+
+    // 分词处理
+    function bigbangProcess(text) {
+        let words = [];
+        
+        if (bigbangMode === 'word') {
+            // 先提取并保护URL
+            const urlRegex = /(https?:\/\/[^\s]+)/g;
+            const urls = [];
+            let textWithPlaceholders = text;
+            let match;
+            let urlIndex = 0;
+            
+            while ((match = urlRegex.exec(text)) !== null) {
+                urls.push(match[0]);
+                textWithPlaceholders = textWithPlaceholders.replace(match[0], `__URL_PLACEHOLDER_${urlIndex}__`);
+                urlIndex++;
+            }
+            
+            // 按空格分词，同时分离中英文
+            const tokens = textWithPlaceholders.split(/\s+/).filter(function(w) { return w.trim() !== ''; });
+            tokens.forEach(function(token) {
+                // 检查是否是URL占位符
+                const placeholderMatch = token.match(/__URL_PLACEHOLDER_(\d+)__/);
+                if (placeholderMatch) {
+                    const index = parseInt(placeholderMatch[1]);
+                    words.push(urls[index]);
+                } else {
+                    // 使用正则分离中文、英文、数字
+                    const parts = token.match(/[\u4e00-\u9fa5]+|[a-zA-Z]+|[0-9]+|[^\u4e00-\u9fa5a-zA-Z0-9\s]+/g);
+                    if (parts) {
+                        words = words.concat(parts);
+                    } else if (token) {
+                        words.push(token);
+                    }
+                }
+            });
+        } else if (bigbangMode === 'char') {
+            // 按字符分割
+            words = text.split('').filter(function(w) { return w.trim() !== ''; });
+        }
+        
+        const container = document.getElementById('wordContainer');
+        container.innerHTML = '';
+        selectedWords = [];
+        
+        words.forEach(function(word, index) {
+            const tag = document.createElement('span');
+            tag.className = 'word-tag';
+            tag.textContent = word;
+            tag.setAttribute('data-index', index);
+            tag.onclick = function() {
+                toggleWordSelection(this, word);
+            };
+            container.appendChild(tag);
+        });
+        
+        updateBigbangStats();
+    }
+
+    // 切换单词选中状态
+    function toggleWordSelection(element, word) {
+        if (element.classList.contains('selected')) {
+            element.classList.remove('selected');
+            const index = selectedWords.indexOf(word);
+            if (index > -1) {
+                selectedWords.splice(index, 1);
+            }
+        } else {
+            element.classList.add('selected');
+            selectedWords.push(word);
+        }
+        updateResult();
+    }
+
+    // 更新结果显示
+    function updateResult() {
+        const resultArea = document.getElementById('resultArea');
+        resultArea.textContent = selectedWords.join('');
+        updateBigbangStats();
+    }
+
+    // 更新大爆炸统计
+    function updateBigbangStats() {
+        const sourceStats = document.getElementById('bigbang-source-stats');
+        const targetStats = document.getElementById('bigbang-target-stats');
+        const container = document.getElementById('wordContainer');
+        const resultArea = document.getElementById('resultArea');
+        
+        if (sourceStats) {
+            const count = container.querySelectorAll('.word-tag').length;
+            sourceStats.textContent = count + ' 个元素';
+        }
+        
+        if (targetStats) {
+            const text = resultArea.textContent;
+            const stats = computeStats(text);
+            targetStats.textContent = stats.lines + ' 行 · ' + stats.chars + ' 字符';
+        }
+    }
+
+    // 切换分割模式
+    function bigbangSplitMode(mode) {
+        bigbangMode = mode;
+        
+        // 更新按钮样式
+        document.getElementById('splitByWord').classList.remove('active');
+        document.getElementById('splitByChar').classList.remove('active');
+        
+        if (mode === 'word') {
+            document.getElementById('splitByWord').classList.add('active');
+        } else if (mode === 'char') {
+            document.getElementById('splitByChar').classList.add('active');
+        }
+        
+        // 重新处理当前文本
+        const input = document.getElementById('bigbangInput');
+        if (input && input.value.trim()) {
+            bigbangProcess(input.value);
+        }
+    }
+
+    // 清空选择
+    function bigbangClearSelection() {
+        const tags = document.querySelectorAll('#wordContainer .word-tag');
+        tags.forEach(function(tag) {
+            tag.classList.remove('selected');
+        });
+        selectedWords = [];
+        updateResult();
+    }
+
+    // 清空所有
+    function bigbangClear() {
+        document.getElementById('bigbangInput').value = '';
+        document.getElementById('wordContainer').innerHTML = '';
+        document.getElementById('resultArea').textContent = '';
+        selectedWords = [];
+        updateBigbangStats();
+    }
+
+    // 清空输入框
+    function bigbangClearInput() {
+        document.getElementById('bigbangInput').value = '';
+        document.getElementById('bigbangInput').focus();
+    }
+
+    // 复制结果
+    function bigbangCopyResult() {
+        const result = document.getElementById('resultArea').textContent;
+        if (result) {
+            navigator.clipboard.writeText(result).then(function() {
+                showCopyNotification('复制成功！');
+            }).catch(function() {
+                // 复制失败，使用备用方法
+                const textarea = document.createElement('textarea');
+                textarea.value = result;
+                document.body.appendChild(textarea);
+                textarea.select();
+                const success = document.execCommand('copy');
+                document.body.removeChild(textarea);
+                if (success) {
+                    showCopyNotification('复制成功！');
+                } else {
+                    showCopyNotification('复制失败', true);
+                }
+            });
+        } else {
+            showCopyNotification('没有内容可复制', true);
+        }
+    }
+    
+    // 显示复制提醒弹窗
+    function showCopyNotification(message, isError) {
+        // 移除已存在的提示
+        const existingNotification = document.getElementById('copyNotification');
+        if (existingNotification) {
+            existingNotification.remove();
+        }
+        
+        // 创建新提示
+        const notification = document.createElement('div');
+        notification.id = 'copyNotification';
+        notification.textContent = message;
+        notification.style.position = 'fixed';
+        notification.style.top = '50%';
+        notification.style.left = '50%';
+        notification.style.transform = 'translate(-50%, -50%)';
+        notification.style.padding = '20px 40px';
+        notification.style.backgroundColor = '#ffffff';
+        notification.style.color = isError ? '#dc3545' : '#333333';
+        notification.style.border = '2px solid ' + (isError ? '#dc3545' : '#dee2e6');
+        notification.style.borderRadius = '8px';
+        notification.style.boxShadow = '0 4px 20px rgba(0, 0, 0, 0.3)';
+        notification.style.zIndex = '9999';
+        notification.style.fontSize = '16px';
+        notification.style.fontWeight = '500';
+        notification.style.transition = 'opacity 0.3s ease';
+        
+        document.body.appendChild(notification);
+        
+        // 2秒后淡出并移除
+        setTimeout(function() {
+            notification.style.opacity = '0';
+            setTimeout(function() {
+                notification.remove();
+            }, 300);
+        }, 2000);
     }
 </script>
 </body>
