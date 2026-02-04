@@ -1060,55 +1060,53 @@
                 }
             }
             
-            const targetEl = document.getElementById('target');
             const htmlContent = result.map(item => {
-                let text = item.text;
-                
-                // 转义HTML特殊字符（但保留已有的HTML标签）
-                const escapedText = text.replace(/&/g, '&amp;')
-                    .replace(/</g, '&lt;')
-                    .replace(/>/g, '&gt;');
-                
-                // 分割HTML标签和文本内容
-                const parts = [];
-                let lastIndex = 0;
-                const tagRegex = /&lt;[^&gt;]+&gt;/g;
-                let match;
-                
-                while ((match = tagRegex.exec(escapedText)) !== null) {
-                    if (match.index > lastIndex) {
-                        parts.push({ type: 'text', content: escapedText.substring(lastIndex, match.index) });
-                    }
-                    // 将转义的HTML标签还原
-                    const originalTag = match[0].replace(/&lt;/g, '<').replace(/&gt;/g, '>');
-                    parts.push({ type: 'tag', content: originalTag });
-                    lastIndex = match.index + match[0].length;
-                }
-                
-                if (lastIndex < escapedText.length) {
-                    parts.push({ type: 'text', content: escapedText.substring(lastIndex) });
-                }
-                
-                // 只在文本部分进行高亮
-                const highlightedParts = parts.map(part => {
-                    if (part.type === 'tag') {
-                        return part.content;
-                    } else {
-                        let highlightedText = part.content;
-                        item.matchedTokens.forEach(token => {
-                            if (window.textFilterCaseSensitive) {
-                                highlightedText = highlightedText.replace(new RegExp(`(${escapeRegExp(token)})`, 'g'), '<span class="filter-highlight">$1</span>');
-                            } else {
-                                highlightedText = highlightedText.replace(new RegExp(`(${escapeRegExp(token)})`, 'gi'), '<span class="filter-highlight">$1</span>');
-                            }
-                        });
-                        return highlightedText;
-                    }
-                });
-                
-                return highlightedParts.join('');
+                return buildHighlightedLine(item.text, item.matchedTokens);
             }).join('<br>');
             setTargetHTML(htmlContent);
+        }
+
+        function buildHighlightedLine(text, matchedTokens) {
+            const safeText = text == null ? '' : String(text);
+            const tokens = Array.from(new Set((matchedTokens || []).filter(Boolean)));
+            if (tokens.length === 0) {
+                return escapeHtml(safeText);
+            }
+
+            // 优先匹配更长的 token，避免短 token 盖住长 token
+            tokens.sort((a, b) => b.length - a.length);
+            const pattern = tokens.map(token => escapeRegExp(token)).join('|');
+            const flags = window.textFilterCaseSensitive ? 'g' : 'gi';
+            const regex = new RegExp(pattern, flags);
+
+            let resultHtml = '';
+            let lastIndex = 0;
+            let match;
+            while ((match = regex.exec(safeText)) !== null) {
+                const start = match.index;
+                const end = start + match[0].length;
+                if (start > lastIndex) {
+                    resultHtml += escapeHtml(safeText.slice(lastIndex, start));
+                }
+                resultHtml += `<span class="filter-highlight">${escapeHtml(match[0])}</span>`;
+                lastIndex = end;
+                if (match[0].length === 0) {
+                    regex.lastIndex++;
+                }
+            }
+            if (lastIndex < safeText.length) {
+                resultHtml += escapeHtml(safeText.slice(lastIndex));
+            }
+            return resultHtml;
+        }
+
+        function escapeHtml(text) {
+            return text
+                .replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;')
+                .replace(/"/g, '&quot;')
+                .replace(/'/g, '&#39;');
         }
 
         function escapeRegExp(string) {
