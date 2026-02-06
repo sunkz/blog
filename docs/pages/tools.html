@@ -29,9 +29,6 @@
     <script src="js/codemirror/addon/fold/brace-fold.js"></script>
     <script src="js/codemirror/addon/fold/comment-fold.js"></script>
     <script>
-        // 全局变量
-        const APP_VERSION = '4.0.0';
-        
         $(function () {
             $('[data-toggle="tooltip"]').tooltip();
         });
@@ -137,6 +134,9 @@
         color: var(--text);
         background-color: rgba(108,117,125,0.25);
         border-color: var(--btn-border);
+    }
+    #extractExportBtn {
+        border-radius: 0.25rem !important;
     }
 
     .no-padding {
@@ -1288,6 +1288,7 @@
         document.getElementById('toggleCaseBtn').style.display = 'none';
         document.getElementById('txtFilterBtn').textContent = '拼接';
         document.getElementById('extractExportBtn').style.display = 'none';
+
         // 更新tooltip提示信息
         const btn = document.getElementById('txtFilterBtn');
         btn.setAttribute('title', '拼接文本前缀和后缀');
