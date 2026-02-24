@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <title>TextUtil</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="theme-color" content="#ffffff">
 
     <script charset="UTF-8" id="LA_COLLECT" src="js/sdk.51.la_js-sdk-pro.min.js"></script>
     <script>LA.init({id: "3JacvsQODVWrNK9p", ck: "3JacvsQODVWrNK9p", autoTrack: true, hashMode: true})</script>
@@ -35,6 +36,22 @@
     </script>
 </head>
 <body>
+<header class="site-header">
+    <div class="site-header__inner">
+        <div class="site-header__left">
+            <a class="site-title" href="/">Sunkz</a>
+            <button class="theme-toggle" id="themeToggle" type="button" aria-label="Theme"></button>
+        </div>
+        <div class="site-header__right">
+            <nav class="site-nav" aria-label="Main">
+                <a href="/">主页</a>
+                <a href="/about/">关于我</a>
+                <a href="/pages/tools.html">工具集</a>
+            </nav>
+            <a class="github-link" href="https://github.com/sunkz" target="_blank" rel="me">GitHub</a>
+        </div>
+    </div>
+</header>
 <style>
     /* 主题变量 */
     :root {
@@ -85,6 +102,83 @@
     html, body {
         background-color: var(--bg);
         color: var(--text);
+    }
+
+    /* 站点统一头部 */
+    .site-header {
+        border-bottom: 1px solid var(--border);
+        background-color: var(--bg);
+    }
+    .site-header__inner {
+        max-width: 48rem;
+        height: 4.5rem;
+        margin: 0 auto;
+        padding: 0 2rem;
+        display: flex;
+        align-items: center;
+        gap: 1.5rem;
+    }
+    .site-header__left {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        margin-right: auto;
+    }
+    .site-header__right {
+        display: flex;
+        align-items: center;
+        gap: 1.5rem;
+    }
+    .site-title {
+        font-size: 2rem;
+        font-weight: 600;
+        color: var(--text);
+        text-decoration: none;
+    }
+    .site-title:hover { text-decoration: none; color: var(--text); }
+    .site-nav {
+        display: flex;
+        align-items: center;
+        gap: 1.5rem;
+        font-size: 1rem;
+        font-weight: 500;
+    }
+    .site-nav a {
+        color: var(--text);
+        text-decoration: none;
+    }
+    .site-nav a:hover { text-decoration: none; color: var(--text); opacity: 0.8; }
+    .theme-toggle {
+        width: 24px;
+        height: 24px;
+        border: 0;
+        padding: 0;
+        background: url(/theme.png) left center / cover no-repeat;
+        cursor: pointer;
+    }
+    [data-theme="dark"] .theme-toggle {
+        background-image: url(/theme.svg);
+    }
+    .github-link {
+        width: 24px;
+        height: 24px;
+        text-indent: -9999px;
+        overflow: hidden;
+        background: url(/github.svg) center center / cover no-repeat;
+        display: inline-block;
+    }
+    [data-theme="dark"] .github-link { filter: invert(1); }
+    @media (max-width: 768px) {
+        .site-header__inner {
+            padding: 0 1rem;
+            flex-wrap: wrap;
+            height: auto;
+            gap: 0.75rem;
+            padding-top: 0.75rem;
+            padding-bottom: 0.75rem;
+        }
+        .site-header__right { width: 100%; justify-content: space-between; }
+        .site-nav { flex-wrap: wrap; gap: 1rem; }
     }
 
     .card { background-color: var(--card-bg); border-color: var(--border); }
@@ -2240,20 +2334,49 @@
     updateStats('set-tab-target-4');
 
     // 仅为业务按钮接入遥测（已移除主题按钮，无需排除）
-    document.querySelectorAll('button').forEach(function (button) {
-        button.addEventListener('click', handleClick);
-    });
+    if (typeof handleClick === 'function') {
+        document.querySelectorAll('button').forEach(function (button) {
+            button.addEventListener('click', handleClick);
+        });
+    }
 
-    // 跟随系统主题：初始化并监听变化
+    // 主题：跟随系统 + 手动切换（与站点头部一致）
     (function() {
         const mq = window.matchMedia ? window.matchMedia('(prefers-color-scheme: dark)') : null;
-        function apply(theme) { document.documentElement.setAttribute('data-theme', theme); }
-        const initial = mq && mq.matches ? 'dark' : 'light';
-        apply(initial);
+        const html = document.documentElement;
+        function apply(isDark, persist) {
+            html.setAttribute('data-theme', isDark ? 'dark' : 'light');
+            if (persist) {
+                localStorage.setItem('dark', isDark ? 'true' : 'false');
+            }
+        }
+        function init() {
+            const stored = localStorage.getItem('dark');
+            if (stored === 'true' || stored === 'false') {
+                apply(stored === 'true', false);
+                return;
+            }
+            apply(mq && mq.matches, false);
+        }
+        init();
         if (mq && typeof mq.addEventListener === 'function') {
-            mq.addEventListener('change', function(e) { apply(e.matches ? 'dark' : 'light'); });
+            mq.addEventListener('change', function(e) {
+                if (localStorage.getItem('dark') === null) {
+                    apply(e.matches, false);
+                }
+            });
         } else if (mq && typeof mq.addListener === 'function') { // 兼容旧浏览器
-            mq.addListener(function(e) { apply(e.matches ? 'dark' : 'light'); });
+            mq.addListener(function(e) {
+                if (localStorage.getItem('dark') === null) {
+                    apply(e.matches, false);
+                }
+            });
+        }
+        const toggle = document.getElementById('themeToggle');
+        if (toggle) {
+            toggle.addEventListener('click', function() {
+                apply(html.getAttribute('data-theme') !== 'dark', true);
+            });
         }
     })();
 
