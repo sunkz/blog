@@ -67,9 +67,9 @@ git worktree remove .worktrees/feature-auth
 
 ### 第六节：最佳实践 + 结尾
 最佳实践列表（4-5 条，简洁要点）：
-- 命名要有语义（`feature/auth`、`hotfix/login-crash`）
+- 命名要有语义：手动 `git worktree add` 时用 `feature/auth`、`hotfix/login-crash` 等分支名；使用 Claude Code EnterWorktree 时 name 参数要描述任务（如 `auth`、`hotfix`），工具会自动加 `worktree-` 前缀
 - 及时清理：任务完成后用 `remove` 而非 `keep`
-- `.gitignore` 保持干净：将 `.claude/worktrees/` 和 `.worktrees/` 加入忽略
+- `.gitignore` 保持干净：将 `.claude/`（覆盖所有 Claude Code 本地文件）和 `.worktrees/`（手动创建的 worktree）加入忽略；注意 `.claude` 比 `.claude/worktrees/` 范围更广，两者不要混写
 - 一个 worktree 对应一个明确任务，不要混用
 - 每个 worktree 开一个独立终端，与其配套的 Claude 会话专注该任务
 
@@ -80,7 +80,7 @@ git worktree remove .worktrees/feature-auth
 - 格式：Hugo Markdown，YAML front matter
 - 语言：中文
 - 风格：简洁直接，与博客现有文章风格一致
-- 存放路径：`content/posts/Claude Code Worktree：告别上下文污染，拥抱并行开发.md`
+- 存放路径：`content/posts/claude-code-worktree.md`，front matter 中设置 `title: "Claude Code Worktree：告别上下文污染，拥抱并行开发"`（与项目现有文章文件名风格一致，避免 URL 含空格或全角字符）
 
 ## 成功标准
 
