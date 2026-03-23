@@ -48,3 +48,41 @@ description: You MUST use this before any creative work - creating features,
 ### 存储位置
 
 Skill 文件存放在 `~/.claude/plugins/` 目录下（或项目本地路径），按 `<publisher>/<name>/` 层级组织。Claude Code 启动时扫描这个目录，把所有 skill 的元数据（name + description）注册到 context，准备随时触发。
+
+## 二、触发机制
+
+知道了 skill 是什么，接下来的问题是：它怎么被激活？
+
+### 语义匹配决策
+
+当用户发送消息时，模型会读取所有已注册 skill 的 `description`，将其与当前任务语义对比，决定是否调用 `Skill` 工具。这个决策是纯语言模型行为——没有正则匹配，没有关键词过滤，就是模型读懂了 description 描述的使用场景，再看当前任务是否符合。
+
+以 `brainstorming` skill 的 description 为例：
+
+> "You MUST use this before any creative work - creating features, building components, adding functionality, or modifying behavior."
+
+当你说"帮我加个新功能"，模型识别出这是"adding functionality"，触发条件命中，调用 Skill 工具加载完整内容。
+
+### "1% 原则"的真相
+
+你可能听说过一条规则："只要有 1% 的可能 skill 适用，就必须触发。"这条规则听起来像是平台层的硬性逻辑，实际上它是 `using-superpowers` 这个**元 skill** 中写死的一条提示指令：
+
+> "If you think there is even a 1% chance a skill might apply to what you are doing, you ABSOLUTELY MUST invoke the skill."
+
+它的作用是通过强语义措辞（ABSOLUTELY MUST）把模型的触发阈值调低——宁可误触发，不可漏触发。这是提示工程的手段，不是代码级的拦截逻辑。理解这一点很重要：skill 系统的所有"强制性"，根本上都来自语言本身的约束力。
+
+### Description 的写法影响触发准确性
+
+写 skill 的人需要认真对待 description 的措辞。精心设计的 description 通常包含两个部分：
+
+```
+TRIGGER when: [明确的触发场景]
+DO NOT TRIGGER when: [明确的排除场景]
+```
+
+例如 `claude-api` skill 的 description：
+
+> "TRIGGER when: code imports `anthropic`/`@anthropic-ai/sdk`...
+> DO NOT TRIGGER when: code imports `openai`/other AI SDK..."
+
+明确的边界描述让模型在模糊情况下也能做出正确判断。
