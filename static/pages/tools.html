@@ -3277,7 +3277,7 @@
 @keyframes utools-bounce{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
 @keyframes utools-fab-glow{0%,100%{box-shadow:0 4px 15px rgba(238,9,121,.5),0 0 20px rgba(255,106,0,.3)}50%{box-shadow:0 4px 20px rgba(255,106,0,.6),0 0 30px rgba(238,9,121,.4)}}
 </style>
-<div id="utools-modal" style="display:flex;position:fixed;inset:0;z-index:9999;background:rgba(0,0,0,.6);justify-content:center;align-items:center;">
+<div id="utools-modal" style="display:none;position:fixed;inset:0;z-index:9999;background:rgba(0,0,0,.6);justify-content:center;align-items:center;">
   <div style="background:linear-gradient(135deg,#ff6a00,#ee0979,#ff6a00);border-radius:16px;max-width:440px;width:90%;overflow:hidden;position:relative;cursor:pointer;animation:utools-pop .5s ease-out,utools-glow 2s infinite;padding:4px;"
        onclick="window.open('https://sunkz.top/posts/%E6%96%87%E6%9C%AC%E5%B7%A5%E5%85%B7%E7%AE%B1%E4%B8%8A%E6%9E%B6utools%E5%95%A6/','_blank');closeModal();">
     <div style="background:#fff;border-radius:13px;overflow:hidden;">
@@ -3297,6 +3297,10 @@
 function closeModal(){
   document.getElementById('utools-modal').style.display='none';
   document.getElementById('utools-fab').style.display='block';
+  localStorage.setItem('utools-modal-shown','1');
+}
+if(!localStorage.getItem('utools-modal-shown')){
+  document.getElementById('utools-modal').style.display='flex';
 }
 </script>
 </body>
