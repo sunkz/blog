@@ -500,21 +500,11 @@
         text-align: right;
         padding-right: 4px;
     }
-    /* 恢复行内最小左内边距，避免初始光标贴到 gutter */
-    #json-operation .CodeMirror-lines pre {
-        padding-left: 0;
-    }
     /* 占位符文本右移，避免与行号区域重叠 */
     #json-operation .CodeMirror .CodeMirror-placeholder {
         padding-left: 0;
         color: var(--muted); /* 与占位提示风格一致 */
     }
-    /* 隐藏所有 gutters（行号/折叠栏），并去除占位宽度 */
-    #json-operation .CodeMirror-gutters {
-        display: none !important;
-        width: 0 !important;
-    }
-
     /* CodeMirror 常规覆盖（行内/游标） */
     .CodeMirror-cursor { border-left: 1px solid var(--editor-cursor); }
     .cm-s-neo.CodeMirror { background-color: var(--editor-bg); color: var(--text); }
@@ -1000,7 +990,7 @@
     if (window.CodeMirror) {
         window.jsonSourceEditor = CodeMirror.fromTextArea(document.getElementById('json_source'), {
             mode: {name: 'javascript', json: true},
-            lineNumbers: false,
+            lineNumbers: true,
             indentUnit: 2,
             tabSize: 2,
             smartIndent: true,
@@ -1010,12 +1000,12 @@
             theme: 'neo',
             placeholder: '["请输入JSON文本"]',
             styleActiveLine: true,
-            gutters: [],
-            foldGutter: false
+            gutters: ['CodeMirror-linenumbers', 'CodeMirror-foldgutter'],
+            foldGutter: true
         });
         window.jsonTargetEditor = CodeMirror.fromTextArea(document.getElementById('json_target'), {
             mode: {name: 'javascript', json: true},
-            lineNumbers: false,
+            lineNumbers: true,
             indentUnit: 2,
             tabSize: 2,
             smartIndent: true,
@@ -1024,8 +1014,8 @@
             lineWrapping: true,
             theme: 'neo',
             styleActiveLine: true,
-            gutters: [],
-            foldGutter: false
+            gutters: ['CodeMirror-linenumbers', 'CodeMirror-foldgutter'],
+            foldGutter: true
         });
 
         // 编辑时更新统计与联动
