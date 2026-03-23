@@ -151,3 +151,42 @@ and the user has approved it.
 | 跳步不留痕迹 | 跳步意味着 todo 状态不一致，行为被暴露 |
 
 一个没有 skill 约束的 AI，在面对"实现新功能"时，会根据对话上下文推断最优路径——这通常意味着直接写代码，跳过设计、跳过评审、跳过测试。有了 skill，每个检查点都是显式的状态节点，模型必须一一经过，无法在内部"假装"完成了某步骤。
+
+## 五、Skill 组合
+
+单个 skill 改变的是一次交互的行为。多个 skill 组合起来，才能覆盖完整的开发工作流。
+
+### 横向执行顺序
+
+当多个 skill 都适用于当前任务时，`using-superpowers` 元 skill 规定了调用顺序：**process skill 先于 implementation skill**。
+
+- **Process skill**：定义"如何做"的流程，如 `brainstorming`（如何规划功能）、`systematic-debugging`（如何调试问题）
+- **Implementation skill**：定义"做什么"的执行，如 `writing-plans`（写实现计划）、`executing-plans`（执行计划）
+
+这个顺序确保了：在落笔写代码之前，思考和设计工作必须先完成。注意这是**横向执行顺序**——决定的是"先跑哪个"，而不是第三节讨论的纵向优先级（"谁说了算"）。两者是不同维度的概念，不要混淆。
+
+### brainstorming → writing-plans：一个完整示例
+
+这篇文章的写作过程本身就是最好的示例。当我说"写一篇博客"时，`brainstorming` skill 被触发，它包含一个 9 步强制检查清单：
+
+1. 探索项目上下文
+2. （如需要）提供可视化工具
+3. 逐一询问澄清问题
+4. 提出 2-3 种方案
+5. 分节展示设计并获得确认
+6. 写设计文档并提交 git
+7. **Spec 审查循环**：派遣 subagent 审查 → 修复问题 → 再次审查（最多 3 轮）
+8. **用户审批门控**：要求用户确认 spec 再继续
+9. 才能调用 `writing-plans`
+
+注意第 7、8 步：在进入实现阶段之前，有一个完整的质量门控——自动化审查加人工审批。这不是"建议这么做"，而是 skill 中的强制流程。跳过任何一步，都意味着违反了 HARD-GATE 约束。
+
+第 9 步调用 `writing-plans` 才是 implementation skill 真正登场的时机。Process skill 跑完，implementation skill 才能接手——这就是横向执行顺序的实际体现。
+
+### Skill 体系的本质
+
+这就是 skill 组合的价值：**把一个复杂工作流的最佳实践，编译成 AI 必须遵循的执行约束**。
+
+单独看任何一个 skill，它只是若干条提示指令。组合起来，它们构成了一套有序的工作流规范：process skill 负责确保"想清楚了再动手"，implementation skill 负责"有条不紊地落地"，二者之间的顺序约束则由元 skill 统一协调。
+
+这套体系的核心洞察在于：AI 的行为不是靠"更聪明"来保证质量，而是靠**结构性约束**。把最佳实践写进 skill，比每次依赖模型自主判断要可靠得多。
