@@ -115,3 +115,39 @@ Skill 指令（动态加载的领域规则）
 - **横向执行顺序**：当多个 skill 都应该被调用时，先调哪个（答案：process skill 先于 implementation skill）
 
 第二种优先级将在 Skill 组合一节中详细讨论。
+
+## 四、执行约束
+
+上下文注入解决了"模型知道要做什么"的问题，但知道不等于做到——模型仍然可能跳步、走捷径、或者在流程还没完成时就声称"搞定了"。
+
+Skill 系统用两种机制来解决这个问题。
+
+### HARD-GATE：强语义禁止
+
+你在很多 skill 里会看到这样的标记：
+
+```
+<HARD-GATE>
+Do NOT invoke any implementation skill, write any code, scaffold any project,
+or take any implementation action until you have presented a design
+and the user has approved it.
+</HARD-GATE>
+```
+
+很多人以为这是某种平台层的拦截机制——触发了就会被系统强制阻止。实际上不是。`HARD-GATE` 只是一个 XML 标签约定，它的"硬"来自措辞本身：`Do NOT`、`NEVER`、`This applies to EVERY project regardless of perceived simplicity`。
+
+这些强语义词汇在训练数据中高度关联着"必须遵守"的语境，因此模型对它们的遵从度极高。这是提示工程的力量，不是代码执行的力量。它有效，但它的本质是语言约束，不是程序约束。
+
+### Checklist → TodoWrite：外化状态机
+
+第二个约束机制更为精妙。Skill 中的检查清单不只是列出来让模型"心里有数"——它强制要求模型通过 `TodoWrite` 工具将每个步骤的完成状态**写入 UI 可见的 todo 列表**。
+
+这个设计的关键在于"外化"：
+
+| 内部意图（无 skill） | 外化状态机（有 skill） |
+|---------------------|----------------------|
+| 模型内部推断"我已完成步骤 X" | 步骤 X 的完成状态写入工具调用，用户可见 |
+| 模型可以在对话中声称完成了没完成的事 | 必须显式标记每个步骤为 completed |
+| 跳步不留痕迹 | 跳步意味着 todo 状态不一致，行为被暴露 |
+
+一个没有 skill 约束的 AI，在面对"实现新功能"时，会根据对话上下文推断最优路径——这通常意味着直接写代码，跳过设计、跳过评审、跳过测试。有了 skill，每个检查点都是显式的状态节点，模型必须一一经过，无法在内部"假装"完成了某步骤。
