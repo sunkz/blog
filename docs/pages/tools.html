@@ -488,8 +488,12 @@
     #json-operation .CodeMirror-activeline-background { 
         background: rgba(108,117,125,0.15); 
     }
-    #json-operation .CodeMirror-activeline-gutter { 
-        background: rgba(108,117,125,0.15); 
+    #json-operation .CodeMirror-activeline-gutter {
+        background: rgba(108,117,125,0.15);
+    }
+    /* 覆盖 neo 主题过浅的行号颜色，确保在激活行高亮时仍可见 */
+    #json-operation .cm-s-neo .CodeMirror-linenumber {
+        color: var(--muted);
     }
     /* 正确为行号预留独立 gutter，避免与文本重叠 */
     /* 让 CodeMirror 自行计算 gutter 宽度，避免与正文错位 */
