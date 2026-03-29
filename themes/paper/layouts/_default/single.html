@@ -9,7 +9,16 @@
       {{ if .Date }}
       <time>{{ .Date | time.Format ":date_medium" }}</time>
       {{ end }}<!---->
-      {{ $single_author := or .Params.Author site.Author.name }}
+      {{ $single_author := partial "site-author.html" . }}
+      {{ with or (index .Params "author") (index .Params "Author") }}
+        {{ if reflect.IsMap . }}
+          {{ with or (index . "name") (index . "Name") }}
+            {{ $single_author = . }}
+          {{ end }}
+        {{ else }}
+          {{ $single_author = . }}
+        {{ end }}
+      {{ end }}
       <!---->
       {{ if $single_author }}
       <span class="mx-1">&middot;</span>

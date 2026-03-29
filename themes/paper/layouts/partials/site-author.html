@@ -1,0 +1,14 @@
+{{- $siteAuthor := site.Title -}}
+{{- with site.Params.name -}}
+  {{- $siteAuthor = . -}}
+{{- end -}}
+{{- with or (index site.Params "author") (index site.Params "Author") -}}
+  {{- if reflect.IsMap . -}}
+    {{- with or (index . "name") (index . "Name") -}}
+      {{- $siteAuthor = . -}}
+    {{- end -}}
+  {{- else -}}
+    {{- $siteAuthor = . -}}
+  {{- end -}}
+{{- end -}}
+{{- return $siteAuthor -}}
