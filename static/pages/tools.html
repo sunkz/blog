@@ -199,12 +199,17 @@
         flex-shrink: 0;
         width: 100%;
     }
-    body > .container-fluid {
+    body > .app-main {
         flex: 1;
         min-height: 0;
         display: flex;
         flex-direction: column;
         overflow: hidden;
+        max-width: 48rem;
+        width: 100%;
+        margin: 0 auto;
+        padding-left: 2rem;
+        padding-right: 2rem;
     }
 
     .card { background-color: var(--card-bg); border-color: var(--border); }
@@ -362,6 +367,9 @@
 
     .tab-controls {
         flex-shrink: 0;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 4px;
     }
 
     .auto-fill-group {
@@ -658,7 +666,7 @@
 
 </style>
 
-<div class="container-fluid col-xl-8 mt-1">
+<div class="app-main mt-1">
     <!-- 标签与主题切换同排 -->
     <div class="d-flex align-items-center mt-0 mb-2">
         <div class="toggle-switch" id="toggleSwitch">
