@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html class="not-ready lg:text-base" style="--bg: #fff" lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>CCBot - Sunkz</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="CCBot - AI 编程 Agent 通知助手，macOS 菜单栏应用">
+    <meta name="theme-color" />
+    <link rel="preload stylesheet" as="style" href="/main.min.css" />
+    <link rel="preload" as="image" href="/theme.png" />
+    <link rel="icon" href="/favicon.ico" />
+
+    <script charset="UTF-8" id="LA_COLLECT" src="js/sdk.51.la_js-sdk-pro.min.js"></script>
+    <script>LA.init({id: "3JacvsQODVWrNK9p", ck: "3JacvsQODVWrNK9p", autoTrack: true, hashMode: true})</script>
+</head>
+<body class="text-black duration-200 ease-out dark:text-white">
+
+<style>
+    .site-header {
+        font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+        line-height: 1.5;
+        box-sizing: border-box;
+    }
+    .site-header *, .site-header *::before, .site-header *::after { box-sizing: border-box; }
+    .site-header a { color: inherit; text-decoration: none; }
+    .site-header a:hover { color: inherit; text-decoration: none; }
+</style>
+<header class="site-header mx-auto flex h-[4.5rem] max-w-3xl px-8 lg:justify-center">
+  <div class="relative z-50 mr-auto flex items-center">
+    <a class="-translate-x-[1px] -translate-y-[1px] text-2xl font-semibold" href="/">Sunkz</a>
+    <div class="btn-dark text-[0] ml-4 h-6 w-6 shrink-0 cursor-pointer"
+         style="background: url(/theme.png) left center / auto 1.5rem no-repeat; transition: background-position 0.4s steps(5);"
+         role="button" aria-label="Dark"></div>
+  </div>
+
+  <div class="btn-menu relative z-50 -mr-8 flex h-[4.5rem] w-[5rem] shrink-0 cursor-pointer flex-col items-center justify-center gap-2.5 lg:hidden"
+       role="button" aria-label="Menu"></div>
+
+  <script>
+    const htmlClass = document.documentElement.classList;
+    setTimeout(() => { htmlClass.remove('not-ready'); }, 10);
+    const btnMenu = document.querySelector('.btn-menu');
+    btnMenu.addEventListener('click', () => { htmlClass.toggle('open'); });
+    const metaTheme = document.querySelector('meta[name="theme-color"]');
+    const lightBg = '#fff';
+    const setDark = (isDark) => {
+      metaTheme.setAttribute('content', isDark ? '#000' : lightBg);
+      htmlClass[isDark ? 'add' : 'remove']('dark');
+      localStorage.setItem('dark', isDark);
+      const btnDarkEl = document.querySelector('.btn-dark');
+      if (btnDarkEl) btnDarkEl.style.backgroundPosition = isDark ? 'right' : 'left center';
+    };
+    const darkScheme = window.matchMedia('(prefers-color-scheme: dark)');
+    const darkVal = localStorage.getItem('dark');
+    setDark(darkVal ? darkVal === 'true' : darkScheme.matches);
+    darkScheme.addEventListener('change', (event) => { setDark(event.matches); });
+    const btnDark = document.querySelector('.btn-dark');
+    btnDark.addEventListener('click', () => { setDark(localStorage.getItem('dark') !== 'true'); });
+  </script>
+
+  <div class="nav-wrapper fixed inset-x-0 top-full z-40 flex h-full select-none flex-col justify-center pb-16 duration-200 dark:bg-black lg:static lg:h-auto lg:flex-row lg:!bg-transparent lg:pb-0 lg:transition-none">
+    <nav class="lg:ml-12 lg:flex lg:flex-row lg:items-center lg:space-x-6">
+      <a class="block text-center text-2xl leading-[5rem] lg:text-base lg:font-normal" href="/">主页</a>
+      <a class="block text-center text-2xl leading-[5rem] lg:text-base lg:font-normal" href="/pages/tools.html">文本工具箱</a>
+      <a class="block text-center text-2xl leading-[5rem] lg:text-base lg:font-normal" href="/pages/cc-bot.html">CCBot</a>
+      <a class="block text-center text-2xl leading-[5rem] lg:text-base lg:font-normal" href="/about/">关于我</a>
+    </nav>
+    <nav class="mt-12 flex justify-center space-x-10 dark:invert lg:ml-12 lg:mt-0 lg:items-center lg:space-x-6">
+      <a class="h-8 w-8 text-[0] [background:var(--url)_center_center/cover_no-repeat] lg:h-6 lg:w-6"
+         style="--url: url(./github.svg)" href="https://github.com/sunkz" target="_blank" rel="me">github</a>
+    </nav>
+  </div>
+</header>
+
+<style>
+* { margin: 0; padding: 0; }
+.cc {
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "SF Pro Display", "Helvetica Neue", Arial, sans-serif;
+    color: #1d1d1f;
+    line-height: 1.5;
+}
+html.dark .cc { color: #f5f5f7; }
+
+/* ---- Hero ---- */
+.cc-hero {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 56px 24px 48px;
+    text-align: center;
+}
+.cc-hero-icon {
+    width: 96px; height: 96px;
+    border-radius: 22px;
+    box-shadow: 0 4px 20px rgba(0,0,0,.12);
+}
+html.dark .cc-hero-icon {
+    box-shadow: 0 4px 20px rgba(0,0,0,.5);
+}
+.cc-hero h1 {
+    font-size: 2.4em;
+    font-weight: 700;
+    letter-spacing: -.025em;
+    margin: 20px 0 0;
+}
+.cc-hero-tagline {
+    font-size: 1.2em;
+    color: #6e6e73;
+    margin: 8px 0 0;
+}
+html.dark .cc-hero-tagline { color: #a1a1a6; }
+.cc-hero-desc {
+    font-size: .95em;
+    color: #86868b;
+    margin: 20px auto 0;
+    max-width: 520px;
+    line-height: 1.7;
+}
+html.dark .cc-hero-desc { color: #a1a1a6; }
+.cc-hero-actions {
+    margin: 28px 0 0;
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+.cc-btn {
+    display: inline-flex; align-items: center; gap: 6px;
+    padding: 10px 22px;
+    border-radius: 980px;
+    font-size: .88em; font-weight: 500;
+    text-decoration: none;
+    transition: all .15s;
+    cursor: pointer; border: none;
+}
+.cc-btn-dl {
+    background: #0071e3; color: #fff;
+}
+.cc-btn-dl:hover { background: #0077ed; color: #fff; text-decoration: none; }
+.cc-btn-gh {
+    background: #f5f5f7; color: #1d1d1f;
+}
+.cc-btn-gh:hover { background: #e8e8ed; color: #1d1d1f; text-decoration: none; }
+html.dark .cc-btn-gh { background: #2d2d2d; color: #f5f5f7; }
+html.dark .cc-btn-gh:hover { background: #3a3a3a; }
+.cc-badge {
+    display: inline-block;
+    font-size: .75em;
+    color: #86868b;
+    margin-top: 14px;
+    letter-spacing: .01em;
+}
+html.dark .cc-badge { color: #6e6e73; }
+
+/* ---- Screenshots ---- */
+.cc-shots {
+    max-width: 780px;
+    margin: 0 auto;
+    padding: 0 24px 56px;
+    display: flex;
+    gap: 32px;
+    justify-content: center;
+    align-items: flex-end;
+    flex-wrap: wrap;
+}
+.cc-shot {
+    text-align: center;
+    flex-shrink: 0;
+}
+.cc-shot img {
+    border-radius: 12px;
+    box-shadow: 0 2px 16px rgba(0,0,0,.1), 0 0 0 .5px rgba(0,0,0,.06);
+}
+html.dark .cc-shot img {
+    box-shadow: 0 2px 16px rgba(0,0,0,.5), 0 0 0 .5px rgba(255,255,255,.08);
+}
+.cc-shot-label {
+    margin-top: 10px;
+    font-size: .8em;
+    color: #86868b;
+}
+html.dark .cc-shot-label { color: #6e6e73; }
+
+/* ---- Divider ---- */
+.cc-divider {
+    height: 1px;
+    background: #d2d2d7;
+    max-width: 680px;
+    margin: 0 auto;
+}
+html.dark .cc-divider { background: #424245; }
+
+/* ---- Section ---- */
+.cc-section {
+    max-width: 680px;
+    margin: 0 auto;
+    padding: 56px 24px;
+}
+.cc-section h2 {
+    font-size: 1.6em;
+    font-weight: 700;
+    letter-spacing: -.02em;
+    margin: 0 0 32px;
+}
+
+/* ---- Feature list ---- */
+.cc-features {
+    display: flex;
+    flex-direction: column;
+    gap: 28px;
+}
+.cc-feat {
+    display: flex;
+    gap: 16px;
+    align-items: flex-start;
+}
+.cc-feat-dot {
+    width: 36px; height: 36px;
+    border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+    font-size: .95em;
+    font-weight: 600;
+    color: #fff;
+    margin-top: 1px;
+}
+.cc-feat-body h3 {
+    font-size: 1em;
+    font-weight: 600;
+    margin: 0 0 3px;
+}
+.cc-feat-body p {
+    font-size: .9em;
+    color: #6e6e73;
+    margin: 0;
+    line-height: 1.6;
+}
+html.dark .cc-feat-body p { color: #a1a1a6; }
+
+/* ---- Arch ---- */
+.cc-arch {
+    background: #f5f5f7;
+    border-radius: 12px;
+    padding: 24px 28px;
+    overflow-x: auto;
+}
+html.dark .cc-arch { background: #1d1d1f; }
+.cc-arch pre {
+    font-family: "SF Mono", "Fira Code", Menlo, monospace;
+    font-size: .8em;
+    line-height: 1.8;
+    color: #1d1d1f;
+    white-space: pre;
+    margin: 0;
+}
+html.dark .cc-arch pre { color: #f5f5f7; }
+
+/* ---- Tech tags ---- */
+.cc-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 24px;
+}
+.cc-tag {
+    display: inline-block;
+    padding: 5px 14px;
+    border-radius: 980px;
+    font-size: .8em;
+    font-weight: 500;
+    background: #f5f5f7;
+    color: #1d1d1f;
+}
+html.dark .cc-tag { background: #2d2d2d; color: #f5f5f7; }
+
+/* ---- Integrations ---- */
+.cc-integrations {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+}
+.cc-integ {
+    padding: 20px;
+    border-radius: 12px;
+    background: #f5f5f7;
+}
+html.dark .cc-integ { background: #1d1d1f; }
+.cc-integ-name {
+    font-weight: 600;
+    font-size: .95em;
+    margin-bottom: 4px;
+}
+.cc-integ-desc {
+    font-size: .82em;
+    color: #86868b;
+    line-height: 1.5;
+}
+html.dark .cc-integ-desc { color: #a1a1a6; }
+
+/* ---- CTA ---- */
+.cc-cta {
+    text-align: center;
+    padding: 48px 24px 56px;
+    max-width: 680px;
+    margin: 0 auto;
+}
+.cc-cta p {
+    font-size: 1.1em;
+    font-weight: 600;
+    margin: 0 0 6px;
+}
+.cc-cta .cc-cta-sub {
+    font-size: .88em;
+    font-weight: 400;
+    color: #86868b;
+    margin-bottom: 20px;
+}
+html.dark .cc-cta .cc-cta-sub { color: #a1a1a6; }
+
+@media (max-width: 600px) {
+    .cc-hero { padding: 40px 20px 36px; }
+    .cc-hero h1 { font-size: 1.8em; }
+    .cc-hero-icon { width: 72px; height: 72px; border-radius: 18px; }
+    .cc-section { padding: 40px 20px; }
+    .cc-section h2 { font-size: 1.3em; }
+    .cc-shots { gap: 20px; padding-bottom: 40px; }
+    .cc-integrations { grid-template-columns: 1fr; }
+    .cc-arch pre { font-size: .68em; }
+}
+</style>
+
+<main class="cc">
+
+    <!-- Hero -->
+    <section class="cc-hero">
+        <h1>CCBot</h1>
+        <div class="cc-hero-tagline">AI Agent 通知助手</div>
+        <p class="cc-hero-desc">
+            macOS 菜单栏应用，监听 Claude Code / Codex CLI / JetBrains IDE 中的 AI Agent 事件，
+            通过系统通知和 Telegram 实时推送 — 再也不用盯着终端等了。
+        </p>
+        <div class="cc-hero-actions">
+            <a class="cc-btn cc-btn-dl" href="https://github.com/sunkz/cc-bot/releases/latest" target="_blank">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                下载
+            </a>
+            <a class="cc-btn cc-btn-gh" href="https://github.com/sunkz/cc-bot" target="_blank">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+                GitHub
+            </a>
+        </div>
+        <div class="cc-badge">v1.0.8 &middot; macOS 13.0+ &middot; MIT License &middot; Swift 6</div>
+    </section>
+
+    <!-- Screenshots -->
+    <div class="cc-shots">
+        <div class="cc-shot">
+            <img src="images/cc-bot/menubar.jpg" alt="CCBot 菜单栏" width="280">
+            <div class="cc-shot-label">菜单栏面板</div>
+        </div>
+        <div class="cc-shot">
+            <img src="images/cc-bot/notification.jpg" alt="CCBot 通知" width="340">
+            <div class="cc-shot-label">系统通知</div>
+        </div>
+    </div>
+
+    <div class="cc-divider"></div>
+
+    <!-- Features -->
+    <section class="cc-section">
+        <h2>功能</h2>
+        <div class="cc-features">
+            <div class="cc-feat">
+                <div class="cc-feat-dot" style="background:#34c759;">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round"><path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 01-3.46 0"/></svg>
+                </div>
+                <div class="cc-feat-body">
+                    <h3>系统通知</h3>
+                    <p>任务完成、权限请求、用户输入、一般通知，4 类事件实时推送到 macOS 通知中心。</p>
+                </div>
+            </div>
+            <div class="cc-feat">
+                <div class="cc-feat-dot" style="background:#007aff;">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round"><path d="M22 2L11 13"/><path d="M22 2l-7 20-4-9-9-4 20-7z"/></svg>
+                </div>
+                <div class="cc-feat-body">
+                    <h3>Telegram 推送</h3>
+                    <p>配置 Bot Token + Chat ID，通知同步到 Telegram。自动重试、指数退避，离开电脑也不错过。</p>
+                </div>
+            </div>
+            <div class="cc-feat">
+                <div class="cc-feat-dot" style="background:#af52de;">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round"><path d="M10 13a5 5 0 007.54.54l3-3a5 5 0 00-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 00-7.54-.54l-3 3a5 5 0 007.07 7.07l1.71-1.71"/></svg>
+                </div>
+                <div class="cc-feat-body">
+                    <h3>一键安装 Hook</h3>
+                    <p>自动写入 ~/.claude/hooks/ 和 ~/.codex/hooks/，注册到配置文件，即装即用即卸。</p>
+                </div>
+            </div>
+            <div class="cc-feat">
+                <div class="cc-feat-dot" style="background:#ff9500;">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+                </div>
+                <div class="cc-feat-body">
+                    <h3>JetBrains IDE 集成</h3>
+                    <p>CC GUI 文件监听 + ACP Proxy 双模式。1.5s 智能延迟过滤自动批准操作，避免通知轰炸。</p>
+                </div>
+            </div>
+            <div class="cc-feat">
+                <div class="cc-feat-dot" style="background:#ff3b30;">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                </div>
+                <div class="cc-feat-body">
+                    <h3>安全 & 去重</h3>
+                    <p>本地 HTTP 服务 Bearer Token 认证，3s 节流 + 6s 指纹去重，干净准确不打扰。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="cc-divider"></div>
+
+    <!-- Integrations -->
+    <section class="cc-section">
+        <h2>集成</h2>
+        <div class="cc-integrations">
+            <div class="cc-integ">
+                <div class="cc-integ-name">Claude Code</div>
+                <div class="cc-integ-desc">CLI / Desktop / Web<br>Notification + Stop Hook</div>
+            </div>
+            <div class="cc-integ">
+                <div class="cc-integ-name">Codex CLI</div>
+                <div class="cc-integ-desc">OpenAI 命令行工具<br>notify 回调</div>
+            </div>
+            <div class="cc-integ">
+                <div class="cc-integ-name">JetBrains CC GUI</div>
+                <div class="cc-integ-desc">文件 IPC 监听<br>DispatchSource 实时响应</div>
+            </div>
+            <div class="cc-integ">
+                <div class="cc-integ-name">JetBrains ACP</div>
+                <div class="cc-integ-desc">Node.js stdio 代理<br>拦截 JSON-RPC 权限请求</div>
+            </div>
+        </div>
+    </section>
+
+    <div class="cc-divider"></div>
+
+    <!-- Architecture -->
+    <section class="cc-section">
+        <h2>架构</h2>
+        <div class="cc-arch">
+<pre>Claude Code  ── Hook ────────▶ HookServer (:62400) ──▶ macOS 通知
+                                                    ──▶ Telegram
+
+Codex CLI    ── notify ──────▶ HookServer (:62400) ──▶ macOS 通知
+                                                    ──▶ Telegram
+
+CC GUI       ── 文件 IPC ──▶ CCGUIWatcher ──────────▶ macOS 通知
+                              (DispatchSource)      ──▶ Telegram
+
+JetBrains    ── stdio ──▶ ACP Proxy ── POST ──▶ HookServer</pre>
+        </div>
+        <div class="cc-tags">
+            <span class="cc-tag">Swift 6</span>
+            <span class="cc-tag">SwiftUI</span>
+            <span class="cc-tag">Network.framework</span>
+            <span class="cc-tag">零第三方依赖</span>
+            <span class="cc-tag">XcodeGen</span>
+            <span class="cc-tag">GitHub Actions CI</span>
+            <span class="cc-tag">公证签名</span>
+        </div>
+    </section>
+
+    <div class="cc-divider"></div>
+
+    <!-- CTA -->
+    <section class="cc-cta">
+        <p>让 AI Agent 自己跑，你去喝杯咖啡。</p>
+        <div class="cc-cta-sub">下载安装，菜单栏一键配置。</div>
+        <a class="cc-btn cc-btn-dl" href="https://github.com/sunkz/cc-bot/releases/latest" target="_blank">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+            下载 CCBot
+        </a>
+    </section>
+
+</main>
+
+<footer class="site-header opaco mx-auto flex h-[4.5rem] max-w-3xl items-center px-8 text-[0.9em] opacity-60">
+  <div class="mr-auto">
+    &copy; 2026
+    <a class="link" href="/">Sunkz</a>
+  </div>
+  <a class="link mx-6" href="https://gohugo.io/" rel="noopener" target="_blank">Powered by Hugo️️</a>️
+  <a class="link" href="https://github.com/nanxiaobei/hugo-paper" rel="noopener" target="_blank">✎ Paper</a>
+</footer>
+
+</body>
+</html>

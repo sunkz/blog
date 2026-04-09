@@ -59,8 +59,26 @@
         color: inherit;
         text-decoration: none;
     }
+    /* 防止 Bootstrap spacing 工具类覆盖 Tailwind 的值 */
+    .site-header .ml-4 {
+        margin-left: 1rem !important;
+    }
+    /* 防止 Bootstrap .btn-dark 覆盖主题切换按钮 */
+    .site-header .btn-dark,
+    .site-header .btn-dark:hover,
+    .site-header .btn-dark:focus,
+    .site-header .btn-dark:active,
+    .site-header .btn-dark:not(:disabled):not(.disabled):active {
+        background-color: transparent !important;
+        border: none !important;
+        box-shadow: none !important;
+        outline: none !important;
+        color: inherit !important;
+        padding: 0 !important;
+        border-radius: 0 !important;
+    }
 </style>
-<header class="site-header mx-auto flex h-[4.5rem] max-w-3xl px-8 lg:justify-between">
+<header class="site-header mx-auto flex h-[4.5rem] max-w-3xl px-8 lg:justify-center">
   <div class="relative z-50 mr-auto flex items-center">
     <a class="-translate-x-[1px] -translate-y-[1px] text-2xl font-semibold" href="/">Sunkz</a>
     <div class="btn-dark text-[0] ml-4 h-6 w-6 shrink-0 cursor-pointer"
@@ -102,8 +120,9 @@
   <div class="nav-wrapper fixed inset-x-0 top-full z-40 flex h-full select-none flex-col justify-center pb-16 duration-200 dark:bg-black lg:static lg:h-auto lg:flex-row lg:!bg-transparent lg:pb-0 lg:transition-none">
     <nav class="lg:ml-12 lg:flex lg:flex-row lg:items-center lg:space-x-6">
       <a class="block text-center text-2xl leading-[5rem] lg:text-base lg:font-normal" href="/">主页</a>
+      <a class="block text-center text-2xl leading-[5rem] lg:text-base lg:font-normal" href="/pages/tools.html">文本工具箱</a>
+      <a class="block text-center text-2xl leading-[5rem] lg:text-base lg:font-normal" href="/pages/cc-bot.html">CCBot</a>
       <a class="block text-center text-2xl leading-[5rem] lg:text-base lg:font-normal" href="/about/">关于我</a>
-      <a class="block text-center text-2xl leading-[5rem] lg:text-base lg:font-normal" href="/pages/tools.html">工具集</a>
     </nav>
     <nav class="mt-12 flex justify-center space-x-10 dark:invert lg:ml-12 lg:mt-0 lg:items-center lg:space-x-6">
       <a class="h-8 w-8 text-[0] [background:var(--url)_center_center/cover_no-repeat] lg:h-6 lg:w-6"
@@ -158,6 +177,11 @@
         --toggle-inactive-text: #adb5bd;
     }
 
+    /* 还原 Bootstrap 对 html 的覆盖，与 Paper 主题一致 */
+    html {
+        line-height: 1.5;
+        font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+    }
     /* 全局基色覆盖 */
     html, body {
         background-color: var(--bg);
@@ -173,6 +197,7 @@
     }
     body > header {
         flex-shrink: 0;
+        width: 100%;
     }
     body > .container-fluid {
         flex: 1;
