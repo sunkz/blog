@@ -35,7 +35,7 @@
   style="--bg: #fff"
   lang="en-us"
 >
-  <head>
+  <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta
@@ -97,14 +97,14 @@ ENTRYPOINT [&#34;java&#34;,&#34;-jar&#34;,&#34;target/hello-0.0.1-SNAPSHOT.jar&#
   
   
   
-  <link rel="preload stylesheet" as="style" href="https://sunkz.top/main.min.css" />
+  <link rel="preload stylesheet" as="style" href="http://localhost:1313/main.min.css" />
 
   
   
   
   
   
-  <link rel="preload" as="image" href="https://sunkz.top/theme.png" />
+  <link rel="preload" as="image" href="http://localhost:1313/theme.png" />
 
   
   
@@ -114,7 +114,7 @@ ENTRYPOINT [&#34;java&#34;,&#34;-jar&#34;,&#34;target/hello-0.0.1-SNAPSHOT.jar&#
 
   
   
-  <link rel="preload" as="image" href="https://sunkz.top/github.svg" />
+  <link rel="preload" as="image" href="http://localhost:1313/github.svg" />
   
   
 
@@ -122,7 +122,7 @@ ENTRYPOINT [&#34;java&#34;,&#34;-jar&#34;,&#34;target/hello-0.0.1-SNAPSHOT.jar&#
   
   <script
     defer
-    src="https://sunkz.top/highlight.min.js"
+    src="http://localhost:1313/highlight.min.js"
     onload="hljs.initHighlightingOnLoad();"
   ></script>
   
@@ -132,50 +132,13 @@ ENTRYPOINT [&#34;java&#34;,&#34;-jar&#34;,&#34;target/hello-0.0.1-SNAPSHOT.jar&#
   
 
   
-  <link rel="icon" href="https://sunkz.top/favicon.ico" />
-  <link rel="apple-touch-icon" href="https://sunkz.top/apple-touch-icon.png" />
+  <link rel="icon" href="http://localhost:1313/favicon.ico" />
+  <link rel="apple-touch-icon" href="http://localhost:1313/apple-touch-icon.png" />
 
   
   <meta name="generator" content="Hugo 0.147.4">
 
   
-  
-  
-  
-  
-  
-  <meta itemprop="name" content="基于Github&#43;Docker的自动化部署">
-  <meta itemprop="description" content="准备工作 Github Dockerhub Server (没有服务器的话,本机使用内网穿透也可以) 整体流程 具体步骤 1. code /hello 代码
-创建 springboot 工程提供一个接口, 并编写 dockerfile
-/** * hello 接口 */ @GetMapping(&#34;/hello&#34;) public String hello(){ return &#34;hello&#34;; } FROM openjdk:11 WORKDIR /workspace/app COPY mvnw . COPY .mvn .mvn COPY pom.xml . COPY src src RUN ./mvnw package -DskipTests ENTRYPOINT [&#34;java&#34;,&#34;-jar&#34;,&#34;target/hello-0.0.1-SNAPSHOT.jar&#34;] 2. 在 Github 创建仓库">
-  <meta itemprop="datePublished" content="2019-01-21T18:43:29-08:00">
-  <meta itemprop="dateModified" content="2019-01-21T18:43:29-08:00">
-  <meta itemprop="wordCount" content="196">
-  
-  <meta property="og:url" content="https://sunkz.top/posts/%E5%9F%BA%E4%BA%8Egithub&#43;docker%E7%9A%84%E8%87%AA%E5%8A%A8%E5%8C%96%E9%83%A8%E7%BD%B2/">
-  <meta property="og:site_name" content="Sunkz">
-  <meta property="og:title" content="基于Github&#43;Docker的自动化部署">
-  <meta property="og:description" content="准备工作 Github Dockerhub Server (没有服务器的话,本机使用内网穿透也可以) 整体流程 具体步骤 1. code /hello 代码
-创建 springboot 工程提供一个接口, 并编写 dockerfile
-/** * hello 接口 */ @GetMapping(&#34;/hello&#34;) public String hello(){ return &#34;hello&#34;; } FROM openjdk:11 WORKDIR /workspace/app COPY mvnw . COPY .mvn .mvn COPY pom.xml . COPY src src RUN ./mvnw package -DskipTests ENTRYPOINT [&#34;java&#34;,&#34;-jar&#34;,&#34;target/hello-0.0.1-SNAPSHOT.jar&#34;] 2. 在 Github 创建仓库">
-  <meta property="og:locale" content="en_us">
-  <meta property="og:type" content="article">
-    <meta property="article:section" content="posts">
-    <meta property="article:published_time" content="2019-01-21T18:43:29-08:00">
-    <meta property="article:modified_time" content="2019-01-21T18:43:29-08:00">
-
-  
-  
-  <meta name="twitter:card" content="summary">
-  <meta name="twitter:title" content="基于Github&#43;Docker的自动化部署">
-  <meta name="twitter:description" content="准备工作 Github Dockerhub Server (没有服务器的话,本机使用内网穿透也可以) 整体流程 具体步骤 1. code /hello 代码
-创建 springboot 工程提供一个接口, 并编写 dockerfile
-/** * hello 接口 */ @GetMapping(&#34;/hello&#34;) public String hello(){ return &#34;hello&#34;; } FROM openjdk:11 WORKDIR /workspace/app COPY mvnw . COPY .mvn .mvn COPY pom.xml . COPY src src RUN ./mvnw package -DskipTests ENTRYPOINT [&#34;java&#34;,&#34;-jar&#34;,&#34;target/hello-0.0.1-SNAPSHOT.jar&#34;] 2. 在 Github 创建仓库">
-
-  
-  
-  
-  <link rel="canonical" href="https://sunkz.top/posts/%E5%9F%BA%E4%BA%8Egithub&#43;docker%E7%9A%84%E8%87%AA%E5%8A%A8%E5%8C%96%E9%83%A8%E7%BD%B2/" />
   
   
 </head>
@@ -185,7 +148,7 @@ ENTRYPOINT [&#34;java&#34;,&#34;-jar&#34;,&#34;target/hello-0.0.1-SNAPSHOT.jar&#
   <div class="relative z-50 mr-auto flex items-center">
     <a
       class="-translate-x-[1px] -translate-y-[1px] text-2xl font-semibold"
-      href="https://sunkz.top/"
+      href="http://localhost:1313/"
       >Sunkz</a
     >
     <div
@@ -428,14 +391,14 @@ ENTRYPOINT [&#34;java&#34;,&#34;-jar&#34;,&#34;target/hello-0.0.1-SNAPSHOT.jar&#
     
     <a
       class="flex w-1/2 items-center rounded-l-md p-6 pr-3 font-semibold no-underline hover:bg-black/[2%] dark:hover:bg-white/[3%]"
-      href="https://sunkz.top/posts/%E6%96%87%E6%9C%AC%E5%B7%A5%E5%85%B7%E7%AE%B1%E4%B8%8A%E6%9E%B6utools%E5%95%A6/"
+      href="http://localhost:1313/posts/%E6%96%87%E6%9C%AC%E5%B7%A5%E5%85%B7%E7%AE%B1%E4%B8%8A%E6%9E%B6utools%E5%95%A6/"
       ><span class="mr-1.5">←</span><span>文本工具箱上架 utools 啦</span></a
     >
     
     
     <a
       class="ml-auto flex w-1/2 items-center justify-end rounded-r-md p-6 pl-3 font-semibold no-underline hover:bg-black/[2%] dark:hover:bg-white/[3%]"
-      href="https://sunkz.top/posts/%E5%9F%BA%E4%BA%8Egithub%E6%90%AD%E5%BB%BAmaven%E7%A7%81%E6%9C%8D/"
+      href="http://localhost:1313/posts/%E5%9F%BA%E4%BA%8Egithub%E6%90%AD%E5%BB%BAmaven%E7%A7%81%E6%9C%8D/"
       ><span>基于Github搭建Maven私服</span><span class="ml-1.5">→</span></a
     >
     
@@ -459,7 +422,7 @@ ENTRYPOINT [&#34;java&#34;,&#34;-jar&#34;,&#34;target/hello-0.0.1-SNAPSHOT.jar&#
 >
   <div class="mr-auto">
     &copy; 2026
-    <a class="link" href="https://sunkz.top/">Sunkz</a>
+    <a class="link" href="http://localhost:1313/">Sunkz</a>
   </div>
   <a class="link mx-6" href="https://gohugo.io/" rel="noopener" target="_blank"
     >Powered by Hugo️️</a

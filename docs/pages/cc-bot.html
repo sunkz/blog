@@ -81,6 +81,17 @@
 }
 html.dark .cc { color: #f5f5f7; }
 
+/* ---- Animations ---- */
+@keyframes cc-fade-up {
+    from { opacity: 0; transform: translateY(24px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+.cc-anim { animation: cc-fade-up .6s ease-out both; }
+.cc-anim-d1 { animation-delay: .1s; }
+.cc-anim-d2 { animation-delay: .2s; }
+.cc-anim-d3 { animation-delay: .3s; }
+.cc-anim-d4 { animation-delay: .4s; }
+
 /* ---- Hero ---- */
 .cc-hero {
     max-width: 720px;
@@ -88,19 +99,11 @@ html.dark .cc { color: #f5f5f7; }
     padding: 56px 24px 48px;
     text-align: center;
 }
-.cc-hero-icon {
-    width: 96px; height: 96px;
-    border-radius: 22px;
-    box-shadow: 0 4px 20px rgba(0,0,0,.12);
-}
-html.dark .cc-hero-icon {
-    box-shadow: 0 4px 20px rgba(0,0,0,.5);
-}
 .cc-hero h1 {
     font-size: 2.4em;
     font-weight: 700;
     letter-spacing: -.025em;
-    margin: 20px 0 0;
+    margin: 0;
 }
 .cc-hero-tagline {
     font-size: 1.2em;
@@ -129,19 +132,27 @@ html.dark .cc-hero-desc { color: #a1a1a6; }
     border-radius: 980px;
     font-size: .88em; font-weight: 500;
     text-decoration: none;
-    transition: all .15s;
+    transition: all .2s;
     cursor: pointer; border: none;
 }
 .cc-btn-dl {
     background: #0071e3; color: #fff;
 }
-.cc-btn-dl:hover { background: #0077ed; color: #fff; text-decoration: none; }
+.cc-btn-dl:hover {
+    background: #0077ed; color: #fff; text-decoration: none;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(0,113,227,.35);
+}
 .cc-btn-gh {
     background: #f5f5f7; color: #1d1d1f;
 }
-.cc-btn-gh:hover { background: #e8e8ed; color: #1d1d1f; text-decoration: none; }
+.cc-btn-gh:hover {
+    background: #e8e8ed; color: #1d1d1f; text-decoration: none;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(0,0,0,.06);
+}
 html.dark .cc-btn-gh { background: #2d2d2d; color: #f5f5f7; }
-html.dark .cc-btn-gh:hover { background: #3a3a3a; }
+html.dark .cc-btn-gh:hover { background: #3a3a3a; box-shadow: 0 4px 12px rgba(0,0,0,.3); }
 .cc-badge {
     display: inline-block;
     font-size: .75em;
@@ -157,7 +168,7 @@ html.dark .cc-badge { color: #6e6e73; }
     margin: 0 auto;
     padding: 0 24px 56px;
     display: flex;
-    gap: 32px;
+    gap: 36px;
     justify-content: center;
     align-items: flex-end;
     flex-wrap: wrap;
@@ -166,12 +177,41 @@ html.dark .cc-badge { color: #6e6e73; }
     text-align: center;
     flex-shrink: 0;
 }
-.cc-shot img {
+.cc-shot-frame {
     border-radius: 12px;
-    box-shadow: 0 2px 16px rgba(0,0,0,.1), 0 0 0 .5px rgba(0,0,0,.06);
+    overflow: hidden;
+    box-shadow: 0 2px 20px rgba(0,0,0,.1), 0 0 0 .5px rgba(0,0,0,.06);
+    background: #f5f5f7;
+    transition: transform .3s, box-shadow .3s;
 }
-html.dark .cc-shot img {
-    box-shadow: 0 2px 16px rgba(0,0,0,.5), 0 0 0 .5px rgba(255,255,255,.08);
+.cc-shot-frame:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 30px rgba(0,0,0,.15), 0 0 0 .5px rgba(0,0,0,.06);
+}
+html.dark .cc-shot-frame {
+    box-shadow: 0 2px 20px rgba(0,0,0,.5), 0 0 0 .5px rgba(255,255,255,.08);
+    background: #2d2d2d;
+}
+html.dark .cc-shot-frame:hover {
+    box-shadow: 0 8px 30px rgba(0,0,0,.6), 0 0 0 .5px rgba(255,255,255,.1);
+}
+.cc-shot-titlebar {
+    height: 28px;
+    display: flex;
+    align-items: center;
+    padding: 0 10px;
+    gap: 6px;
+    background: #e8e8ed;
+}
+html.dark .cc-shot-titlebar { background: #3a3a3a; }
+.cc-shot-dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+}
+.cc-shot-frame img {
+    display: block;
+    width: 100%;
+    height: auto;
 }
 .cc-shot-label {
     margin-top: 10px;
@@ -199,20 +239,70 @@ html.dark .cc-divider { background: #424245; }
     font-size: 1.6em;
     font-weight: 700;
     letter-spacing: -.02em;
+    margin: 0 0 12px;
+}
+.cc-section-sub {
+    color: #86868b;
+    font-size: .92em;
     margin: 0 0 32px;
 }
+html.dark .cc-section-sub { color: #a1a1a6; }
+
+/* ---- Scenarios ---- */
+.cc-scenarios {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+}
+.cc-scenario {
+    padding: 24px 20px;
+    border-radius: 14px;
+    background: #f5f5f7;
+    transition: transform .2s, box-shadow .2s;
+}
+.cc-scenario:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 16px rgba(0,0,0,.06);
+}
+html.dark .cc-scenario { background: #1d1d1f; }
+html.dark .cc-scenario:hover { box-shadow: 0 4px 16px rgba(0,0,0,.3); }
+.cc-scenario-icon {
+    font-size: 1.6em;
+    margin-bottom: 10px;
+    display: block;
+    line-height: 1;
+}
+.cc-scenario h3 {
+    font-size: .92em;
+    font-weight: 600;
+    margin: 0 0 6px;
+}
+.cc-scenario p {
+    font-size: .82em;
+    color: #6e6e73;
+    margin: 0;
+    line-height: 1.55;
+}
+html.dark .cc-scenario p { color: #a1a1a6; }
 
 /* ---- Feature list ---- */
 .cc-features {
     display: flex;
     flex-direction: column;
-    gap: 28px;
+    gap: 24px;
 }
 .cc-feat {
     display: flex;
     gap: 16px;
     align-items: flex-start;
+    padding: 16px;
+    border-radius: 12px;
+    transition: background .2s;
 }
+.cc-feat:hover {
+    background: #f5f5f7;
+}
+html.dark .cc-feat:hover { background: #1d1d1f; }
 .cc-feat-dot {
     width: 36px; height: 36px;
     border-radius: 10px;
@@ -236,6 +326,65 @@ html.dark .cc-divider { background: #424245; }
 }
 html.dark .cc-feat-body p { color: #a1a1a6; }
 
+/* ---- Quick Start ---- */
+.cc-steps {
+    display: flex;
+    gap: 20px;
+    counter-reset: step;
+}
+.cc-step {
+    flex: 1;
+    text-align: center;
+    padding: 28px 16px;
+    border-radius: 14px;
+    background: #f5f5f7;
+    position: relative;
+    transition: transform .2s, box-shadow .2s;
+}
+.cc-step:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 16px rgba(0,0,0,.06);
+}
+html.dark .cc-step { background: #1d1d1f; }
+html.dark .cc-step:hover { box-shadow: 0 4px 16px rgba(0,0,0,.3); }
+.cc-step-num {
+    width: 32px; height: 32px;
+    border-radius: 50%;
+    background: #0071e3;
+    color: #fff;
+    font-size: .85em;
+    font-weight: 700;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 12px;
+}
+.cc-step-icon {
+    display: block;
+    margin: 0 auto 12px;
+}
+.cc-step h3 {
+    font-size: .95em;
+    font-weight: 600;
+    margin: 0 0 6px;
+}
+.cc-step p {
+    font-size: .82em;
+    color: #6e6e73;
+    margin: 0;
+    line-height: 1.5;
+}
+html.dark .cc-step p { color: #a1a1a6; }
+.cc-step-arrow {
+    position: absolute;
+    right: -16px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #d2d2d7;
+    font-size: 1.1em;
+}
+html.dark .cc-step-arrow { color: #424245; }
+
 /* ---- Arch ---- */
 .cc-arch {
     background: #f5f5f7;
@@ -253,6 +402,11 @@ html.dark .cc-arch { background: #1d1d1f; }
     margin: 0;
 }
 html.dark .cc-arch pre { color: #f5f5f7; }
+.cc-arch .cc-hl-purple { color: #af52de; }
+.cc-arch .cc-hl-green { color: #34c759; }
+.cc-arch .cc-hl-blue { color: #007aff; }
+.cc-arch .cc-hl-orange { color: #ff9500; }
+.cc-arch .cc-hl-muted { color: #86868b; }
 
 /* ---- Tech tags ---- */
 .cc-tags {
@@ -269,8 +423,14 @@ html.dark .cc-arch pre { color: #f5f5f7; }
     font-weight: 500;
     background: #f5f5f7;
     color: #1d1d1f;
+    transition: transform .15s;
 }
+.cc-tag:hover { transform: scale(1.04); }
 html.dark .cc-tag { background: #2d2d2d; color: #f5f5f7; }
+.cc-tag-accent { background: #eef4ff; color: #0071e3; }
+html.dark .cc-tag-accent { background: #0a2540; color: #4da3ff; }
+.cc-tag-swift { background: #fff0e6; color: #e65c00; }
+html.dark .cc-tag-swift { background: #331a00; color: #ff9500; }
 
 /* ---- Integrations ---- */
 .cc-integrations {
@@ -282,8 +442,23 @@ html.dark .cc-tag { background: #2d2d2d; color: #f5f5f7; }
     padding: 20px;
     border-radius: 12px;
     background: #f5f5f7;
+    display: flex;
+    gap: 14px;
+    align-items: flex-start;
+    transition: transform .2s, box-shadow .2s;
+}
+.cc-integ:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 16px rgba(0,0,0,.06);
 }
 html.dark .cc-integ { background: #1d1d1f; }
+html.dark .cc-integ:hover { box-shadow: 0 4px 16px rgba(0,0,0,.3); }
+.cc-integ-dot {
+    width: 10px; height: 10px;
+    border-radius: 50%;
+    flex-shrink: 0;
+    margin-top: 5px;
+}
 .cc-integ-name {
     font-weight: 600;
     font-size: .95em;
@@ -302,9 +477,15 @@ html.dark .cc-integ-desc { color: #a1a1a6; }
     padding: 48px 24px 56px;
     max-width: 680px;
     margin: 0 auto;
+    border-radius: 20px;
+    background: linear-gradient(135deg, #f0f4ff 0%, #faf0ff 100%);
+    margin-bottom: 40px;
+}
+html.dark .cc-cta {
+    background: linear-gradient(135deg, #0a1628 0%, #1a0a28 100%);
 }
 .cc-cta p {
-    font-size: 1.1em;
+    font-size: 1.15em;
     font-weight: 600;
     margin: 0 0 6px;
 }
@@ -319,12 +500,15 @@ html.dark .cc-cta .cc-cta-sub { color: #a1a1a6; }
 @media (max-width: 600px) {
     .cc-hero { padding: 40px 20px 36px; }
     .cc-hero h1 { font-size: 1.8em; }
-    .cc-hero-icon { width: 72px; height: 72px; border-radius: 18px; }
     .cc-section { padding: 40px 20px; }
     .cc-section h2 { font-size: 1.3em; }
     .cc-shots { gap: 20px; padding-bottom: 40px; }
     .cc-integrations { grid-template-columns: 1fr; }
     .cc-arch pre { font-size: .68em; }
+    .cc-scenarios { grid-template-columns: 1fr; }
+    .cc-steps { flex-direction: column; }
+    .cc-step-arrow { display: none; }
+    .cc-feat { padding: 12px; }
 }
 </style>
 
@@ -332,13 +516,13 @@ html.dark .cc-cta .cc-cta-sub { color: #a1a1a6; }
 
     <!-- Hero -->
     <section class="cc-hero">
-        <h1>CCBot</h1>
-        <div class="cc-hero-tagline">AI Agent 通知助手</div>
-        <p class="cc-hero-desc">
+        <h1 class="cc-anim">CCBot</h1>
+        <div class="cc-hero-tagline cc-anim cc-anim-d1">AI Agent 通知助手</div>
+        <p class="cc-hero-desc cc-anim cc-anim-d2">
             macOS 菜单栏应用，监听 Claude Code / Codex CLI / JetBrains IDE 中的 AI Agent 事件，
             通过系统通知和 Telegram 实时推送 — 再也不用盯着终端等了。
         </p>
-        <div class="cc-hero-actions">
+        <div class="cc-hero-actions cc-anim cc-anim-d3">
             <a class="cc-btn cc-btn-dl" href="https://github.com/sunkz/cc-bot/releases/latest" target="_blank">
                 <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
                 下载
@@ -348,26 +532,72 @@ html.dark .cc-cta .cc-cta-sub { color: #a1a1a6; }
                 GitHub
             </a>
         </div>
-        <div class="cc-badge">v1.0.8 &middot; macOS 13.0+ &middot; MIT License &middot; Swift 6</div>
+        <div class="cc-badge cc-anim cc-anim-d4">v1.0.8 &middot; macOS 13.0+ &middot; MIT License &middot; Swift 6</div>
     </section>
 
     <!-- Screenshots -->
     <div class="cc-shots">
         <div class="cc-shot">
-            <img src="images/cc-bot/menubar.jpg" alt="CCBot 菜单栏" width="280">
+            <div class="cc-shot-frame" style="width:280px;">
+                <div class="cc-shot-titlebar">
+                    <span class="cc-shot-dot" style="background:#ff5f57;"></span>
+                    <span class="cc-shot-dot" style="background:#febc2e;"></span>
+                    <span class="cc-shot-dot" style="background:#28c840;"></span>
+                </div>
+                <img src="images/cc-bot/menubar.jpg" alt="CCBot 菜单栏">
+            </div>
             <div class="cc-shot-label">菜单栏面板</div>
         </div>
         <div class="cc-shot">
-            <img src="images/cc-bot/notification.jpg" alt="CCBot 通知" width="340">
+            <div class="cc-shot-frame" style="width:340px;">
+                <div class="cc-shot-titlebar">
+                    <span class="cc-shot-dot" style="background:#ff5f57;"></span>
+                    <span class="cc-shot-dot" style="background:#febc2e;"></span>
+                    <span class="cc-shot-dot" style="background:#28c840;"></span>
+                </div>
+                <img src="images/cc-bot/notification.jpg" alt="CCBot 通知">
+            </div>
             <div class="cc-shot-label">系统通知</div>
         </div>
     </div>
 
     <div class="cc-divider"></div>
 
+    <!-- Scenarios -->
+    <section class="cc-section">
+        <h2>使用场景</h2>
+        <p class="cc-section-sub">无论哪种工作模式，CCBot 都能帮你守住关键时刻</p>
+        <div class="cc-scenarios">
+            <div class="cc-scenario">
+                <span class="cc-scenario-icon">
+                    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#ff9500" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                </span>
+                <h3>长任务后台跑</h3>
+                <p>让 Agent 自主重构代码、跑测试，任务完成第一时间通知你，不用反复切窗口查看。</p>
+            </div>
+            <div class="cc-scenario">
+                <span class="cc-scenario-icon">
+                    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#ff3b30" stroke-width="1.8" stroke-linecap="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                </span>
+                <h3>权限卡住时</h3>
+                <p>Agent 需要批准执行危险操作？CCBot 立刻推送，不让权限弹窗默默阻塞进度。</p>
+            </div>
+            <div class="cc-scenario">
+                <span class="cc-scenario-icon">
+                    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#007aff" stroke-width="1.8" stroke-linecap="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+                </span>
+                <h3>多项目并行</h3>
+                <p>同时在多个终端跑 Agent 任务，所有项目的状态汇聚到一个通知流，一目了然。</p>
+            </div>
+        </div>
+    </section>
+
+    <div class="cc-divider"></div>
+
     <!-- Features -->
     <section class="cc-section">
         <h2>功能</h2>
+        <p class="cc-section-sub">覆盖从通知到集成的完整链路</p>
         <div class="cc-features">
             <div class="cc-feat">
                 <div class="cc-feat-dot" style="background:#34c759;">
@@ -414,6 +644,45 @@ html.dark .cc-cta .cc-cta-sub { color: #a1a1a6; }
                     <p>本地 HTTP 服务 Bearer Token 认证，3s 节流 + 6s 指纹去重，干净准确不打扰。</p>
                 </div>
             </div>
+            <div class="cc-feat">
+                <div class="cc-feat-dot" style="background:#5ac8fa;">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>
+                </div>
+                <div class="cc-feat-body">
+                    <h3>自动更新检查</h3>
+                    <p>每次打开菜单自动对比 GitHub Releases 最新版本，发现更新一键跳转下载。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="cc-divider"></div>
+
+    <!-- Quick Start -->
+    <section class="cc-section">
+        <h2>快速开始</h2>
+        <p class="cc-section-sub">三步完成配置</p>
+        <div class="cc-steps">
+            <div class="cc-step">
+                <div class="cc-step-num">1</div>
+                <svg class="cc-step-icon" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#0071e3" stroke-width="1.8" stroke-linecap="round"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                <h3>下载安装</h3>
+                <p>从 GitHub Releases 下载 DMG，拖入 Applications</p>
+                <span class="cc-step-arrow">&rsaquo;</span>
+            </div>
+            <div class="cc-step">
+                <div class="cc-step-num">2</div>
+                <svg class="cc-step-icon" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#0071e3" stroke-width="1.8" stroke-linecap="round"><path d="M10 13a5 5 0 007.54.54l3-3a5 5 0 00-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 00-7.54-.54l-3 3a5 5 0 007.07 7.07l1.71-1.71"/></svg>
+                <h3>安装 Hook</h3>
+                <p>菜单栏点击安装按钮，一键注册到 Claude Code / Codex</p>
+                <span class="cc-step-arrow">&rsaquo;</span>
+            </div>
+            <div class="cc-step">
+                <div class="cc-step-num">3</div>
+                <svg class="cc-step-icon" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#0071e3" stroke-width="1.8" stroke-linecap="round"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                <h3>开始使用</h3>
+                <p>Agent 事件自动推送到通知中心，可选配置 Telegram 远程推送</p>
+            </div>
         </div>
     </section>
 
@@ -422,22 +691,35 @@ html.dark .cc-cta .cc-cta-sub { color: #a1a1a6; }
     <!-- Integrations -->
     <section class="cc-section">
         <h2>集成</h2>
+        <p class="cc-section-sub">覆盖主流 AI 编程工具链</p>
         <div class="cc-integrations">
             <div class="cc-integ">
-                <div class="cc-integ-name">Claude Code</div>
-                <div class="cc-integ-desc">CLI / Desktop / Web<br>Notification + Stop Hook</div>
+                <span class="cc-integ-dot" style="background:#af52de;"></span>
+                <div>
+                    <div class="cc-integ-name">Claude Code</div>
+                    <div class="cc-integ-desc">CLI / Desktop / Web<br>Notification + Stop Hook</div>
+                </div>
             </div>
             <div class="cc-integ">
-                <div class="cc-integ-name">Codex CLI</div>
-                <div class="cc-integ-desc">OpenAI 命令行工具<br>notify 回调</div>
+                <span class="cc-integ-dot" style="background:#34c759;"></span>
+                <div>
+                    <div class="cc-integ-name">Codex CLI</div>
+                    <div class="cc-integ-desc">OpenAI 命令行工具<br>notify 回调</div>
+                </div>
             </div>
             <div class="cc-integ">
-                <div class="cc-integ-name">JetBrains CC GUI</div>
-                <div class="cc-integ-desc">文件 IPC 监听<br>DispatchSource 实时响应</div>
+                <span class="cc-integ-dot" style="background:#007aff;"></span>
+                <div>
+                    <div class="cc-integ-name">JetBrains CC GUI</div>
+                    <div class="cc-integ-desc">文件 IPC 监听<br>DispatchSource 实时响应</div>
+                </div>
             </div>
             <div class="cc-integ">
-                <div class="cc-integ-name">JetBrains ACP</div>
-                <div class="cc-integ-desc">Node.js stdio 代理<br>拦截 JSON-RPC 权限请求</div>
+                <span class="cc-integ-dot" style="background:#ff9500;"></span>
+                <div>
+                    <div class="cc-integ-name">JetBrains ACP</div>
+                    <div class="cc-integ-desc">Node.js stdio 代理<br>拦截 JSON-RPC 权限请求</div>
+                </div>
             </div>
         </div>
     </section>
@@ -448,21 +730,21 @@ html.dark .cc-cta .cc-cta-sub { color: #a1a1a6; }
     <section class="cc-section">
         <h2>架构</h2>
         <div class="cc-arch">
-<pre>Claude Code  ── Hook ────────▶ HookServer (:62400) ──▶ macOS 通知
-                                                    ──▶ Telegram
+<pre><span class="cc-hl-purple">Claude Code</span>  <span class="cc-hl-muted">── Hook ────────▶</span> <span class="cc-hl-blue">HookServer (:62400)</span> <span class="cc-hl-muted">──▶</span> <span class="cc-hl-green">macOS 通知</span>
+                                                    <span class="cc-hl-muted">──▶</span> <span class="cc-hl-blue">Telegram</span>
 
-Codex CLI    ── notify ──────▶ HookServer (:62400) ──▶ macOS 通知
-                                                    ──▶ Telegram
+<span class="cc-hl-green">Codex CLI</span>    <span class="cc-hl-muted">── notify ──────▶</span> <span class="cc-hl-blue">HookServer (:62400)</span> <span class="cc-hl-muted">──▶</span> <span class="cc-hl-green">macOS 通知</span>
+                                                    <span class="cc-hl-muted">──▶</span> <span class="cc-hl-blue">Telegram</span>
 
-CC GUI       ── 文件 IPC ──▶ CCGUIWatcher ──────────▶ macOS 通知
-                              (DispatchSource)      ──▶ Telegram
+<span class="cc-hl-orange">CC GUI</span>       <span class="cc-hl-muted">── 文件 IPC ──▶</span> <span class="cc-hl-blue">CCGUIWatcher</span> <span class="cc-hl-muted">──────────▶</span> <span class="cc-hl-green">macOS 通知</span>
+                              <span class="cc-hl-muted">(DispatchSource)</span>      <span class="cc-hl-muted">──▶</span> <span class="cc-hl-blue">Telegram</span>
 
-JetBrains    ── stdio ──▶ ACP Proxy ── POST ──▶ HookServer</pre>
+<span class="cc-hl-orange">JetBrains</span>    <span class="cc-hl-muted">── stdio ──▶</span> <span class="cc-hl-purple">ACP Proxy</span> <span class="cc-hl-muted">── POST ──▶</span> <span class="cc-hl-blue">HookServer</span></pre>
         </div>
         <div class="cc-tags">
-            <span class="cc-tag">Swift 6</span>
-            <span class="cc-tag">SwiftUI</span>
-            <span class="cc-tag">Network.framework</span>
+            <span class="cc-tag cc-tag-swift">Swift 6</span>
+            <span class="cc-tag cc-tag-accent">SwiftUI</span>
+            <span class="cc-tag cc-tag-accent">Network.framework</span>
             <span class="cc-tag">零第三方依赖</span>
             <span class="cc-tag">XcodeGen</span>
             <span class="cc-tag">GitHub Actions CI</span>
@@ -473,13 +755,15 @@ JetBrains    ── stdio ──▶ ACP Proxy ── POST ──▶ HookServer</
     <div class="cc-divider"></div>
 
     <!-- CTA -->
-    <section class="cc-cta">
-        <p>让 AI Agent 自己跑，你去喝杯咖啡。</p>
-        <div class="cc-cta-sub">下载安装，菜单栏一键配置。</div>
-        <a class="cc-btn cc-btn-dl" href="https://github.com/sunkz/cc-bot/releases/latest" target="_blank">
-            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-            下载 CCBot
-        </a>
+    <section class="cc-section" style="padding-bottom: 20px;">
+        <div class="cc-cta">
+            <p>让 AI Agent 自己跑，你去喝杯咖啡。</p>
+            <div class="cc-cta-sub">下载安装，菜单栏一键配置。</div>
+            <a class="cc-btn cc-btn-dl" href="https://github.com/sunkz/cc-bot/releases/latest" target="_blank">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                下载 CCBot
+            </a>
+        </div>
     </section>
 
 </main>
