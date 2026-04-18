@@ -63,11 +63,12 @@
       <a class="block text-center text-2xl leading-[5rem] lg:text-base lg:font-normal" href="/">主页</a>
       <a class="block text-center text-2xl leading-[5rem] lg:text-base lg:font-normal" href="/pages/tools.html">文本工具箱</a>
       <a class="block text-center text-2xl leading-[5rem] lg:text-base lg:font-normal" href="/pages/cc-bot.html">CCBot</a>
+      <a class="block text-center text-2xl leading-[5rem] lg:text-base lg:font-normal" href="/pages/cc-space.html">CCSpace</a>
       <a class="block text-center text-2xl leading-[5rem] lg:text-base lg:font-normal" href="/about/">关于我</a>
     </nav>
     <nav class="mt-12 flex justify-center space-x-10 dark:invert lg:ml-12 lg:mt-0 lg:items-center lg:space-x-6">
       <a class="h-8 w-8 text-[0] [background:var(--url)_center_center/cover_no-repeat] lg:h-6 lg:w-6"
-         style="--url: url(./github.svg)" href="https://github.com/sunkz" target="_blank" rel="me">github</a>
+         style="--url: url(/github.svg)" href="https://github.com/sunkz" target="_blank" rel="me">github</a>
     </nav>
   </div>
 </header>
@@ -91,6 +92,7 @@ html.dark .cc { color: #f5f5f7; }
 .cc-anim-d2 { animation-delay: .2s; }
 .cc-anim-d3 { animation-delay: .3s; }
 .cc-anim-d4 { animation-delay: .4s; }
+.cc-anim-d5 { animation-delay: .5s; }
 
 /* ---- Hero ---- */
 .cc-hero {
@@ -98,6 +100,27 @@ html.dark .cc { color: #f5f5f7; }
     margin: 0 auto;
     padding: 56px 24px 48px;
     text-align: center;
+}
+.cc-app-icon-wrap {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 92px;
+    height: 92px;
+    margin-bottom: 18px;
+    border-radius: 26px;
+    background: linear-gradient(180deg, #f6f8ff 0%, #eef2ff 100%);
+    box-shadow: 0 18px 40px rgba(56, 90, 190, .14);
+}
+html.dark .cc-app-icon-wrap {
+    background: linear-gradient(180deg, #1a2235 0%, #111827 100%);
+    box-shadow: 0 18px 40px rgba(0, 0, 0, .32);
+}
+.cc-app-icon {
+    width: 68px;
+    height: 68px;
+    border-radius: 18px;
+    display: block;
 }
 .cc-hero h1 {
     font-size: 2.4em;
@@ -500,6 +523,16 @@ html.dark .cc-cta .cc-cta-sub { color: #a1a1a6; }
 @media (max-width: 600px) {
     .cc-hero { padding: 40px 20px 36px; }
     .cc-hero h1 { font-size: 1.8em; }
+    .cc-app-icon-wrap {
+        width: 78px;
+        height: 78px;
+        border-radius: 22px;
+    }
+    .cc-app-icon {
+        width: 58px;
+        height: 58px;
+        border-radius: 16px;
+    }
     .cc-section { padding: 40px 20px; }
     .cc-section h2 { font-size: 1.3em; }
     .cc-shots { gap: 20px; padding-bottom: 40px; }
@@ -516,13 +549,16 @@ html.dark .cc-cta .cc-cta-sub { color: #a1a1a6; }
 
     <!-- Hero -->
     <section class="cc-hero">
-        <h1 class="cc-anim">CCBot</h1>
-        <div class="cc-hero-tagline cc-anim cc-anim-d1">AI Agent 通知助手</div>
-        <p class="cc-hero-desc cc-anim cc-anim-d2">
+        <div class="cc-app-icon-wrap cc-anim">
+            <img class="cc-app-icon" src="images/cc-bot/icon.png" alt="CCBot 图标">
+        </div>
+        <h1 class="cc-anim cc-anim-d1">CCBot</h1>
+        <div class="cc-hero-tagline cc-anim cc-anim-d2">AI Agent 通知助手</div>
+        <p class="cc-hero-desc cc-anim cc-anim-d3">
             macOS 菜单栏应用，监听 Claude Code / Codex CLI / JetBrains IDE 中的 AI Agent 事件，
             通过系统通知和 Telegram 实时推送 — 再也不用盯着终端等了。
         </p>
-        <div class="cc-hero-actions cc-anim cc-anim-d3">
+        <div class="cc-hero-actions cc-anim cc-anim-d4">
             <a class="cc-btn cc-btn-dl" href="https://github.com/sunkz/cc-bot/releases/latest" target="_blank">
                 <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
                 下载
@@ -532,7 +568,7 @@ html.dark .cc-cta .cc-cta-sub { color: #a1a1a6; }
                 GitHub
             </a>
         </div>
-        <div class="cc-badge cc-anim cc-anim-d4">v1.0.8 &middot; macOS 13.0+ &middot; MIT License &middot; Swift 6</div>
+        <div class="cc-badge cc-anim cc-anim-d5">v1.0.8 &middot; macOS 13.0+ &middot; MIT License &middot; Swift 6</div>
     </section>
 
     <!-- Screenshots -->
