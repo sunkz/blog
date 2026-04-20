@@ -21,6 +21,11 @@ publishdir = 'docs'
     url = "/pages/cc-bot.html"
     weight = 30
   [[menu.main]]
+    identifier = "CCSpace"
+    name = "CCSpace"
+    url = "/pages/cc-space.html"
+    weight = 35
+  [[menu.main]]
     identifier = "关于我"
     name = "关于我"
     url = "/about/"

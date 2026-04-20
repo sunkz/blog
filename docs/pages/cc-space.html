@@ -2,9 +2,9 @@
 <html class="not-ready lg:text-base" style="--bg: #fff" lang="zh-CN">
 <head>
     <meta charset="UTF-8">
-    <title>CCBot - Sunkz</title>
+    <title>CCSpace - Sunkz</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="CCBot - AI 编程 Agent 通知助手，macOS 菜单栏应用">
+    <meta name="description" content="CCSpace - macOS 多仓库工作区管理工具，统一创建、同步和维护 Git 工作区">
     <meta name="theme-color" />
     <link rel="preload stylesheet" as="style" href="/main.min.css" />
     <link rel="preload" as="image" href="/theme.png" />
@@ -82,7 +82,6 @@
 }
 html.dark .cc { color: #f5f5f7; }
 
-/* ---- Animations ---- */
 @keyframes cc-fade-up {
     from { opacity: 0; transform: translateY(24px); }
     to   { opacity: 1; transform: translateY(0); }
@@ -92,11 +91,9 @@ html.dark .cc { color: #f5f5f7; }
 .cc-anim-d2 { animation-delay: .2s; }
 .cc-anim-d3 { animation-delay: .3s; }
 .cc-anim-d4 { animation-delay: .4s; }
-.cc-anim-d5 { animation-delay: .5s; }
 
-/* ---- Hero ---- */
 .cc-hero {
-    max-width: 720px;
+    max-width: 760px;
     margin: 0 auto;
     padding: 56px 24px 48px;
     text-align: center;
@@ -123,7 +120,7 @@ html.dark .cc-app-icon-wrap {
     display: block;
 }
 .cc-hero h1 {
-    font-size: 2.4em;
+    font-size: 2.5em;
     font-weight: 700;
     letter-spacing: -.025em;
     margin: 0;
@@ -138,7 +135,7 @@ html.dark .cc-hero-tagline { color: #a1a1a6; }
     font-size: .95em;
     color: #86868b;
     margin: 20px auto 0;
-    max-width: 520px;
+    max-width: 600px;
     line-height: 1.7;
 }
 html.dark .cc-hero-desc { color: #a1a1a6; }
@@ -150,27 +147,37 @@ html.dark .cc-hero-desc { color: #a1a1a6; }
     flex-wrap: wrap;
 }
 .cc-btn {
-    display: inline-flex; align-items: center; gap: 6px;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
     padding: 10px 22px;
     border-radius: 980px;
-    font-size: .88em; font-weight: 500;
+    font-size: .88em;
+    font-weight: 500;
     text-decoration: none;
     transition: all .2s;
-    cursor: pointer; border: none;
+    cursor: pointer;
+    border: none;
 }
 .cc-btn-dl {
-    background: #0071e3; color: #fff;
+    background: #0071e3;
+    color: #fff;
 }
 .cc-btn-dl:hover {
-    background: #0077ed; color: #fff; text-decoration: none;
+    background: #0077ed;
+    color: #fff;
+    text-decoration: none;
     transform: translateY(-1px);
     box-shadow: 0 4px 12px rgba(0,113,227,.35);
 }
 .cc-btn-gh {
-    background: #f5f5f7; color: #1d1d1f;
+    background: #f5f5f7;
+    color: #1d1d1f;
 }
 .cc-btn-gh:hover {
-    background: #e8e8ed; color: #1d1d1f; text-decoration: none;
+    background: #e8e8ed;
+    color: #1d1d1f;
+    text-decoration: none;
     transform: translateY(-1px);
     box-shadow: 0 4px 12px rgba(0,0,0,.06);
 }
@@ -185,40 +192,74 @@ html.dark .cc-btn-gh:hover { background: #3a3a3a; box-shadow: 0 4px 12px rgba(0,
 }
 html.dark .cc-badge { color: #6e6e73; }
 
-/* ---- Screenshots ---- */
-.cc-shots {
-    max-width: 780px;
+.cc-showcases {
+    max-width: 920px;
     margin: 0 auto;
     padding: 0 24px 56px;
     display: flex;
-    gap: 36px;
-    justify-content: center;
-    align-items: flex-end;
-    flex-wrap: wrap;
+    flex-direction: column;
+    gap: 28px;
 }
-.cc-shot {
-    text-align: center;
+.cc-showcase {
+    padding: 28px;
+    border-radius: 24px;
+    background: linear-gradient(180deg, #fafbff 0%, #f5f7fb 100%);
+    box-shadow: 0 8px 30px rgba(15, 23, 42, .06);
+}
+html.dark .cc-showcase {
+    background: linear-gradient(180deg, #15181f 0%, #111318 100%);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, .24);
+}
+.cc-showcase-head {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 10px;
+}
+.cc-showcase-index {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: #0071e3;
+    color: #fff;
+    font-size: .82em;
+    font-weight: 700;
     flex-shrink: 0;
 }
-.cc-shot-frame {
-    border-radius: 12px;
+.cc-showcase h3 {
+    font-size: 1.12em;
+    font-weight: 650;
+    margin: 0;
+}
+.cc-showcase p {
+    font-size: .92em;
+    color: #6e6e73;
+    line-height: 1.7;
+    margin: 0 0 18px;
+}
+html.dark .cc-showcase p { color: #a1a1a6; }
+.cc-showcase-frame {
+    border-radius: 16px;
     overflow: hidden;
     box-shadow: 0 2px 20px rgba(0,0,0,.1), 0 0 0 .5px rgba(0,0,0,.06);
     background: #f5f5f7;
     transition: transform .3s, box-shadow .3s;
 }
-.cc-shot-frame:hover {
+.cc-showcase-frame:hover {
     transform: translateY(-4px);
     box-shadow: 0 8px 30px rgba(0,0,0,.15), 0 0 0 .5px rgba(0,0,0,.06);
 }
-html.dark .cc-shot-frame {
+html.dark .cc-showcase-frame {
     box-shadow: 0 2px 20px rgba(0,0,0,.5), 0 0 0 .5px rgba(255,255,255,.08);
     background: #2d2d2d;
 }
-html.dark .cc-shot-frame:hover {
+html.dark .cc-showcase-frame:hover {
     box-shadow: 0 8px 30px rgba(0,0,0,.6), 0 0 0 .5px rgba(255,255,255,.1);
 }
-.cc-shot-titlebar {
+.cc-showcase-titlebar {
     height: 28px;
     display: flex;
     align-items: center;
@@ -226,24 +267,18 @@ html.dark .cc-shot-frame:hover {
     gap: 6px;
     background: #e8e8ed;
 }
-html.dark .cc-shot-titlebar { background: #3a3a3a; }
-.cc-shot-dot {
-    width: 8px; height: 8px;
+html.dark .cc-showcase-titlebar { background: #3a3a3a; }
+.cc-showcase-dot {
+    width: 8px;
+    height: 8px;
     border-radius: 50%;
 }
-.cc-shot-frame img {
+.cc-showcase-frame img {
     display: block;
     width: 100%;
     height: auto;
 }
-.cc-shot-label {
-    margin-top: 10px;
-    font-size: .8em;
-    color: #86868b;
-}
-html.dark .cc-shot-label { color: #6e6e73; }
 
-/* ---- Divider ---- */
 .cc-divider {
     height: 1px;
     background: #d2d2d7;
@@ -252,7 +287,6 @@ html.dark .cc-shot-label { color: #6e6e73; }
 }
 html.dark .cc-divider { background: #424245; }
 
-/* ---- Section ---- */
 .cc-section {
     max-width: 680px;
     margin: 0 auto;
@@ -271,7 +305,6 @@ html.dark .cc-divider { background: #424245; }
 }
 html.dark .cc-section-sub { color: #a1a1a6; }
 
-/* ---- Scenarios ---- */
 .cc-scenarios {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -308,7 +341,6 @@ html.dark .cc-scenario:hover { box-shadow: 0 4px 16px rgba(0,0,0,.3); }
 }
 html.dark .cc-scenario p { color: #a1a1a6; }
 
-/* ---- Feature list ---- */
 .cc-features {
     display: flex;
     flex-direction: column;
@@ -327,9 +359,12 @@ html.dark .cc-scenario p { color: #a1a1a6; }
 }
 html.dark .cc-feat:hover { background: #1d1d1f; }
 .cc-feat-dot {
-    width: 36px; height: 36px;
+    width: 36px;
+    height: 36px;
     border-radius: 10px;
-    display: flex; align-items: center; justify-content: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     flex-shrink: 0;
     font-size: .95em;
     font-weight: 600;
@@ -349,7 +384,6 @@ html.dark .cc-feat:hover { background: #1d1d1f; }
 }
 html.dark .cc-feat-body p { color: #a1a1a6; }
 
-/* ---- Quick Start ---- */
 .cc-steps {
     display: flex;
     gap: 20px;
@@ -371,7 +405,8 @@ html.dark .cc-feat-body p { color: #a1a1a6; }
 html.dark .cc-step { background: #1d1d1f; }
 html.dark .cc-step:hover { box-shadow: 0 4px 16px rgba(0,0,0,.3); }
 .cc-step-num {
-    width: 32px; height: 32px;
+    width: 32px;
+    height: 32px;
     border-radius: 50%;
     background: #0071e3;
     color: #fff;
@@ -408,30 +443,45 @@ html.dark .cc-step p { color: #a1a1a6; }
 }
 html.dark .cc-step-arrow { color: #424245; }
 
-/* ---- Arch ---- */
-.cc-arch {
-    background: #f5f5f7;
+.cc-actions {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+}
+.cc-action {
+    padding: 20px;
     border-radius: 12px;
-    padding: 24px 28px;
-    overflow-x: auto;
+    background: #f5f5f7;
+    display: flex;
+    gap: 14px;
+    align-items: flex-start;
+    transition: transform .2s, box-shadow .2s;
 }
-html.dark .cc-arch { background: #1d1d1f; }
-.cc-arch pre {
-    font-family: "SF Mono", "Fira Code", Menlo, monospace;
-    font-size: .8em;
-    line-height: 1.8;
-    color: #1d1d1f;
-    white-space: pre;
-    margin: 0;
+.cc-action:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 16px rgba(0,0,0,.06);
 }
-html.dark .cc-arch pre { color: #f5f5f7; }
-.cc-arch .cc-hl-purple { color: #af52de; }
-.cc-arch .cc-hl-green { color: #34c759; }
-.cc-arch .cc-hl-blue { color: #007aff; }
-.cc-arch .cc-hl-orange { color: #ff9500; }
-.cc-arch .cc-hl-muted { color: #86868b; }
+html.dark .cc-action { background: #1d1d1f; }
+html.dark .cc-action:hover { box-shadow: 0 4px 16px rgba(0,0,0,.3); }
+.cc-action-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    flex-shrink: 0;
+    margin-top: 5px;
+}
+.cc-action-name {
+    font-weight: 600;
+    font-size: .95em;
+    margin-bottom: 4px;
+}
+.cc-action-desc {
+    font-size: .82em;
+    color: #86868b;
+    line-height: 1.5;
+}
+html.dark .cc-action-desc { color: #a1a1a6; }
 
-/* ---- Tech tags ---- */
 .cc-tags {
     display: flex;
     flex-wrap: wrap;
@@ -455,57 +505,16 @@ html.dark .cc-tag-accent { background: #0a2540; color: #4da3ff; }
 .cc-tag-swift { background: #fff0e6; color: #e65c00; }
 html.dark .cc-tag-swift { background: #331a00; color: #ff9500; }
 
-/* ---- Integrations ---- */
-.cc-integrations {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 16px;
-}
-.cc-integ {
-    padding: 20px;
-    border-radius: 12px;
-    background: #f5f5f7;
-    display: flex;
-    gap: 14px;
-    align-items: flex-start;
-    transition: transform .2s, box-shadow .2s;
-}
-.cc-integ:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 16px rgba(0,0,0,.06);
-}
-html.dark .cc-integ { background: #1d1d1f; }
-html.dark .cc-integ:hover { box-shadow: 0 4px 16px rgba(0,0,0,.3); }
-.cc-integ-dot {
-    width: 10px; height: 10px;
-    border-radius: 50%;
-    flex-shrink: 0;
-    margin-top: 5px;
-}
-.cc-integ-name {
-    font-weight: 600;
-    font-size: .95em;
-    margin-bottom: 4px;
-}
-.cc-integ-desc {
-    font-size: .82em;
-    color: #86868b;
-    line-height: 1.5;
-}
-html.dark .cc-integ-desc { color: #a1a1a6; }
-
-/* ---- CTA ---- */
 .cc-cta {
     text-align: center;
     padding: 48px 24px 56px;
     max-width: 680px;
-    margin: 0 auto;
+    margin: 0 auto 40px;
     border-radius: 20px;
-    background: linear-gradient(135deg, #f0f4ff 0%, #faf0ff 100%);
-    margin-bottom: 40px;
+    background: linear-gradient(135deg, #f1f6ff 0%, #eef8f7 100%);
 }
 html.dark .cc-cta {
-    background: linear-gradient(135deg, #0a1628 0%, #1a0a28 100%);
+    background: linear-gradient(135deg, #0a1628 0%, #08201d 100%);
 }
 .cc-cta p {
     font-size: 1.15em;
@@ -522,7 +531,7 @@ html.dark .cc-cta .cc-cta-sub { color: #a1a1a6; }
 
 @media (max-width: 600px) {
     .cc-hero { padding: 40px 20px 36px; }
-    .cc-hero h1 { font-size: 1.8em; }
+    .cc-hero h1 { font-size: 1.9em; }
     .cc-app-icon-wrap {
         width: 78px;
         height: 78px;
@@ -535,158 +544,180 @@ html.dark .cc-cta .cc-cta-sub { color: #a1a1a6; }
     }
     .cc-section { padding: 40px 20px; }
     .cc-section h2 { font-size: 1.3em; }
-    .cc-shots { gap: 20px; padding-bottom: 40px; }
-    .cc-integrations { grid-template-columns: 1fr; }
-    .cc-arch pre { font-size: .68em; }
+    .cc-showcases {
+        gap: 20px;
+        padding: 0 20px 40px;
+    }
+    .cc-showcase { padding: 20px; }
     .cc-scenarios { grid-template-columns: 1fr; }
     .cc-steps { flex-direction: column; }
     .cc-step-arrow { display: none; }
+    .cc-actions { grid-template-columns: 1fr; }
     .cc-feat { padding: 12px; }
 }
 </style>
 
 <main class="cc">
 
-    <!-- Hero -->
     <section class="cc-hero">
         <div class="cc-app-icon-wrap cc-anim">
-            <img class="cc-app-icon" src="images/cc-bot/icon.png" alt="CCBot 图标">
+            <img class="cc-app-icon" src="images/cc-space/icon.png" alt="CCSpace 图标">
         </div>
-        <h1 class="cc-anim cc-anim-d1">CCBot</h1>
-        <div class="cc-hero-tagline cc-anim cc-anim-d2">AI Agent 通知助手</div>
+        <h1 class="cc-anim cc-anim-d1">CCSpace</h1>
+        <div class="cc-hero-tagline cc-anim cc-anim-d2">macOS 多仓库工作区管理工具</div>
         <p class="cc-hero-desc cc-anim cc-anim-d3">
-            macOS 菜单栏应用，监听 Claude Code / Codex CLI / JetBrains IDE 中的 AI Agent 事件，
-            通过系统通知和 Telegram 实时推送 — 再也不用盯着终端等了。
+            把常用 Git 仓库维护成仓库库，按当前任务自由组合成工作区。
+            从并行克隆、统一切分支，到批量同步、推送和状态巡检，都在一个桌面应用里完成。
         </p>
         <div class="cc-hero-actions cc-anim cc-anim-d4">
-            <a class="cc-btn cc-btn-dl" href="https://github.com/sunkz/cc-bot/releases/latest" target="_blank">
+            <a class="cc-btn cc-btn-dl" href="https://github.com/sunkz/cc-space/releases/latest" target="_blank">
                 <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
                 下载
             </a>
-            <a class="cc-btn cc-btn-gh" href="https://github.com/sunkz/cc-bot" target="_blank">
+            <a class="cc-btn cc-btn-gh" href="https://github.com/sunkz/cc-space" target="_blank">
                 <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
                 GitHub
             </a>
         </div>
-        <div class="cc-badge cc-anim cc-anim-d5">v1.0.8 &middot; macOS 13.0+ &middot; MIT License &middot; Swift 6</div>
+        <div class="cc-badge">macOS 14.0+ &middot; Swift 6 &middot; MIT License &middot; 多仓库工作区</div>
     </section>
 
-    <!-- Screenshots -->
-    <div class="cc-shots">
-        <div class="cc-shot">
-            <div class="cc-shot-frame" style="width:280px;">
-                <div class="cc-shot-titlebar">
-                    <span class="cc-shot-dot" style="background:#ff5f57;"></span>
-                    <span class="cc-shot-dot" style="background:#febc2e;"></span>
-                    <span class="cc-shot-dot" style="background:#28c840;"></span>
-                </div>
-                <img src="images/cc-bot/menubar.jpg" alt="CCBot 菜单栏">
+    <div class="cc-showcases">
+        <section class="cc-showcase">
+            <div class="cc-showcase-head">
+                <span class="cc-showcase-index">01</span>
+                <h3>仓库库配置</h3>
             </div>
-            <div class="cc-shot-label">菜单栏面板</div>
-        </div>
-        <div class="cc-shot">
-            <div class="cc-shot-frame" style="width:340px;">
-                <div class="cc-shot-titlebar">
-                    <span class="cc-shot-dot" style="background:#ff5f57;"></span>
-                    <span class="cc-shot-dot" style="background:#febc2e;"></span>
-                    <span class="cc-shot-dot" style="background:#28c840;"></span>
+            <p>先把常用 Git 仓库维护进仓库库，后面建工作区时只需要勾选，不用每次重新找地址、填路径。</p>
+            <div class="cc-showcase-frame">
+                <div class="cc-showcase-titlebar">
+                    <span class="cc-showcase-dot" style="background:#ff5f57;"></span>
+                    <span class="cc-showcase-dot" style="background:#febc2e;"></span>
+                    <span class="cc-showcase-dot" style="background:#28c840;"></span>
                 </div>
-                <img src="images/cc-bot/notification.jpg" alt="CCBot 通知">
+                <img src="images/cc-space/settings-overview.png" alt="CCSpace 仓库库配置">
             </div>
-            <div class="cc-shot-label">系统通知</div>
-        </div>
+        </section>
+        <section class="cc-showcase">
+            <div class="cc-showcase-head">
+                <span class="cc-showcase-index">02</span>
+                <h3>创建工作区</h3>
+            </div>
+            <p>针对当前任务勾选需要的仓库，填写工作区名称和工作分支，然后并行克隆成一套完整环境。</p>
+            <div class="cc-showcase-frame">
+                <div class="cc-showcase-titlebar">
+                    <span class="cc-showcase-dot" style="background:#ff5f57;"></span>
+                    <span class="cc-showcase-dot" style="background:#febc2e;"></span>
+                    <span class="cc-showcase-dot" style="background:#28c840;"></span>
+                </div>
+                <img src="images/cc-space/create-workplace.png" alt="CCSpace 创建工作区">
+            </div>
+        </section>
+        <section class="cc-showcase">
+            <div class="cc-showcase-head">
+                <span class="cc-showcase-index">03</span>
+                <h3>工作区详情</h3>
+            </div>
+            <p>所有仓库的当前分支、同步状态和批量操作都集中在一个视图里，适合开工前检查和收尾同步。</p>
+            <div class="cc-showcase-frame">
+                <div class="cc-showcase-titlebar">
+                    <span class="cc-showcase-dot" style="background:#ff5f57;"></span>
+                    <span class="cc-showcase-dot" style="background:#febc2e;"></span>
+                    <span class="cc-showcase-dot" style="background:#28c840;"></span>
+                </div>
+                <img src="images/cc-space/workplace-detail.png" alt="CCSpace 工作区详情">
+            </div>
+        </section>
     </div>
 
     <div class="cc-divider"></div>
 
-    <!-- Scenarios -->
     <section class="cc-section">
         <h2>使用场景</h2>
-        <p class="cc-section-sub">无论哪种工作模式，CCBot 都能帮你守住关键时刻</p>
+        <p class="cc-section-sub">适合需要同时维护多个 Git 仓库的一整套项目环境</p>
         <div class="cc-scenarios">
             <div class="cc-scenario">
                 <span class="cc-scenario-icon">
-                    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#ff9500" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#007aff" stroke-width="1.8" stroke-linecap="round"><path d="M4 7h16"/><path d="M4 12h16"/><path d="M4 17h10"/></svg>
                 </span>
-                <h3>长任务后台跑</h3>
-                <p>让 Agent 自主重构代码、跑测试，任务完成第一时间通知你，不用反复切窗口查看。</p>
+                <h3>新需求一键开工</h3>
+                <p>前端、后端、网关、组件库一起选中，并行克隆成一个工作区，省去手工开多个终端。</p>
             </div>
             <div class="cc-scenario">
                 <span class="cc-scenario-icon">
-                    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#ff3b30" stroke-width="1.8" stroke-linecap="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#34c759" stroke-width="1.8" stroke-linecap="round"><path d="M8 6h13"/><path d="M8 12h13"/><path d="M8 18h13"/><circle cx="4" cy="6" r="1.5"/><circle cx="4" cy="12" r="1.5"/><circle cx="4" cy="18" r="1.5"/></svg>
                 </span>
-                <h3>权限卡住时</h3>
-                <p>Agent 需要批准执行危险操作？CCBot 立刻推送，不让权限弹窗默默阻塞进度。</p>
+                <h3>统一切换分支</h3>
+                <p>工作区下所有仓库按同一个工作分支切换，主分支合并、回到默认分支也能批量完成。</p>
             </div>
             <div class="cc-scenario">
                 <span class="cc-scenario-icon">
-                    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#007aff" stroke-width="1.8" stroke-linecap="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+                    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#ff9500" stroke-width="1.8" stroke-linecap="round"><path d="M12 3v6"/><path d="M12 15v6"/><path d="M3 12h6"/><path d="M15 12h6"/><circle cx="12" cy="12" r="3.5"/></svg>
                 </span>
-                <h3>多项目并行</h3>
-                <p>同时在多个终端跑 Agent 任务，所有项目的状态汇聚到一个通知流，一目了然。</p>
+                <h3>同步状态一屏看完</h3>
+                <p>未提交、未推送、落后远端、未克隆等状态直接汇总出来，适合日常巡检和收尾同步。</p>
             </div>
         </div>
     </section>
 
     <div class="cc-divider"></div>
 
-    <!-- Features -->
     <section class="cc-section">
-        <h2>功能</h2>
-        <p class="cc-section-sub">覆盖从通知到集成的完整链路</p>
+        <h2>核心能力</h2>
+        <p class="cc-section-sub">围绕多仓库工作流，把重复操作变成可复用动作</p>
         <div class="cc-features">
             <div class="cc-feat">
-                <div class="cc-feat-dot" style="background:#34c759;">
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round"><path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 01-3.46 0"/></svg>
+                <div class="cc-feat-dot" style="background:#007aff;">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round"><path d="M3 6h18"/><path d="M7 12h10"/><path d="M10 18h4"/></svg>
                 </div>
                 <div class="cc-feat-body">
-                    <h3>系统通知</h3>
-                    <p>任务完成、权限请求、用户输入、一般通知，4 类事件实时推送到 macOS 通知中心。</p>
+                    <h3>仓库库配置</h3>
+                    <p>先把常用 Git URL 维护进仓库库，自动解析仓库名，避免每次创建工作区都从头录入。</p>
                 </div>
             </div>
             <div class="cc-feat">
-                <div class="cc-feat-dot" style="background:#007aff;">
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round"><path d="M22 2L11 13"/><path d="M22 2l-7 20-4-9-9-4 20-7z"/></svg>
+                <div class="cc-feat-dot" style="background:#34c759;">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round"><path d="M12 3v18"/><path d="M3 12h18"/></svg>
                 </div>
                 <div class="cc-feat-body">
-                    <h3>Telegram 推送</h3>
-                    <p>配置 Bot Token + Chat ID，通知同步到 Telegram。自动重试、指数退避，离开电脑也不错过。</p>
+                    <h3>并行创建工作区</h3>
+                    <p>勾选仓库、填写工作区名和工作分支后，多个仓库会并行克隆到本地目录，建立速度更快。</p>
                 </div>
             </div>
             <div class="cc-feat">
                 <div class="cc-feat-dot" style="background:#af52de;">
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round"><path d="M10 13a5 5 0 007.54.54l3-3a5 5 0 00-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 00-7.54-.54l-3 3a5 5 0 007.07 7.07l1.71-1.71"/></svg>
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round"><path d="M4 7h16"/><path d="M4 12h10"/><path d="M4 17h7"/></svg>
                 </div>
                 <div class="cc-feat-body">
-                    <h3>一键安装 Hook</h3>
-                    <p>自动写入 ~/.claude/hooks/ 和 ~/.codex/hooks/，注册到配置文件，即装即用即卸。</p>
+                    <h3>统一状态面板</h3>
+                    <p>每个仓库的当前分支、默认分支、工作区状态和错误信息集中展示，问题仓库可以快速定位。</p>
                 </div>
             </div>
             <div class="cc-feat">
                 <div class="cc-feat-dot" style="background:#ff9500;">
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round"><path d="M5 12h14"/><path d="M12 5l7 7-7 7"/></svg>
                 </div>
                 <div class="cc-feat-body">
-                    <h3>JetBrains IDE 集成</h3>
-                    <p>CC GUI 文件监听 + ACP Proxy 双模式。1.5s 智能延迟过滤自动批准操作，避免通知轰炸。</p>
+                    <h3>批量操作</h3>
+                    <p>同步全部、推送全部、合并默认分支、切换默认分支或工作分支，都可以一口气对整个工作区执行。</p>
                 </div>
             </div>
             <div class="cc-feat">
                 <div class="cc-feat-dot" style="background:#ff3b30;">
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round"><path d="M4 20h16"/><path d="M7 20V8l5-4 5 4v12"/></svg>
                 </div>
                 <div class="cc-feat-body">
-                    <h3>安全 & 去重</h3>
-                    <p>本地 HTTP 服务 Bearer Token 认证，3s 节流 + 6s 指纹去重，干净准确不打扰。</p>
+                    <h3>编辑与回滚</h3>
+                    <p>修改工作区名称、工作分支或仓库集合时带事务回滚，出错会自动恢复，避免留下半成品目录。</p>
                 </div>
             </div>
             <div class="cc-feat">
                 <div class="cc-feat-dot" style="background:#5ac8fa;">
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0114.13-3.36L23 10"/><path d="M20.49 15a9 9 0 01-14.13 3.36L1 14"/></svg>
                 </div>
                 <div class="cc-feat-body">
-                    <h3>自动更新检查</h3>
-                    <p>每次打开菜单自动对比 GitHub Releases 最新版本，发现更新一键跳转下载。</p>
+                    <h3>自动刷新</h3>
+                    <p>激活中的工作区会周期性刷新 Git 状态，已删除的目录和仓库会自动清理，减少手工维护成本。</p>
                 </div>
             </div>
         </div>
@@ -694,110 +725,89 @@ html.dark .cc-cta .cc-cta-sub { color: #a1a1a6; }
 
     <div class="cc-divider"></div>
 
-    <!-- Quick Start -->
     <section class="cc-section">
         <h2>快速开始</h2>
-        <p class="cc-section-sub">三步完成配置</p>
+        <p class="cc-section-sub">第一次上手只需要三步</p>
         <div class="cc-steps">
             <div class="cc-step">
                 <div class="cc-step-num">1</div>
-                <svg class="cc-step-icon" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#0071e3" stroke-width="1.8" stroke-linecap="round"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-                <h3>下载安装</h3>
-                <p>从 GitHub Releases 下载 DMG，拖入 Applications</p>
+                <svg class="cc-step-icon" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#0071e3" stroke-width="1.8" stroke-linecap="round"><path d="M4 7h16"/><path d="M4 12h16"/><path d="M4 17h10"/></svg>
+                <h3>录入仓库</h3>
+                <p>在设置页粘贴常用 Git URL，建立自己的仓库库</p>
                 <span class="cc-step-arrow">&rsaquo;</span>
             </div>
             <div class="cc-step">
                 <div class="cc-step-num">2</div>
-                <svg class="cc-step-icon" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#0071e3" stroke-width="1.8" stroke-linecap="round"><path d="M10 13a5 5 0 007.54.54l3-3a5 5 0 00-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 00-7.54-.54l-3 3a5 5 0 007.07 7.07l1.71-1.71"/></svg>
-                <h3>安装 Hook</h3>
-                <p>菜单栏点击安装按钮，一键注册到 Claude Code / Codex</p>
+                <svg class="cc-step-icon" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#0071e3" stroke-width="1.8" stroke-linecap="round"><path d="M12 3v18"/><path d="M3 12h18"/></svg>
+                <h3>创建工作区</h3>
+                <p>按当前任务勾选仓库，填写工作区名称和工作分支</p>
                 <span class="cc-step-arrow">&rsaquo;</span>
             </div>
             <div class="cc-step">
                 <div class="cc-step-num">3</div>
-                <svg class="cc-step-icon" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#0071e3" stroke-width="1.8" stroke-linecap="round"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
-                <h3>开始使用</h3>
-                <p>Agent 事件自动推送到通知中心，可选配置 Telegram 远程推送</p>
+                <svg class="cc-step-icon" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#0071e3" stroke-width="1.8" stroke-linecap="round"><path d="M5 12h14"/><path d="M12 5l7 7-7 7"/></svg>
+                <h3>统一操作</h3>
+                <p>在详情页批量同步、推送、合并和切换分支</p>
             </div>
         </div>
     </section>
 
     <div class="cc-divider"></div>
 
-    <!-- Integrations -->
     <section class="cc-section">
-        <h2>集成</h2>
-        <p class="cc-section-sub">覆盖主流 AI 编程工具链</p>
-        <div class="cc-integrations">
-            <div class="cc-integ">
-                <span class="cc-integ-dot" style="background:#af52de;"></span>
+        <h2>常用操作</h2>
+        <p class="cc-section-sub">把多个仓库当成一个项目来管理</p>
+        <div class="cc-actions">
+            <div class="cc-action">
+                <span class="cc-action-dot" style="background:#34c759;"></span>
                 <div>
-                    <div class="cc-integ-name">Claude Code</div>
-                    <div class="cc-integ-desc">CLI / Desktop / Web<br>Notification + Stop Hook</div>
+                    <div class="cc-action-name">同步全部</div>
+                    <div class="cc-action-desc">拉取所有仓库最新代码，适合开工前快速对齐状态。</div>
                 </div>
             </div>
-            <div class="cc-integ">
-                <span class="cc-integ-dot" style="background:#34c759;"></span>
+            <div class="cc-action">
+                <span class="cc-action-dot" style="background:#007aff;"></span>
                 <div>
-                    <div class="cc-integ-name">Codex CLI</div>
-                    <div class="cc-integ-desc">OpenAI 命令行工具<br>notify 回调</div>
+                    <div class="cc-action-name">推送全部</div>
+                    <div class="cc-action-desc">统一推送所有有待提交的仓库，减少逐个检查遗漏。</div>
                 </div>
             </div>
-            <div class="cc-integ">
-                <span class="cc-integ-dot" style="background:#007aff;"></span>
+            <div class="cc-action">
+                <span class="cc-action-dot" style="background:#ff9500;"></span>
                 <div>
-                    <div class="cc-integ-name">JetBrains CC GUI</div>
-                    <div class="cc-integ-desc">文件 IPC 监听<br>DispatchSource 实时响应</div>
+                    <div class="cc-action-name">合并默认分支</div>
+                    <div class="cc-action-desc">把各仓库默认分支最新内容合并到当前工作分支，集中处理冲突。</div>
                 </div>
             </div>
-            <div class="cc-integ">
-                <span class="cc-integ-dot" style="background:#ff9500;"></span>
+            <div class="cc-action">
+                <span class="cc-action-dot" style="background:#af52de;"></span>
                 <div>
-                    <div class="cc-integ-name">JetBrains ACP</div>
-                    <div class="cc-integ-desc">Node.js stdio 代理<br>拦截 JSON-RPC 权限请求</div>
+                    <div class="cc-action-name">切换工作分支</div>
+                    <div class="cc-action-desc">整组仓库一起切换到工作分支或默认分支，不再逐仓库点选。</div>
                 </div>
             </div>
-        </div>
-    </section>
-
-    <div class="cc-divider"></div>
-
-    <!-- Architecture -->
-    <section class="cc-section">
-        <h2>架构</h2>
-        <div class="cc-arch">
-<pre><span class="cc-hl-purple">Claude Code</span>  <span class="cc-hl-muted">── Hook ────────▶</span> <span class="cc-hl-blue">HookServer (:62400)</span> <span class="cc-hl-muted">──▶</span> <span class="cc-hl-green">macOS 通知</span>
-                                                    <span class="cc-hl-muted">──▶</span> <span class="cc-hl-blue">Telegram</span>
-
-<span class="cc-hl-green">Codex CLI</span>    <span class="cc-hl-muted">── notify ──────▶</span> <span class="cc-hl-blue">HookServer (:62400)</span> <span class="cc-hl-muted">──▶</span> <span class="cc-hl-green">macOS 通知</span>
-                                                    <span class="cc-hl-muted">──▶</span> <span class="cc-hl-blue">Telegram</span>
-
-<span class="cc-hl-orange">CC GUI</span>       <span class="cc-hl-muted">── 文件 IPC ──▶</span> <span class="cc-hl-blue">CCGUIWatcher</span> <span class="cc-hl-muted">──────────▶</span> <span class="cc-hl-green">macOS 通知</span>
-                              <span class="cc-hl-muted">(DispatchSource)</span>      <span class="cc-hl-muted">──▶</span> <span class="cc-hl-blue">Telegram</span>
-
-<span class="cc-hl-orange">JetBrains</span>    <span class="cc-hl-muted">── stdio ──▶</span> <span class="cc-hl-purple">ACP Proxy</span> <span class="cc-hl-muted">── POST ──▶</span> <span class="cc-hl-blue">HookServer</span></pre>
         </div>
         <div class="cc-tags">
             <span class="cc-tag cc-tag-swift">Swift 6</span>
             <span class="cc-tag cc-tag-accent">SwiftUI</span>
-            <span class="cc-tag cc-tag-accent">Network.framework</span>
-            <span class="cc-tag">零第三方依赖</span>
-            <span class="cc-tag">XcodeGen</span>
+            <span class="cc-tag cc-tag-accent">Git CLI</span>
+            <span class="cc-tag">JSON 本地存储</span>
+            <span class="cc-tag">并行克隆</span>
+            <span class="cc-tag">事务回滚</span>
+            <span class="cc-tag">自动刷新</span>
             <span class="cc-tag">GitHub Actions CI</span>
-            <span class="cc-tag">公证签名</span>
         </div>
     </section>
 
     <div class="cc-divider"></div>
 
-    <!-- CTA -->
     <section class="cc-section" style="padding-bottom: 20px;">
         <div class="cc-cta">
-            <p>让 AI Agent 自己跑，你去喝杯咖啡。</p>
-            <div class="cc-cta-sub">下载安装，菜单栏一键配置。</div>
-            <a class="cc-btn cc-btn-dl" href="https://github.com/sunkz/cc-bot/releases/latest" target="_blank">
+            <p>从“打开一堆仓库”切换到“打开一个工作区”。</p>
+            <div class="cc-cta-sub">下载后先录入常用仓库，之后每个任务都能一键建好环境。</div>
+            <a class="cc-btn cc-btn-dl" href="https://github.com/sunkz/cc-space/releases/latest" target="_blank">
                 <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-                下载 CCBot
+                下载 CCSpace
             </a>
         </div>
     </section>
