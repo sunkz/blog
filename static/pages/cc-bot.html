@@ -24,6 +24,109 @@
     .site-header *, .site-header *::before, .site-header *::after { box-sizing: border-box; }
     .site-header a { color: inherit; text-decoration: none; }
     .site-header a:hover { color: inherit; text-decoration: none; }
+    .site-header .site-nav-products {
+        display: flex;
+        flex-direction: column;
+        gap: 0;
+    }
+    .site-header .site-nav-link {
+        transition:
+            color .2s ease,
+            background .2s ease,
+            border-color .2s ease,
+            box-shadow .2s ease,
+            transform .2s ease;
+    }
+    .site-header .site-nav-label {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+        line-height: 1;
+        padding-right: .34rem;
+    }
+    .site-header .site-nav-badge {
+        position: absolute;
+        top: -.34rem;
+        right: -.18rem;
+        color: #ea580c;
+        font-size: .62rem;
+        line-height: 1;
+        transform: scale(.92);
+        transform-origin: top right;
+    }
+    .site-header .site-nav-link--feature,
+    .site-header .site-nav-link--feature:visited {
+        margin-inline: 1rem;
+        border: 1px solid transparent;
+        border-radius: 999px;
+        background: transparent;
+        box-shadow: none;
+        color: #3156a6;
+    }
+    .site-header .site-nav-link--feature:hover {
+        background: rgba(255, 255, 255, .72);
+        color: #1f3f88;
+    }
+    .site-header .site-nav-link--feature.site-nav-link--current,
+    .site-header .site-nav-link--feature.site-nav-link--current:visited {
+        border-color: rgba(148, 163, 184, .16);
+        background: rgba(255, 255, 255, .92);
+        box-shadow:
+            0 8px 20px rgba(15, 23, 42, .07),
+            0 1px 2px rgba(15, 23, 42, .04),
+            inset 0 1px 0 rgba(255, 255, 255, .95);
+        color: #17326f;
+    }
+    html.dark .site-header .site-nav-link--feature,
+    html.dark .site-header .site-nav-link--feature:visited {
+        border-color: transparent;
+        background: transparent;
+        box-shadow: none;
+        color: #d6e3ff;
+    }
+    html.dark .site-header .site-nav-link--feature:hover {
+        background: rgba(255, 255, 255, .08);
+        color: #f3f7ff;
+    }
+    html.dark .site-header .site-nav-link--feature.site-nav-link--current,
+    html.dark .site-header .site-nav-link--feature.site-nav-link--current:visited {
+        border-color: rgba(255, 255, 255, .08);
+        background: rgba(255, 255, 255, .12);
+        box-shadow:
+            0 10px 22px rgba(0, 0, 0, .18),
+            inset 0 1px 0 rgba(255, 255, 255, .08);
+        color: #ffffff;
+    }
+    html.dark .site-header .site-nav-badge {
+        color: #fb923c;
+    }
+    @media (min-width: 1024px) {
+        .site-header .site-nav-products {
+            display: inline-flex;
+            flex-direction: row;
+            align-items: center;
+            gap: .2rem;
+            margin-inline: -.2rem;
+            padding: .18rem;
+            border: 1px solid rgba(148, 163, 184, .14);
+            border-radius: 999px;
+            background: rgba(148, 163, 184, .08);
+            box-shadow: inset 0 1px 0 rgba(255, 255, 255, .75);
+        }
+        html.dark .site-header .site-nav-products {
+            border-color: rgba(255, 255, 255, .06);
+            background: rgba(255, 255, 255, .05);
+            box-shadow: inset 0 1px 0 rgba(255, 255, 255, .04);
+        }
+        .site-header .site-nav-link--feature {
+            margin-inline: 0;
+            padding: .34rem .86rem;
+            line-height: 1.2;
+            font-weight: 600;
+            letter-spacing: -.01em;
+        }
+    }
 </style>
 <header class="site-header mx-auto flex h-[4.5rem] max-w-3xl px-8 lg:justify-center">
   <div class="relative z-50 mr-auto flex items-center">
@@ -60,11 +163,12 @@
 
   <div class="nav-wrapper fixed inset-x-0 top-full z-40 flex h-full select-none flex-col justify-center pb-16 duration-200 dark:bg-black lg:static lg:h-auto lg:flex-row lg:!bg-transparent lg:pb-0 lg:transition-none">
     <nav class="lg:ml-12 lg:flex lg:flex-row lg:items-center lg:space-x-6">
-      <a class="block text-center text-2xl leading-[5rem] lg:text-base lg:font-normal" href="/">主页</a>
-      <a class="block text-center text-2xl leading-[5rem] lg:text-base lg:font-normal" href="/pages/tools.html">文本工具箱</a>
-      <a class="block text-center text-2xl leading-[5rem] lg:text-base lg:font-normal" href="/pages/cc-bot.html">CCBot</a>
-      <a class="block text-center text-2xl leading-[5rem] lg:text-base lg:font-normal" href="/pages/cc-space.html">CCSpace</a>
-      <a class="block text-center text-2xl leading-[5rem] lg:text-base lg:font-normal" href="/about/">关于我</a>
+      <a class="site-nav-link block text-center text-2xl leading-[5rem] lg:text-base lg:font-normal" href="/">主页</a>
+      <div class="site-nav-products">
+        <a class="site-nav-link site-nav-link--feature site-nav-link--current block text-center text-2xl leading-[5rem] lg:text-base lg:font-normal" href="/pages/cc-bot.html"><span class="site-nav-label">CCBot<span class="site-nav-badge" aria-hidden="true">🔥</span></span></a>
+        <a class="site-nav-link site-nav-link--feature block text-center text-2xl leading-[5rem] lg:text-base lg:font-normal" href="/pages/cc-space.html"><span class="site-nav-label">CCSpace<span class="site-nav-badge" aria-hidden="true">🔥</span></span></a>
+      </div>
+      <a class="site-nav-link block text-center text-2xl leading-[5rem] lg:text-base lg:font-normal" href="/about/">关于我</a>
     </nav>
     <nav class="mt-12 flex justify-center space-x-10 dark:invert lg:ml-12 lg:mt-0 lg:items-center lg:space-x-6">
       <a class="h-8 w-8 text-[0] [background:var(--url)_center_center/cover_no-repeat] lg:h-6 lg:w-6"

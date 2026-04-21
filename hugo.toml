@@ -11,20 +11,15 @@ publishdir = 'docs'
     url = "/"
     weight = 10
   [[menu.main]]
-    identifier = "文本工具箱"
-    name = "文本工具箱"
-    url = "/pages/tools.html"
-    weight = 20
-  [[menu.main]]
     identifier = "CCBot"
     name = "CCBot"
     url = "/pages/cc-bot.html"
-    weight = 30
+    weight = 20
   [[menu.main]]
     identifier = "CCSpace"
     name = "CCSpace"
     url = "/pages/cc-space.html"
-    weight = 35
+    weight = 30
   [[menu.main]]
     identifier = "关于我"
     name = "关于我"
