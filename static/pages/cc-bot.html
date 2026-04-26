@@ -659,8 +659,8 @@ html.dark .cc-cta .cc-cta-sub { color: #a1a1a6; }
         <h1 class="cc-anim cc-anim-d1">CCBot</h1>
         <div class="cc-hero-tagline cc-anim cc-anim-d2">AI Agent 通知助手</div>
         <p class="cc-hero-desc cc-anim cc-anim-d3">
-            macOS 菜单栏应用，监听 Claude Code / Codex CLI / JetBrains IDE 中的 AI Agent 事件，
-            通过系统通知和 Telegram 实时推送 — 再也不用盯着终端等了。
+            macOS 菜单栏应用，监听 Claude Code / Codex / JetBrains IDE 中的 AI Agent 事件，
+            通过系统通知和 Telegram 实时推送 — 再也不用盯着终端或应用界面等了。
         </p>
         <div class="cc-hero-actions cc-anim cc-anim-d4">
             <a class="cc-btn cc-btn-dl" href="https://github.com/sunkz/cc-bot/releases/latest" target="_blank">
@@ -727,7 +727,7 @@ html.dark .cc-cta .cc-cta-sub { color: #a1a1a6; }
                     <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#007aff" stroke-width="1.8" stroke-linecap="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
                 </span>
                 <h3>多项目并行</h3>
-                <p>同时在多个终端跑 Agent 任务，所有项目的状态汇聚到一个通知流，一目了然。</p>
+                <p>同时在多个终端或应用里跑 Agent 任务，所有项目的状态汇聚到一个通知流，一目了然。</p>
             </div>
         </div>
     </section>
@@ -843,8 +843,8 @@ html.dark .cc-cta .cc-cta-sub { color: #a1a1a6; }
             <div class="cc-integ">
                 <span class="cc-integ-dot" style="background:#34c759;"></span>
                 <div>
-                    <div class="cc-integ-name">Codex CLI</div>
-                    <div class="cc-integ-desc">OpenAI 命令行工具<br>notify 回调</div>
+                    <div class="cc-integ-name">Codex</div>
+                    <div class="cc-integ-desc">CLI / 其他 Codex 应用<br>notify / PermissionRequest 回调</div>
                 </div>
             </div>
             <div class="cc-integ">
@@ -866,7 +866,7 @@ html.dark .cc-cta .cc-cta-sub { color: #a1a1a6; }
 <pre><span class="cc-hl-purple">Claude Code</span>  <span class="cc-hl-muted">── Hook ────────▶</span> <span class="cc-hl-blue">HookServer (:62400)</span> <span class="cc-hl-muted">──▶</span> <span class="cc-hl-green">macOS 通知</span>
                                                     <span class="cc-hl-muted">──▶</span> <span class="cc-hl-blue">Telegram</span>
 
-<span class="cc-hl-green">Codex CLI</span>    <span class="cc-hl-muted">── notify ──────▶</span> <span class="cc-hl-blue">HookServer (:62400)</span> <span class="cc-hl-muted">──▶</span> <span class="cc-hl-green">macOS 通知</span>
+<span class="cc-hl-green">Codex</span>        <span class="cc-hl-muted">── notify ──────▶</span> <span class="cc-hl-blue">HookServer (:62400)</span> <span class="cc-hl-muted">──▶</span> <span class="cc-hl-green">macOS 通知</span>
                                                     <span class="cc-hl-muted">──▶</span> <span class="cc-hl-blue">Telegram</span>
 
 <span class="cc-hl-orange">CC GUI</span>       <span class="cc-hl-muted">── 文件 IPC ──▶</span> <span class="cc-hl-blue">CCGUIWatcher</span> <span class="cc-hl-muted">──────────▶</span> <span class="cc-hl-green">macOS 通知</span>
