@@ -772,7 +772,7 @@ html.dark .cc-cta .cc-cta-sub { color: #a1a1a6; }
                 </div>
                 <div class="cc-feat-body">
                     <h3>JetBrains IDE 集成</h3>
-                    <p>CC GUI 文件监听 + ACP Proxy 双模式。1.5s 智能延迟过滤自动批准操作，避免通知轰炸。</p>
+                    <p>监听 IDEA 等 JetBrains IDE 中 CC GUI 插件的权限请求，实时弹出通知。</p>
                 </div>
             </div>
             <div class="cc-feat">
@@ -854,13 +854,6 @@ html.dark .cc-cta .cc-cta-sub { color: #a1a1a6; }
                     <div class="cc-integ-desc">文件 IPC 监听<br>DispatchSource 实时响应</div>
                 </div>
             </div>
-            <div class="cc-integ">
-                <span class="cc-integ-dot" style="background:#ff9500;"></span>
-                <div>
-                    <div class="cc-integ-name">JetBrains ACP</div>
-                    <div class="cc-integ-desc">Node.js stdio 代理<br>拦截 JSON-RPC 权限请求</div>
-                </div>
-            </div>
         </div>
     </section>
 
@@ -877,9 +870,7 @@ html.dark .cc-cta .cc-cta-sub { color: #a1a1a6; }
                                                     <span class="cc-hl-muted">──▶</span> <span class="cc-hl-blue">Telegram</span>
 
 <span class="cc-hl-orange">CC GUI</span>       <span class="cc-hl-muted">── 文件 IPC ──▶</span> <span class="cc-hl-blue">CCGUIWatcher</span> <span class="cc-hl-muted">──────────▶</span> <span class="cc-hl-green">macOS 通知</span>
-                              <span class="cc-hl-muted">(DispatchSource)</span>      <span class="cc-hl-muted">──▶</span> <span class="cc-hl-blue">Telegram</span>
-
-<span class="cc-hl-orange">JetBrains</span>    <span class="cc-hl-muted">── stdio ──▶</span> <span class="cc-hl-purple">ACP Proxy</span> <span class="cc-hl-muted">── POST ──▶</span> <span class="cc-hl-blue">HookServer</span></pre>
+                              <span class="cc-hl-muted">(DispatchSource)</span>      <span class="cc-hl-muted">──▶</span> <span class="cc-hl-blue">Telegram</span></pre>
         </div>
         <div class="cc-tags">
             <span class="cc-tag cc-tag-swift">Swift 6</span>
