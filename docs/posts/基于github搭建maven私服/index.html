@@ -58,9 +58,11 @@
   <meta name="description" content="Github Package 私服
 
 demo : http://github.com/sunkz/common
+
 settings.xml
 
 生效顺序 : .m2/settings.xml &gt; $M2_HOME/conf/settings.xml
+
 &lt;?xml version=&#34;1.0&#34; encoding=&#34;UTF-8&#34;?&gt;
 &lt;settings xmlns=&#34;http://maven.apache.org/SETTINGS/1.2.0&#34; xmlns:xsi=&#34;http://www.w3.org/2001/XMLSchema-instance&#34;
           xsi:schemaLocation=&#34;http://maven.apache.org/SETTINGS/1.2.0 https://maven.apache.org/xsd/settings-1.2.0.xsd&#34;&gt;
@@ -172,7 +174,7 @@ pom.xml
   <link rel="apple-touch-icon" href="https://sunkz.top/apple-touch-icon.png" />
 
   
-  <meta name="generator" content="Hugo 0.147.4">
+  <meta name="generator" content="Hugo 0.159.1">
 
   
   
@@ -498,11 +500,13 @@ settings.xml 生效顺序 : .m2/settings.xml &gt; $M2_HOME/conf/settings.xml
 
   <section><h3 id="github-package-私服">Github Package 私服</h3>
 <blockquote>
-<p>demo : <a href="http://github.com/sunkz/common">http://github.com/sunkz/common</a></p></blockquote>
+<p>demo : <a href="http://github.com/sunkz/common">http://github.com/sunkz/common</a></p>
+</blockquote>
 <h4 id="settingsxml">settings.xml</h4>
 <blockquote>
-<p>生效顺序 : .m2/settings.xml &gt; $M2_HOME/conf/settings.xml</p></blockquote>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-xml" data-lang="xml"><span style="display:flex;"><span><span style="color:#75715e">&lt;?xml version=&#34;1.0&#34; encoding=&#34;UTF-8&#34;?&gt;</span>
+<p>生效顺序 : .m2/settings.xml &gt; $M2_HOME/conf/settings.xml</p>
+</blockquote>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-xml" data-lang="xml"><span style="display:flex;"><span><span style="color:#75715e">&lt;?xml version=&#34;1.0&#34; encoding=&#34;UTF-8&#34;?&gt;</span>
 </span></span><span style="display:flex;"><span><span style="color:#f92672">&lt;settings</span> <span style="color:#a6e22e">xmlns=</span><span style="color:#e6db74">&#34;http://maven.apache.org/SETTINGS/1.2.0&#34;</span> <span style="color:#a6e22e">xmlns:xsi=</span><span style="color:#e6db74">&#34;http://www.w3.org/2001/XMLSchema-instance&#34;</span>
 </span></span><span style="display:flex;"><span>          <span style="color:#a6e22e">xsi:schemaLocation=</span><span style="color:#e6db74">&#34;http://maven.apache.org/SETTINGS/1.2.0 https://maven.apache.org/xsd/settings-1.2.0.xsd&#34;</span><span style="color:#f92672">&gt;</span>
 </span></span><span style="display:flex;"><span>
@@ -556,7 +560,7 @@ settings.xml 生效顺序 : .m2/settings.xml &gt; $M2_HOME/conf/settings.xml
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#f92672">&lt;/settings&gt;</span>
 </span></span></code></pre></div><h4 id="pomxml">pom.xml</h4>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-xml" data-lang="xml"><span style="display:flex;"><span><span style="color:#75715e">&lt;!-- mvn deploy 远程私服地址 --&gt;</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-xml" data-lang="xml"><span style="display:flex;"><span><span style="color:#75715e">&lt;!-- mvn deploy 远程私服地址 --&gt;</span>
 </span></span><span style="display:flex;"><span><span style="color:#f92672">&lt;distributionManagement&gt;</span>
 </span></span><span style="display:flex;"><span>    <span style="color:#f92672">&lt;repository&gt;</span>
 </span></span><span style="display:flex;"><span>        <span style="color:#75715e">&lt;!-- id 需要与 settings.xml server 中的 一致 --&gt;</span>
